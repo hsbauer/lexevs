@@ -8,5 +8,6 @@
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/lgConverter"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/lexrdf"/>
 	<classpathentry kind="con" path="org.apache.ivyde.eclipse.cpcontainer.IVYDE_CONTAINER/?project=lbImpl&amp;ivyXmlPath=ivy.xml&amp;confs=*"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/LoaderTutorial"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>
