@@ -3,6 +3,7 @@ package org.LexGrid.LexBIG.Impl.Extensions.GenericExtensions.search;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -177,7 +178,8 @@ public class SearchExtensionImpl extends AbstractExtendable implements SearchExt
                 getSearchIndexService().
                 query(this.resolveCodeSystemReferences(codeSystemsToInclude), 
                         blockJoinQuery);
-        return new SearchScoreDocIterator(scoreDocs);
+        return new SearchScoreDocIterator(scoreDocs, Arrays.asList(this.resolveCodeSystemReferences(codeSystemsToInclude).
+                toArray(new AbsoluteCodingSchemeVersionReference[codeSystemsToInclude.size()])));
     }
     
     protected BooleanQuery buildOnMatchAlgorithm(String text, Analyzer analyzer, MatchAlgorithm matchAlgorithm){

@@ -59,7 +59,7 @@ public class MultiIndexRegistry implements IndexRegistry, InitializingBean {
 	}
 
 	public MultiIndexRegistry() {
-		// TODO Auto-generated constructor stub
+
 	}
 
 	@Override
@@ -290,9 +290,37 @@ public class MultiIndexRegistry implements IndexRegistry, InitializingBean {
 	
     private LuceneIndexTemplate getLuceneIndexTemplate(
             List<AbsoluteCodingSchemeVersionReference> codingSchemes) {
-        List<NamedDirectory> directories = getNamedDirectoriesForCodingSchemes(codingSchemes);
-        return new MultiBaseLuceneIndexTemplate(directories);
+
+		String key = DaoUtility.createKey(codingSchemes);
+
+		if(! this.multiCodingSchemeKeyToTemplateMap.containsKey(key)) {
+
+			List<NamedDirectory> directories = new ArrayList<NamedDirectory>();
+
+			for(AbsoluteCodingSchemeVersionReference ref : codingSchemes) {
+				String uri = ref.getCodingSchemeURN();
+				String version = ref.getCodingSchemeVersion();
+
+				String indexName = this.getCodingSchemeIndexName(uri, version);
+
+				if(! this.luceneIndexNameToDirctoryMap.containsKey(indexName)) {
+					NamedDirectory dir = this.createIndexDirectory(indexName);
+					this.luceneIndexNameToDirctoryMap.put(indexName, dir);
+				}
+				
+				directories.add(
+						this.luceneIndexNameToDirctoryMap.get(indexName));
+			}
+
+			this.multiCodingSchemeKeyToTemplateMap.put(key, new MultiBaseLuceneIndexTemplate(directories));
+		}
+
+		return this.multiCodingSchemeKeyToTemplateMap.get(key);
     }
+    
+	public String getCodingSchemeIndexName(String codingSchemeUri, String version) {
+		return this.getLuceneIndexTemplate(codingSchemeUri, version).getIndexName();
+	}
 
 	private List<NamedDirectory> getNamedDirectoriesForCodingSchemes(
 			List<AbsoluteCodingSchemeVersionReference> codingSchemes) {
