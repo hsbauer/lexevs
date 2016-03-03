@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import org.LexGrid.LexBIG.DataModel.Core.AbsoluteCodingSchemeVersionReference;
 import org.LexGrid.LexBIG.Exceptions.LBParameterException;
@@ -290,8 +291,9 @@ public class MultiIndexRegistry implements IndexRegistry, InitializingBean {
 	
     private LuceneIndexTemplate getLuceneIndexTemplate(
             List<AbsoluteCodingSchemeVersionReference> codingSchemes) {
-
+    	long createKeyStart = System.nanoTime();
 		String key = DaoUtility.createKey(codingSchemes);
+		System.out.println("Create Key: " + TimeUnit.NANOSECONDS.toMillis((System.nanoTime() - createKeyStart)));
 
 		if(! this.multiCodingSchemeKeyToTemplateMap.containsKey(key)) {
 
@@ -300,11 +302,14 @@ public class MultiIndexRegistry implements IndexRegistry, InitializingBean {
 			for(AbsoluteCodingSchemeVersionReference ref : codingSchemes) {
 				String uri = ref.getCodingSchemeURN();
 				String version = ref.getCodingSchemeVersion();
-
+				long getNameStart = System.nanoTime();
 				String indexName = this.getCodingSchemeIndexName(uri, version);
-
+				System.out.println("Get CodingScheme name: " + TimeUnit.NANOSECONDS.toMillis((System.nanoTime() - getNameStart)));
+				
 				if(! this.luceneIndexNameToDirctoryMap.containsKey(indexName)) {
+					long createDirectoryStart = System.nanoTime();
 					NamedDirectory dir = this.createIndexDirectory(indexName);
+					System.out.println("Create Directory: " + TimeUnit.NANOSECONDS.toMillis((System.nanoTime() - createDirectoryStart)));
 					this.luceneIndexNameToDirctoryMap.put(indexName, dir);
 				}
 				
