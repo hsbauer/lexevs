@@ -45,7 +45,8 @@ public class DefaultLuceneDirectoryCreator implements LuceneDirectoryCreator{
 			if(SystemUtils.IS_OS_WINDOWS){
 				directory = FSDirectory.open(path); //getDirectory(baseDirectory);
 			} else {
-				directory = MMapDirectory.open(path); //getDirectory(baseDirectory);
+				directory = new MMapDirectory(path, 1 << 30);
+//				directory = MMapDirectory.open(path); //getDirectory(baseDirectory);
 			}
 
 		} catch (IOException e) {

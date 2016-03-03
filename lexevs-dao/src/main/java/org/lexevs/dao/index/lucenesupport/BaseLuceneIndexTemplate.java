@@ -391,16 +391,16 @@ public class BaseLuceneIndexTemplate implements InitializingBean, DisposableBean
 		this.indexReader = indexReader;
 	}
 	
-	public void finalize() throws Throwable {
-		super.finalize();
-		this.doFinalize();
-	}
-	
-	protected void doFinalize() throws Throwable {
-		if(this.indexReader != null) {
-			this.indexReader.close();
-		}
-	}
+//	public void finalize() throws Throwable {
+//		super.finalize();
+//		this.doFinalize();
+//	}
+//	
+//	protected void doFinalize() throws Throwable {
+//		if(this.indexReader != null) {
+//			this.indexReader.close();
+//		}
+//	}
 
 	@Override
 	public Document getDocumentById(final int id, final Set<String> fields) {
