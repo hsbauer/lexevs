@@ -301,9 +301,9 @@ public class MultiIndexRegistry implements IndexRegistry, InitializingBean {
 	
     private LuceneIndexTemplate getLuceneIndexTemplate(
             List<AbsoluteCodingSchemeVersionReference> codingSchemes) {
-    	long createKeyStart = System.nanoTime();
+ //   	long createKeyStart = System.nanoTime();
 		String key = DaoUtility.createKey(codingSchemes);
-		System.out.println("Create Key: " + TimeUnit.NANOSECONDS.toMillis((System.nanoTime() - createKeyStart)));
+//		System.out.println("Create Key: " + TimeUnit.NANOSECONDS.toMillis((System.nanoTime() - createKeyStart)));
 
 		if(! this.multiCodingSchemeKeyToTemplateMap.containsKey(key)) {
 			if(codingSchemes.size() == 1){
@@ -322,14 +322,14 @@ public class MultiIndexRegistry implements IndexRegistry, InitializingBean {
 			for(AbsoluteCodingSchemeVersionReference ref : codingSchemes) {
 				String uri = ref.getCodingSchemeURN();
 				String version = ref.getCodingSchemeVersion();
-				long getNameStart = System.nanoTime();
+//				long getNameStart = System.nanoTime();
 				String indexName = this.getCodingSchemeIndexName(uri, version);
-				System.out.println("Get CodingScheme name: " + TimeUnit.NANOSECONDS.toMillis((System.nanoTime() - getNameStart)));
+//				System.out.println("Get CodingScheme name: " + TimeUnit.NANOSECONDS.toMillis((System.nanoTime() - getNameStart)));
 				
 				if(! this.luceneIndexNameToDirctoryMap.containsKey(indexName)) {
-					long createDirectoryStart = System.nanoTime();
+//					long createDirectoryStart = System.nanoTime();
 					NamedDirectory dir = this.createIndexDirectory(indexName);
-					System.out.println("Create Directory: " + TimeUnit.NANOSECONDS.toMillis((System.nanoTime() - createDirectoryStart)));
+//					System.out.println("Create Directory: " + TimeUnit.NANOSECONDS.toMillis((System.nanoTime() - createDirectoryStart)));
 					this.luceneIndexNameToDirctoryMap.put(indexName, dir);
 				}
 				
