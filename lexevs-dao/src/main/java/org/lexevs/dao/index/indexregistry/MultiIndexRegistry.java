@@ -88,7 +88,8 @@ public class MultiIndexRegistry implements IndexRegistry, InitializingBean {
 	
 	protected NamedDirectory createIndexDirectory(String indexName) {
 		String baseIndexPath = systemVariables.getAutoLoadIndexLocation();
-		NamedDirectory namedDirectory = luceneDirectoryCreator.getDirectory(indexName, new File(baseIndexPath));
+		//NamedDirectory namedDirectory = luceneDirectoryCreator.getDirectory(indexName, new File(baseIndexPath));
+		NamedDirectory namedDirectory = concurrentMetaData.getIndexMetaDataForFileName(indexName).getDirectory();
 		luceneIndexNameToDirctoryMap.put(indexName, namedDirectory);
 		return namedDirectory;
 	}
@@ -114,23 +115,32 @@ public class MultiIndexRegistry implements IndexRegistry, InitializingBean {
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		File indexDir = new File(systemVariables.getAutoLoadIndexLocation());
+		
 		for (File f : indexDir.listFiles()) {
 			if (f.exists() && f.isDirectory()) {
+				LuceneIndexTemplate template = buildTemplateForIndexName(f.getName());
+				if(template != null){
 				luceneIndexNameToTemplateMap.put(f.getName(),
-						buildTemplateForIndexName(f.getName()));
+						template);
+				}
 			}
 		}
 	}
 	
 	private LuceneIndexTemplate buildTemplateForIndexName(String name) {
 		BaseLuceneIndexTemplate baseTemplate = new BaseLuceneIndexTemplate();
-		for(CodingSchemeMetaData md : ConcurrentMetaData.getInstance().getCodingSchemeList()){
-			if(md.getIndexDirectoryName().equals(name)){
-				new BaseLuceneIndexTemplate(md.getDirectory());
-				break;
+		if (!ConcurrentMetaData.getInstance().getCodingSchemeList().isEmpty()) {
+			for (CodingSchemeMetaData md : ConcurrentMetaData.getInstance()
+					.getCodingSchemeList()) {
+				if (md.getIndexDirectoryName().equals(name)) {
+					new BaseLuceneIndexTemplate(md.getDirectory());
+					break;
+				}
 			}
+			return baseTemplate;
+		} else {
+			return null;
 		}
-		return baseTemplate;
 	}
 
 	protected void autoRegisterIndex(String codingSchemeUri, String version) {
@@ -296,7 +306,17 @@ public class MultiIndexRegistry implements IndexRegistry, InitializingBean {
 		System.out.println("Create Key: " + TimeUnit.NANOSECONDS.toMillis((System.nanoTime() - createKeyStart)));
 
 		if(! this.multiCodingSchemeKeyToTemplateMap.containsKey(key)) {
+			if(codingSchemes.size() == 1){
 
+				AbsoluteCodingSchemeVersionReference reference = codingSchemes.get(0);
+				NamedDirectory nd = concurrentMetaData.
+				getCodingSchemeMetaDataForUriAndVersion(reference.getCodingSchemeURN(), 
+				reference.getCodingSchemeVersion()).getDirectory();
+				if(!luceneIndexNameToTemplateMap.containsKey(nd.getIndexName())){
+					luceneIndexNameToTemplateMap.put(nd.getIndexName(), new BaseLuceneIndexTemplate(nd));
+				}
+				return luceneIndexNameToTemplateMap.get(nd.getIndexName());
+			}
 			List<NamedDirectory> directories = new ArrayList<NamedDirectory>();
 
 			for(AbsoluteCodingSchemeVersionReference ref : codingSchemes) {

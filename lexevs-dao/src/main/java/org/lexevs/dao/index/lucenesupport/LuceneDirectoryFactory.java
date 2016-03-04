@@ -27,7 +27,13 @@ import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.index.Term;
 import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.SearcherFactory;
+import org.apache.lucene.search.SearcherManager;
+import org.apache.lucene.search.TermQuery;
+import org.apache.lucene.search.TopScoreDocCollector;
 import org.apache.lucene.search.join.ToParentBlockJoinIndexSearcher;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
@@ -91,7 +97,8 @@ public class LuceneDirectoryFactory implements FactoryBean {
 	public static class NamedDirectory {
 		private Directory directory;
 		private String indexName;
-		private IndexSearcher indexSearcher;
+		private SearcherManager searchManager;
+//		private IndexSearcher indexSearcher;
 		private ToParentBlockJoinIndexSearcher blockJoinSearcher;
 		private IndexReader indexReader;
 
@@ -102,11 +109,35 @@ public class LuceneDirectoryFactory implements FactoryBean {
 			try {
 				this.initIndexDirectory(directory);
 				this.indexReader = this.createIndexReader(directory);
-				this.indexSearcher = this.createIndexSearcher(this.indexReader);
+				this.searchManager = this.createIndexSearcherManager(this.indexReader);
 				this.blockJoinSearcher = this.createBlockJoinIndexSearcher(this.indexReader);
 			} catch (Exception e) {
 				throw new RuntimeException(e);
 			}
+		}
+
+		private SearcherManager createIndexSearcherManager(
+				IndexReader indexReader) {
+			SearcherManager manager = null;
+			try {
+				manager =  new SearcherManager((DirectoryReader)indexReader, new SearcherFactory());
+				warmSearcher(manager);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return manager;
+		}
+
+		private void warmSearcher(SearcherManager manager) {
+			try {
+				IndexSearcher search = manager.acquire();
+				search.search(new TermQuery(new Term("propetyValue", "blood")), TopScoreDocCollector.create(10));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
 
 		public Directory getDirectory() {
@@ -123,13 +154,35 @@ public class LuceneDirectoryFactory implements FactoryBean {
 		}
 		
 		public IndexSearcher getIndexSearcher() {
-			return indexSearcher;
+			try {
+				return searchManager.acquire();
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
 		}
-		public void setIndexSearcher(IndexSearcher indexSearcher) {
-			this.indexSearcher = indexSearcher;
+		public void releaseIndexSearcher(IndexSearcher indexSearcher) {
+			try {
+				searchManager.release(indexSearcher);
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
 		}
 		
 		
+		/**
+		 * @return the searchManager
+		 */
+		public SearcherManager getSearchManager() {
+			return searchManager;
+		}
+
+		/**
+		 * @param searchManager the searchManager to set
+		 */
+		public void setSearchManager(SearcherManager searchManager) {
+			this.searchManager = searchManager;
+		}
+
 		public ToParentBlockJoinIndexSearcher getBlockJoinSearcher() {
 			return blockJoinSearcher;
 		}
@@ -176,7 +229,8 @@ public class LuceneDirectoryFactory implements FactoryBean {
 					this.indexReader.close();
 					this.indexReader = this.createIndexReader(this.directory);
 				}
-				this.indexSearcher = this.createIndexSearcher(this.indexReader);
+				this.searchManager.close();
+				this.searchManager = this.createIndexSearcherManager(this.indexReader);
 				LoggerFactory.getLogger().warn("Refreshing index: " + this.indexName);
 			} catch (Exception e) {
 				throw new RuntimeException(e);
