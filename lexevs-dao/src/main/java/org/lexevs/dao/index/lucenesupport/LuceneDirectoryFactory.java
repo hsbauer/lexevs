@@ -123,19 +123,18 @@ public class LuceneDirectoryFactory implements FactoryBean {
 				manager =  new SearcherManager((DirectoryReader)indexReader, new SearcherFactory());
 				warmSearcher(manager);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new RuntimeException("Failed to Aquire Searcher manager: ", e);
 			}
 			return manager;
 		}
 
 		private void warmSearcher(SearcherManager manager) {
+			IndexSearcher search = null;
 			try {
-				IndexSearcher search = manager.acquire();
+				search = manager.acquire();
 				search.search(new TermQuery(new Term("propetyValue", "blood")), TopScoreDocCollector.create(10));
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new RuntimeException(e);
 			}
 			
 		}

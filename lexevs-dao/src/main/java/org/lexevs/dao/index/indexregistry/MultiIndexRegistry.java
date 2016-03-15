@@ -87,9 +87,12 @@ public class MultiIndexRegistry implements IndexRegistry, InitializingBean {
 	}
 	
 	protected NamedDirectory createIndexDirectory(String indexName) {
-		String baseIndexPath = systemVariables.getAutoLoadIndexLocation();
+		//String baseIndexPath = systemVariables.getAutoLoadIndexLocation();
 		//NamedDirectory namedDirectory = luceneDirectoryCreator.getDirectory(indexName, new File(baseIndexPath));
 		NamedDirectory namedDirectory = concurrentMetaData.getIndexMetaDataForFileName(indexName).getDirectory();
+		if(namedDirectory.getIndexReader().maxDoc() == 0){
+			namedDirectory.refresh();
+		}
 		luceneIndexNameToDirctoryMap.put(indexName, namedDirectory);
 		return namedDirectory;
 	}
@@ -320,17 +323,22 @@ public class MultiIndexRegistry implements IndexRegistry, InitializingBean {
 			List<NamedDirectory> directories = new ArrayList<NamedDirectory>();
 
 			for(AbsoluteCodingSchemeVersionReference ref : codingSchemes) {
-				String uri = ref.getCodingSchemeURN();
-				String version = ref.getCodingSchemeVersion();
-//				long getNameStart = System.nanoTime();
-				String indexName = this.getCodingSchemeIndexName(uri, version);
-//				System.out.println("Get CodingScheme name: " + TimeUnit.NANOSECONDS.toMillis((System.nanoTime() - getNameStart)));
+				NamedDirectory ndMulti =
+				concurrentMetaData.
+				getCodingSchemeMetaDataForUriAndVersion(ref.getCodingSchemeURN(), 
+				ref.getCodingSchemeVersion()).getDirectory();
+				String indexName = ndMulti.getIndexName();
+				long getNameStart = System.nanoTime();
+				if(ndMulti.getIndexReader().maxDoc() == 0){
+				ndMulti.refresh();
+				}
+				System.out.println("Get maxdocs: " + TimeUnit.NANOSECONDS.toMillis((System.nanoTime() - getNameStart)));
 				
 				if(! this.luceneIndexNameToDirctoryMap.containsKey(indexName)) {
 //					long createDirectoryStart = System.nanoTime();
-					NamedDirectory dir = this.createIndexDirectory(indexName);
+//					NamedDirectory dir = this.createIndexDirectory(indexName);
 //					System.out.println("Create Directory: " + TimeUnit.NANOSECONDS.toMillis((System.nanoTime() - createDirectoryStart)));
-					this.luceneIndexNameToDirctoryMap.put(indexName, dir);
+					this.luceneIndexNameToDirctoryMap.put(indexName, ndMulti);
 				}
 				
 				directories.add(

@@ -27,6 +27,7 @@ import org.LexGrid.LexBIG.DataModel.Core.AbsoluteCodingSchemeVersionReference;
 import org.LexGrid.LexBIG.DataModel.Core.CodingSchemeVersionOrTag;
 import org.LexGrid.LexBIG.DataModel.Core.ConceptReference;
 import org.LexGrid.LexBIG.DataModel.Core.ResolvedConceptReference;
+import org.LexGrid.LexBIG.DataModel.Core.types.CodingSchemeVersionStatus;
 import org.LexGrid.LexBIG.DataModel.InterfaceElements.SortOption;
 import org.LexGrid.LexBIG.DataModel.InterfaceElements.types.SortContext;
 import org.LexGrid.LexBIG.Exceptions.LBInvocationException;
@@ -58,12 +59,15 @@ import org.LexGrid.LexBIG.Utility.logging.LgLoggerIF;
 import org.LexGrid.annotations.LgClientSideSafe;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.BooleanClause.Occur;
+import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
 import org.lexevs.dao.database.ibatis.codednodegraph.model.EntityReferencingAssociatedConcept;
 import org.lexevs.locator.LexEvsServiceLocator;
 import org.lexevs.logging.LoggerFactory;
+import org.lexevs.registry.service.Registry;
+import org.lexevs.system.service.SystemResourceService;
 import org.lexevs.system.utility.CodingSchemeReference;
 
 import java.util.ArrayList;
@@ -141,14 +145,14 @@ public class CodedNodeSetImpl implements CodedNodeSet, Cloneable {
             ref.setCodingSchemeURN(uri);
             ref.setCodingSchemeVersion(version);
 
-            //builder.add(new GetAllConcepts(codingScheme, tagOrVersion).getQuery(), Occur.MUST);
+            builder.add(new GetAllConcepts(codingScheme, tagOrVersion).getQuery(), Occur.MUST);
             
             this.references.add(ref);
             this.primaryReference = ref;
         } catch (LBParameterException e) {
             throw e;
-//        } catch (LBResourceUnavailableException e) {
-//            throw e;
+        } catch (LBResourceUnavailableException e) {
+            throw e;
         }
         catch (Exception e) {
             String logId = getLogger().error("Unexpected Error", e);
@@ -250,6 +254,41 @@ public class CodedNodeSetImpl implements CodedNodeSet, Cloneable {
         }
     }
 
+    private void validateCodeSystem(String codingScheme, CodingSchemeVersionOrTag tagOrVersion) 
+            throws LBParameterException, LBResourceUnavailableException{
+        String version = null;
+        SystemResourceService rm = LexEvsServiceLocator.getInstance().getSystemResourceService();
+        Registry registry = LexEvsServiceLocator.getInstance().getRegistry();
+        
+        
+        if (tagOrVersion == null || tagOrVersion.getVersion() == null || tagOrVersion.getVersion().length() == 0) {
+            version = rm.getInternalVersionStringForTag(codingScheme,
+                    (tagOrVersion == null ? null : tagOrVersion.getTag()));
+        } else {
+            version = tagOrVersion.getVersion();
+        }
+
+        // this throws the necessary exceptions if it can't be mapped / found
+        rm.getInternalCodingSchemeNameForUserCodingSchemeName(codingScheme, version);
+
+
+        
+        // make sure that it is active.
+        String urn = rm.getUriForUserCodingSchemeName(codingScheme, version);
+        if (!registry.getCodingSchemeEntry(
+                Constructors.createAbsoluteCodingSchemeVersionReference(urn, version)).getStatus().
+                    equals(CodingSchemeVersionStatus.ACTIVE.toString())) {
+            throw new LBResourceUnavailableException("The requested coding scheme is not currently active");
+        }
+    }
+    
+    private Query getCodingSchemeQueryForSetFunction(String Uri, String version){
+        BooleanQuery.Builder builder = new BooleanQuery.Builder();
+        builder.add(new TermQuery(new Term("codingSchemeUri", Uri)), BooleanClause.Occur.MUST);
+        builder.add(new TermQuery(new Term("codingSchemeVersion", version)), BooleanClause.Occur.MUST);
+
+        return builder.build();
+    }
     /**
      * @see org.LexGrid.LexBIG.LexBIGService.CodedNodeSet#isCodeInSet(org.LexGrid.LexBIG.DataModel.Core.ConceptReference)
      */
@@ -745,7 +784,9 @@ public class CodedNodeSetImpl implements CodedNodeSet, Cloneable {
         getLogger().logMethod(new Object[] { anonymousOption });
         try {
             BooleanQuery.Builder newBuilder = new BooleanQuery.Builder();
+            if(!this.builder.build().clauses().isEmpty()){
             newBuilder.add(this.builder.build(), Occur.MUST);
+            }
             newBuilder.add(new RestrictToAnonymous(anonymousOption).getQuery(), Occur.MUST);
 
             this.builder = newBuilder;
