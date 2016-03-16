@@ -2,9 +2,11 @@ package org.lexevs.dao.index.indexregistry;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.lucene.index.DirectoryReader;
+import org.lexevs.dao.index.lucenesupport.LuceneDirectoryFactory.NamedDirectory;
 import org.lexevs.dao.index.lucenesupport.MultiBaseLuceneIndexTemplate;
 import org.lexevs.dao.index.lucenesupport.LuceneIndexTemplate;
 
@@ -20,13 +22,18 @@ public class RefreshingMultiIndexMap {
 		return map.put(key, value);
 	}
 	
-	public LuceneIndexTemplate getRefreshedTemplate(String key){
+	private LuceneIndexTemplate getRefreshedTemplate(String key){
+	boolean refreshed = false;
 	LuceneIndexTemplate template = map.get(key);
-	try {
-		DirectoryReader.openIfChanged((DirectoryReader) ((MultiBaseLuceneIndexTemplate)template).getIndexReader());
-	} catch (IOException e) {
-		throw new RuntimeException("The following index failed to be refreshed in the cache: " + template.getIndexName(), e);
-	}
+
+		 List<NamedDirectory> directories = ((MultiBaseLuceneIndexTemplate)template).getNamedDirectories();
+		 for(NamedDirectory dir: directories){
+			 if(dir.isReaderClosed()){
+				 dir.refresh();
+				 refreshed = true;
+			 }
+		 }
+    if(refreshed){return new MultiBaseLuceneIndexTemplate(directories);}
 	return template;
 	}
 	

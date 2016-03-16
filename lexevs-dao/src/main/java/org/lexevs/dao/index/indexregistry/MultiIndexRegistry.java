@@ -43,10 +43,13 @@ public class MultiIndexRegistry implements IndexRegistry, InitializingBean {
 	
 	private ConcurrentMetaData concurrentMetaData;
 	
-	private Map<String,LuceneIndexTemplate> luceneIndexNameToTemplateMap = new HashMap<String,LuceneIndexTemplate>();
+//	private Map<String,LuceneIndexTemplate> luceneIndexNameToTemplateMap = new HashMap<String,LuceneIndexTemplate>();
 	
-	private Map<String,LuceneIndexTemplate> multiCodingSchemeKeyToTemplateMap = new HashMap<String,LuceneIndexTemplate>();
+//	private Map<String,LuceneIndexTemplate> multiCodingSchemeKeyToTemplateMap = new HashMap<String,LuceneIndexTemplate>();
+	private RefreshingLuceneIndexNameToTemplateMap luceneIndexNameToTemplateMap = new RefreshingLuceneIndexNameToTemplateMap();
+	private RefreshingMultiIndexMap multiCodingSchemeKeyToTemplateMap = new RefreshingMultiIndexMap();
 	
+
 	private Map<String,NamedDirectory> luceneIndexNameToDirctoryMap = new HashMap<String,NamedDirectory>();
 	
 	private Map<CodingSchemeUriVersionPair,String> luceneCodingSchemeToIndexNameMap = 
@@ -86,6 +89,8 @@ public class MultiIndexRegistry implements IndexRegistry, InitializingBean {
 		}
 	}
 	
+	//Always assuming that the index name parameter was used to create an entry in 
+	//concurrentMetaData first.  
 	protected NamedDirectory createIndexDirectory(String indexName) {
 		//String baseIndexPath = systemVariables.getAutoLoadIndexLocation();
 		//NamedDirectory namedDirectory = luceneDirectoryCreator.getDirectory(indexName, new File(baseIndexPath));

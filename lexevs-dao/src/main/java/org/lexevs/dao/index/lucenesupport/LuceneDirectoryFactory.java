@@ -25,6 +25,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.index.IndexReader.ReaderClosedListener;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.Term;
@@ -98,9 +99,9 @@ public class LuceneDirectoryFactory implements FactoryBean {
 		private Directory directory;
 		private String indexName;
 		private SearcherManager searchManager;
-//		private IndexSearcher indexSearcher;
 		private ToParentBlockJoinIndexSearcher blockJoinSearcher;
 		private IndexReader indexReader;
+		private boolean isReaderClosed;
 
 		public NamedDirectory(Directory directory, String indexName) {
 			super();
@@ -192,6 +193,9 @@ public class LuceneDirectoryFactory implements FactoryBean {
 		}
 
 		public IndexReader getIndexReader() {
+//			if(isReaderClosed()){
+//			this.refresh();
+//			}
 			return indexReader;
 		}
 		public void setIndexReader(IndexReader indexReader) {
@@ -207,6 +211,14 @@ public class LuceneDirectoryFactory implements FactoryBean {
 		}
 		protected IndexReader createIndexReader(Directory directory) throws Exception {
 			IndexReader reader = DirectoryReader.open(directory);
+			reader.addReaderClosedListener(new ReaderClosedListener(){
+
+				@Override
+				public void onClose(IndexReader arg0) throws IOException {
+				 isReaderClosed = true;					
+				}
+				
+			});
 			return reader;
 		}
 
@@ -254,6 +266,13 @@ public class LuceneDirectoryFactory implements FactoryBean {
 			} catch (IOException e) {
 				throw new RuntimeException(e);
 			}
+		}
+
+		/**
+		 * @return the isReaderClosed
+		 */
+		public boolean isReaderClosed() {
+			return isReaderClosed;
 		}
 	}
 }
