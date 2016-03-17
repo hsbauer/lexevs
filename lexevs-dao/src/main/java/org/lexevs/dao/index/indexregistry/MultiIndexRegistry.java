@@ -240,6 +240,9 @@ public class MultiIndexRegistry implements IndexRegistry, InitializingBean {
  
 		String location = systemVariables.getAutoLoadIndexLocation();
 		try {
+			if(concurrentMetaData.getIndexMetaDataForFileName(indexName) != null){
+			concurrentMetaData.getIndexMetaDataForFileName(indexName).getDirectory().getIndexReader().close();
+			}
 			Path path = Paths.get(location,indexName);
 			FileUtils.deleteDirectory(new File(path.toString()));
 			concurrentMetaData.removeIndexMetaDataValue(indexName);
