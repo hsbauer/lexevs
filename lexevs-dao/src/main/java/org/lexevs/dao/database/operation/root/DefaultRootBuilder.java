@@ -18,6 +18,7 @@
  */
 package org.lexevs.dao.database.operation.root;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +51,7 @@ public class DefaultRootBuilder implements RootBuilder {
 			List<String> associationNames,
 			String relationContainerName, 
 			RootOrTail rootOrTail,
-			TraverseAssociations traverse) {
+			TraverseAssociations traverse) throws SQLException {
 		Assert.notNull(relationContainerName);
 		
 		List<ConceptReference> refs;

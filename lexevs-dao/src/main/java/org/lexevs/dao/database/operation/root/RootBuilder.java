@@ -18,6 +18,7 @@
  */
 package org.lexevs.dao.database.operation.root;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.lexevs.dao.database.operation.LexEvsDatabaseOperations.RootOrTail;
@@ -31,5 +32,5 @@ public interface RootBuilder {
 			List<String> associationNames, 
 			String relationContainerName, 
 			RootOrTail rootOrTail, 
-			TraverseAssociations traverse);
+			TraverseAssociations traverse) throws SQLException;
 }

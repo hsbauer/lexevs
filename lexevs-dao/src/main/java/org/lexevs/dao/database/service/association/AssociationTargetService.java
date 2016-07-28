@@ -18,6 +18,8 @@
  */
 package org.lexevs.dao.database.service.association;
 
+import java.sql.SQLException;
+
 import org.LexGrid.LexBIG.Exceptions.LBException;
 import org.LexGrid.LexBIG.Exceptions.LBRevisionException;
 import org.LexGrid.relations.AssociationSource;
@@ -50,13 +52,14 @@ public interface AssociationTargetService {
 	 * @param associationInstanceId the association instance id
 	 * 
 	 * @return the association target
+	 * @throws SQLException 
 	 */
 	public AssociationTarget getAssociationTarget(
 			String codingSchemeUri, 
 			String version,
 			String relationContainerName, 
 			String associationPredicateName,
-			String associationInstanceId);
+			String associationInstanceId) throws SQLException;
 	
 	/**
 	 * Resolve association target by revision.
@@ -71,6 +74,7 @@ public interface AssociationTargetService {
 	 * @return the association target
 	 * 
 	 * @throws LBRevisionException the LB revision exception
+	 * @throws SQLException 
 	 */
 	public AssociationTarget resolveAssociationTargetByRevision(
 			String codingSchemeUri, 
@@ -78,7 +82,7 @@ public interface AssociationTargetService {
 			String relationContainerName, 
 			String associationPredicateName,
 			String associationInstanceId,
-			String revisionId) throws LBRevisionException;
+			String revisionId) throws LBRevisionException, SQLException;
 
 	/**
 	 * Insert association target.
@@ -90,6 +94,7 @@ public interface AssociationTargetService {
 	 * @param sourceEntityCode the source entity code
 	 * @param sourceEntityCodeNamespace the source entity code namespace
 	 * @param target the target
+	 * @throws SQLException 
 	 */
 	public void insertAssociationTarget(
 			String codingSchemeUri, 
@@ -98,7 +103,7 @@ public interface AssociationTargetService {
 			String associationPredicateName,
 			String sourceEntityCode,
 			String sourceEntityCodeNamespace,
-			AssociationTarget target);
+			AssociationTarget target) throws SQLException;
 
 	/**
 	 * Update association target.
@@ -106,11 +111,12 @@ public interface AssociationTargetService {
 	 * @param codingSchemeUri the coding scheme uri
 	 * @param version the version
 	 * @param source the source
+	 * @throws SQLException 
 	 */
 	public void updateAssociationTarget(
 			String codingSchemeUri,
 			String version, 
-			AssociationTarget source);
+			AssociationTarget source) throws SQLException;
 
 	/**
 	 * Removes the association target.
@@ -118,11 +124,12 @@ public interface AssociationTargetService {
 	 * @param codingSchemeUri the coding scheme uri
 	 * @param version the version
 	 * @param target the target
+	 * @throws SQLException 
 	 */
 	public void removeAssociationTarget(
 			String codingSchemeUri,
 			String version, 
-			AssociationTarget target);
+			AssociationTarget target) throws SQLException;
 
 	/**
 	 * Revise.
@@ -136,6 +143,7 @@ public interface AssociationTargetService {
 	 * @param target the target
 	 * 
 	 * @throws LBException the LB exception
+	 * @throws SQLException 
 	 */
 	public void revise(String codingSchemeUri, 
 			String version, 
@@ -144,7 +152,7 @@ public interface AssociationTargetService {
 			String sourceEntityCode,
 			String sourceEntityCodeNamespace,
 			AssociationTarget target)
-			throws LBException;
+			throws LBException, SQLException;
 
 	/**
 	 * Revise.
@@ -157,6 +165,7 @@ public interface AssociationTargetService {
 	 * @param target the target
 	 * 
 	 * @throws LBException the LB exception
+	 * @throws SQLException 
 	 */
 	public void revise(
 			String codingSchemeUri, 
@@ -165,5 +174,5 @@ public interface AssociationTargetService {
 			String associationPredicateName,
 			AssociationSource source, 
 			AssociationTarget target)
-			throws LBException;
+			throws LBException, SQLException;
 }

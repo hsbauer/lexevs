@@ -18,6 +18,7 @@
  */
 package org.lexevs.dao.database.service.codingscheme;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.LexGrid.LexBIG.DataModel.Core.AbsoluteCodingSchemeVersionReference;
@@ -89,7 +90,7 @@ public class VersionableEventCodingSchemeService extends RevisableAbstractDataba
 	@Override
 	protected CodingScheme addDependentAttributesByRevisionId(
 			CodingSchemeUriVersionBasedEntryId id, String entryUid,
-			CodingScheme entry, String revisionId) {
+			CodingScheme entry, String revisionId) throws SQLException {
 		String uri = id.getCodingSchemeUri();
 		String version = id.getCodingSchemeVersion();
 	
@@ -151,7 +152,7 @@ public class VersionableEventCodingSchemeService extends RevisableAbstractDataba
 	 */
 	@Override
 	public CodingScheme resolveCodingSchemeByRevision(String codingSchemeURI,
-			String version, String revisionId) throws LBRevisionException {
+			String version, String revisionId) throws LBRevisionException, SQLException {
 		String codingSchemeUid = this.getDaoManager().
 			getCodingSchemeDao(codingSchemeURI, version).
 				getCodingSchemeUIdByUriAndVersion(codingSchemeURI, version);
@@ -210,7 +211,7 @@ public class VersionableEventCodingSchemeService extends RevisableAbstractDataba
 	 */
 	@Transactional
 	@DatabaseErrorIdentifier(errorCode=REMOVE_CODINGSCHEME_ERROR)
-	public void removeCodingScheme(String uri, String version) {
+	public void removeCodingScheme(String uri, String version) throws SQLException {
 		
 		CodingSchemeDao csDao = this.getDaoManager().getCodingSchemeDao(uri,
 				version);
@@ -251,7 +252,7 @@ public class VersionableEventCodingSchemeService extends RevisableAbstractDataba
 	@Transactional
 	@DatabaseErrorIdentifier(errorCode=INSERT_CODINGSCHEME_ERROR)
 	public  void insertCodingScheme(CodingScheme scheme, String releaseURI)
-			throws CodingSchemeAlreadyLoadedException {
+			throws CodingSchemeAlreadyLoadedException, SQLException {
 		try {
 			this.firePreCodingSchemeInsertEvent(scheme);
 
@@ -315,7 +316,7 @@ public class VersionableEventCodingSchemeService extends RevisableAbstractDataba
 	@Transactional(rollbackFor=Exception.class)  
 	@DatabaseErrorIdentifier(errorCode=UPDATE_CODINGSCHEME_ERROR)
 	public void updateCodingScheme(
-			final CodingScheme codingScheme) throws LBException {
+			final CodingScheme codingScheme) throws LBException, SQLException {
 		final String uri = codingScheme.getCodingSchemeURI();
 		final String version = codingScheme.getRepresentsVersion();
 		
@@ -360,7 +361,7 @@ public class VersionableEventCodingSchemeService extends RevisableAbstractDataba
 	 */
 	@Override
 	@Transactional(rollbackFor=Exception.class)
-	public void revise(CodingScheme revisedCodingScheme, String releaseURI, Boolean indexNewCodingScheme) throws LBException {
+	public void revise(CodingScheme revisedCodingScheme, String releaseURI, Boolean indexNewCodingScheme) throws LBException, SQLException {
 		String uri = revisedCodingScheme.getCodingSchemeURI();
 		String version = revisedCodingScheme.getRepresentsVersion();
 		
@@ -412,7 +413,7 @@ public class VersionableEventCodingSchemeService extends RevisableAbstractDataba
 	@Override
 	@Transactional
 	@DatabaseErrorIdentifier(errorCode=REMOVE_CODINGSCHEME_ERROR)
-	public void removeCodingScheme(CodingScheme codingScheme) {
+	public void removeCodingScheme(CodingScheme codingScheme) throws SQLException {
 
 		String codingSchemeUri = codingScheme.getCodingSchemeURI();
 		String version = codingScheme.getRepresentsVersion();
@@ -438,7 +439,7 @@ public class VersionableEventCodingSchemeService extends RevisableAbstractDataba
 	 * @see org.lexevs.dao.database.service.RevisableAbstractDatabaseService#doInsertDependentChanges(org.lexevs.dao.database.service.RevisableAbstractDatabaseService.CodingSchemeUriVersionBasedEntryId, org.LexGrid.commonTypes.Versionable)
 	 */
 	@Override
-	protected void doInsertDependentChanges(CodingSchemeUriVersionBasedEntryId id, CodingScheme revisedEntry) throws LBException {
+	protected void doInsertDependentChanges(CodingSchemeUriVersionBasedEntryId id, CodingScheme revisedEntry) throws LBException, SQLException {
 		String codingSchemeUri = id.getCodingSchemeUri();
 		String version = id.getCodingSchemeVersion();
 		
@@ -545,8 +546,9 @@ public class VersionableEventCodingSchemeService extends RevisableAbstractDataba
 	 * Do add cs dependent entry.
 	 * 
 	 * @param codingScheme the coding scheme
+	 * @throws SQLException 
 	 */
-	private void doAddCSDependentEntry(CodingScheme codingScheme) {
+	private void doAddCSDependentEntry(CodingScheme codingScheme) throws SQLException {
 		
 		String codingSchemeUri = codingScheme.getCodingSchemeURI();
 		String version = codingScheme.getRepresentsVersion();

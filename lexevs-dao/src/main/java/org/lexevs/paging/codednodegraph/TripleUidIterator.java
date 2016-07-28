@@ -18,6 +18,7 @@
  */
 package org.lexevs.paging.codednodegraph;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.LexGrid.LexBIG.DataModel.Collections.SortOptionList;
@@ -68,7 +69,7 @@ public class TripleUidIterator extends AbstractPageableIterator<String>{
 		this.sortAlgorithms = sortAlgorithms;
 	}
 	@Override
-	protected List<String> doPage(final int currentPosition, final int pageSize) {
+	protected List<String> doPage(final int currentPosition, final int pageSize) throws SQLException {
 		CodedNodeGraphService codedNodeGraphService =
 			LexEvsServiceLocator.getInstance().getDatabaseServiceManager().getCodedNodeGraphService();
 

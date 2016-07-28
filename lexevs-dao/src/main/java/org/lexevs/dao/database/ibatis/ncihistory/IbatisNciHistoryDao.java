@@ -18,6 +18,7 @@
  */
 package org.lexevs.dao.database.ibatis.ncihistory;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -74,13 +75,13 @@ public class IbatisNciHistoryDao extends AbstractIbatisDao implements NciHistory
 private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.parseStringToVersion("2.0");
 	
 	@Override
-	public void removeNciHistory(String codingSchemeUri) {
+	public void removeNciHistory(String codingSchemeUri) throws SQLException {
 		this.getSqlMapClientTemplate().delete(DELETE_SYSTEMRELEASE_SQL, new SequentialMappedParameterBean(codingSchemeUri));
 	}
 
 	@Override
 	public void insertSystemRelease(String codingSchemeUri,
-			SystemRelease systemRelease) {
+			SystemRelease systemRelease) throws SQLException {
 		
 		String systemReleaseGuid = this.createUniqueId();
 		
@@ -91,7 +92,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<NCIChangeEvent> getAncestors(String codingSchemeUri, String conceptCode) {
+	public List<NCIChangeEvent> getAncestors(String codingSchemeUri, String conceptCode) throws SQLException {
 		return this.getSqlMapClientTemplate().queryForList(GET_ANCESTORS_SQL, 
 				new SequentialMappedParameterBean(
 						codingSchemeUri,
@@ -101,7 +102,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<SystemRelease> getBaseLines(String codingSchemeUri, Date releasedAfter,
-			Date releasedBefore) {
+			Date releasedBefore) throws SQLException {
 		
 		return this.getSqlMapClientTemplate().queryForList(GET_BASELINES_SQL, 
 				new SequentialMappedParameterBean(
@@ -111,7 +112,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 	}
 
 	@Override
-	public CodingSchemeVersion getConceptCreateVersion(String codingSchemeUri, String conceptCode){
+	public CodingSchemeVersion getConceptCreateVersion(String codingSchemeUri, String conceptCode) throws SQLException{
 		NCIChangeEvent event = (NCIChangeEvent) this.getSqlMapClientTemplate().queryForObject(GET_CONCEPT_CREATION_VERSION_SQL, 
 				new SequentialMappedParameterBean(
 						codingSchemeUri,
@@ -123,7 +124,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<CodingSchemeVersion> getConceptChangeVersions(String codingSchemeUri, String conceptCode,
-			Date beginDate, Date endDate) {
+			Date beginDate, Date endDate) throws SQLException {
 		List<NCIChangeEvent> events = (List<NCIChangeEvent>) this.getSqlMapClientTemplate().queryForList(GET_CONCEPT_CHANGE_VERSIONS_SQL, 
 				new SequentialMappedParameterBean(
 						codingSchemeUri,
@@ -143,7 +144,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
         return returnList;
 	}
 	
-	private CodingSchemeVersion buildCodingSchemeVersion(String codingSchemeUri, NCIChangeEvent event) {
+	private CodingSchemeVersion buildCodingSchemeVersion(String codingSchemeUri, NCIChangeEvent event) throws SQLException {
 		CodingSchemeVersion result = new CodingSchemeVersion();
 		
 		String systemReleaseUid = this.getSystemReleaseUidForDate(codingSchemeUri, event.getEditDate());
@@ -161,7 +162,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<NCIChangeEvent> getDescendants(String codingSchemeUri, String conceptCode) {
+	public List<NCIChangeEvent> getDescendants(String codingSchemeUri, String conceptCode) throws SQLException {
 		return this.getSqlMapClientTemplate().queryForList(GET_DECENDANTS_SQL, 
 				new SequentialMappedParameterBean(
 						codingSchemeUri,
@@ -169,7 +170,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 	}
 
 	@Override
-	public SystemRelease getEarliestBaseLine(String codingSchemeUri) {
+	public SystemRelease getEarliestBaseLine(String codingSchemeUri) throws SQLException {
 		return (SystemRelease) this.getSqlMapClientTemplate().queryForObject(GET_EARLIEST_BASELINE_SQL, 
 				new SequentialMappedParameterBean(codingSchemeUri));
 	}
@@ -177,7 +178,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<NCIChangeEvent> getEditActionList(String codingSchemeUri,
-			String conceptCode, Date date) {
+			String conceptCode, Date date) throws SQLException {
 		return (List<NCIChangeEvent>) this.getSqlMapClientTemplate().queryForList(
 				GET_CHANGE_EVENT_FOR_DATE_SQL, 
 				new SequentialMappedParameterBean(
@@ -189,7 +190,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<NCIChangeEvent> getEditActionList(String codingSchemeUri,
-			String conceptCode, Date beginDate, Date endDate) {
+			String conceptCode, Date beginDate, Date endDate) throws SQLException {
 		return (List<NCIChangeEvent>) this.getSqlMapClientTemplate().queryForList(
 				GET_CHANGE_EVENT_SQL, 
 				new SequentialMappedParameterBean(
@@ -202,7 +203,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<NCIChangeEvent> getEditActionList(String codingSchemeUri,
-			String conceptCode, String releaseURN) {
+			String conceptCode, String releaseURN) throws SQLException {
 		
 		return (List<NCIChangeEvent>) this.getSqlMapClientTemplate().queryForList(GET_CHANGE_EVENT_FOR_SYSTEM_RELEASE_SQL, 
 				new SequentialMappedParameterBean(
@@ -212,14 +213,14 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 	}
 
 	@Override
-	public SystemRelease getLatestBaseLine(String codingSchemeUri) {
+	public SystemRelease getLatestBaseLine(String codingSchemeUri) throws SQLException {
 		return (SystemRelease) this.getSqlMapClientTemplate().queryForObject(GET_LATEST_BASELINE_SQL, 
 				new SequentialMappedParameterBean(codingSchemeUri));
 	}
 
 	@Override
 	public SystemRelease getSystemReleaseForReleaseUri(String codingSchemeUri,
-			String releaseURN) {
+			String releaseURN) throws SQLException {
 		return (SystemRelease) this.getSqlMapClientTemplate().queryForObject(GET_SYSTEMRELEASE_FOR_URI_SQL, 
 				new SequentialMappedParameterBean(
 						codingSchemeUri,
@@ -228,14 +229,14 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 	
 	@Override
 	public SystemRelease getSystemReleaseForReleaseUid(String codingSchemeUri,
-			String releaseUid) {
+			String releaseUid) throws SQLException {
 		return (SystemRelease) this.getSqlMapClientTemplate().queryForObject(GET_SYSTEMRELEASE_FOR_UID_SQL, 
 				new SequentialMappedParameterBean(
 						codingSchemeUri,
 						releaseUid));
 	}
 	
-	public void insertNciChangeEvent(String releaseUid, NCIChangeEvent changeEvent) {
+	public void insertNciChangeEvent(String releaseUid, NCIChangeEvent changeEvent) throws SQLException {
 		this.getSqlMapClientTemplate().insert(INSERT_NCI_CHANGEEVENT_SQL, 
 				new SequentialMappedParameterBean(
 						this.createUniqueId(),
@@ -245,7 +246,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 
 	@Override
 	public String getSystemReleaseUidForDate(String codingSchemeUri,
-			Date editDate) {
+			Date editDate) throws SQLException {
 		return (String) this.getSqlMapClientTemplate().queryForObject(GET_SYSTEMRELEASE_UID_FOR_DATE_SQL, 
 				new SequentialMappedParameterBean(
 						codingSchemeUri,

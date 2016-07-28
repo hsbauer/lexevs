@@ -18,6 +18,8 @@
  */
 package org.lexevs.dao.database.service.listener;
 
+import java.sql.SQLException;
+
 import org.LexGrid.codingSchemes.CodingScheme;
 import org.LexGrid.commonTypes.Property;
 import org.LexGrid.concepts.Entity;
@@ -44,7 +46,7 @@ public class DefaultLanguageAddingListener extends DefaultServiceEventListener {
 	 * @see org.lexevs.dao.database.service.listener.DefaultServiceEventListener#onPreBatchEntityInsert(org.lexevs.dao.database.service.event.entity.EntityBatchInsertEvent)
 	 */
 	@Override
-	public boolean onPreBatchEntityInsert(EntityBatchInsertEvent event) {
+	public boolean onPreBatchEntityInsert(EntityBatchInsertEvent event) throws SQLException {
 		if(event == null || event.getEntities() == null) {return true;}
 		
 		CodingScheme cs = getCodingScheme(
@@ -67,8 +69,9 @@ public class DefaultLanguageAddingListener extends DefaultServiceEventListener {
 	 * @param version the version
 	 * 
 	 * @return the coding scheme
+	 * @throws SQLException 
 	 */
-	private CodingScheme getCodingScheme(String uri, String version) {
+	private CodingScheme getCodingScheme(String uri, String version) throws SQLException {
 		CodingScheme cs = 
 			LexEvsServiceLocator.getInstance().
 				getDatabaseServiceManager().
@@ -103,7 +106,7 @@ public class DefaultLanguageAddingListener extends DefaultServiceEventListener {
 	 * @see org.lexevs.dao.database.service.listener.DefaultServiceEventListener#onPreEntityInsert(org.lexevs.dao.database.service.event.entity.EntityInsertOrRemoveEvent)
 	 */
 	@Override
-	public boolean onPreEntityInsert(EntityInsertOrRemoveEvent event) {
+	public boolean onPreEntityInsert(EntityInsertOrRemoveEvent event) throws SQLException {
 		if(event == null || event.getEntity() == null) {return true;}
 	
 		CodingScheme cs = getCodingScheme(

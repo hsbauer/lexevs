@@ -19,6 +19,7 @@
 package org.lexevs.dao.database.service.valuesets;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.List;
 
 import org.LexGrid.LexBIG.Exceptions.LBException;
@@ -49,7 +50,7 @@ public interface PickListDefinitionService {
 	 * 
 	 * @return list of pick list definition id that match value set definition uri
 	 */
-	public List<String> getPickListDefinitionIdForValueSetDefinitionUri(String valueSetDefUri);
+	public List<String> getPickListDefinitionIdForValueSetDefinitionUri(String valueSetDefUri) throws SQLException;
 	
 	/**
 	 * Gets the pick list definition id for entity reference.
@@ -61,7 +62,7 @@ public interface PickListDefinitionService {
 	 * @return the pick list definition id for entity reference
 	 * 
 	 * @throws LBException 	 */
-	public List<String> getPickListDefinitionIdForEntityReference(String entityCode, String entityCodeNameSpace, String propertyId);
+	public List<String> getPickListDefinitionIdForEntityReference(String entityCode, String entityCodeNameSpace, String propertyId) throws SQLException;
 	
 	/**
 	 * Returns list of pick list definition IDs that contains supplied Supported Attribute Tag and Value.
@@ -71,14 +72,14 @@ public interface PickListDefinitionService {
 	 * 
 	 * @return list of picklistIds
 	 */
-	public List<String> getPickListDefinitionIdForSupportedTagAndValue(String supportedTag, String value);
+	public List<String> getPickListDefinitionIdForSupportedTagAndValue(String supportedTag, String value) throws SQLException;
 	
 	/**
 	 * Removes the pick list definition by pick list id.
 	 * 
 	 * @param pickListId the pick list id
 	 */
-	public void removePickListDefinitionByPickListId(String pickListId);
+	public void removePickListDefinitionByPickListId(String pickListId) throws SQLException;
 
 	/**
 	 * Insert pick list definition.
@@ -98,14 +99,14 @@ public interface PickListDefinitionService {
 	 * @param definitions the pick list definitions
 	 * @param systemReleaseUri the system release uri
 	 */
-	public void insertPickListDefinitions(PickListDefinitions definitions, String systemReleaseUri);
+	public void insertPickListDefinitions(PickListDefinitions definitions, String systemReleaseUri) throws SQLException;
 
 	/**
 	 * List pick list ids.
 	 * 
 	 * @return the list< string>
 	 */
-	public List<String> listPickListIds() ;	
+	public List<String> listPickListIds()  throws SQLException;	
 	
 	/**
 	 * Update pick list definition.
@@ -113,15 +114,16 @@ public interface PickListDefinitionService {
 	 * @param definition the definition
 	 * 
 	 * @throws LBException the LB exception
+	 * @throws SQLException 
 	 */
-	public void updatePickListDefinition(PickListDefinition definition) throws LBException;
+	public void updatePickListDefinition(PickListDefinition definition) throws LBException, SQLException;
 	
 	/**
 	 * Removes the pick list definition.
 	 * 
 	 * @param definition the definition
 	 */
-	public void removePickListDefinition(PickListDefinition definition);
+	public void removePickListDefinition(PickListDefinition definition) throws SQLException;
 	
 	/**
 	 * Update versionable attributes.
@@ -129,8 +131,9 @@ public interface PickListDefinitionService {
 	 * @param definition the definition
 	 * 
 	 * @throws LBException the LB exception
+	 * @throws SQLException 
 	 */
-	public void updateVersionableAttributes(PickListDefinition definition) throws LBException;
+	public void updateVersionableAttributes(PickListDefinition definition) throws LBException, SQLException;
 	
 	/**
 	 * Insert dependent changes.
@@ -138,8 +141,9 @@ public interface PickListDefinitionService {
 	 * @param definition the definition
 	 * 
 	 * @throws LBException the LB exception
+	 * @throws SQLException 
 	 */
-	public void insertDependentChanges(PickListDefinition definition) throws LBException;
+	public void insertDependentChanges(PickListDefinition definition) throws LBException, SQLException;
 	
 	/**
 	 * Revise.
@@ -149,8 +153,9 @@ public interface PickListDefinitionService {
 	 * @param releaseURI the release uri
 	 * 
 	 * @throws LBException the LB exception
+	 * @throws SQLException 
 	 */
-	public void revise(PickListDefinition pickListDefinition, Mappings mapping, String releaseURI) throws LBException;
+	public void revise(PickListDefinition pickListDefinition, Mappings mapping, String releaseURI) throws LBException, SQLException;
 
 	/**
 	 * Resolve pick list definition by revision.
@@ -176,7 +181,8 @@ public interface PickListDefinitionService {
 	 * @return the pick list definition
 	 * 
 	 * @throws LBRevisionException the LB revision exception
+	 * @throws SQLException 
 	 */
 	public PickListDefinition resolvePickListDefinitionByDate(String pickListId,
-			Date date, Integer sortType) throws LBRevisionException;
+			Date date, Integer sortType) throws LBRevisionException, SQLException;
 }

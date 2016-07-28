@@ -20,6 +20,7 @@ package org.lexevs.dao.database.service.valuesets;
 
 import java.net.URI;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -152,7 +153,7 @@ public class VersionableEventValueSetDefinitionService extends AbstractDatabaseS
 	 */
 	@Override
 	public void insertDependentChanges(
-			ValueSetDefinition valueSetDefinition) throws LBException {
+			ValueSetDefinition valueSetDefinition) throws LBException, SQLException {
 
 		String valueSetDefinitionURI = valueSetDefinition.getValueSetDefinitionURI();
 		
@@ -190,7 +191,7 @@ public class VersionableEventValueSetDefinitionService extends AbstractDatabaseS
 	 */
 	@Override
 	public void updateVersionableAttributes(
-			ValueSetDefinition valueSetDefinition) throws LBException {
+			ValueSetDefinition valueSetDefinition) throws LBException, SQLException {
 
 		String valueSetDefinitionURI = valueSetDefinition
 				.getValueSetDefinitionURI();
@@ -218,7 +219,7 @@ public class VersionableEventValueSetDefinitionService extends AbstractDatabaseS
 	 * @see org.lexevs.dao.database.service.valuesets.ValueSetDefinitionService#updateValueSetDefinition(org.LexGrid.valueSets.ValueSetDefinition)
 	 */
 	@Override
-	public void updateValueSetDefinition(ValueSetDefinition valueSetDefinition) throws LBException {
+	public void updateValueSetDefinition(ValueSetDefinition valueSetDefinition) throws LBException, SQLException {
 
 		String valueSetDefinitionURI = valueSetDefinition
 				.getValueSetDefinitionURI();
@@ -247,7 +248,7 @@ public class VersionableEventValueSetDefinitionService extends AbstractDatabaseS
 	 */
 	@Override
 	public void revise(ValueSetDefinition valueSetDefinition, Mappings mapping,
-			String releaseURI) throws LBException {
+			String releaseURI) throws LBException, SQLException {
 
 		if (validRevision(valueSetDefinition)) {
 
@@ -397,9 +398,10 @@ public class VersionableEventValueSetDefinitionService extends AbstractDatabaseS
 	 * Do add value set definition dependent entry.
 	 * 
 	 * @param valueSetDefinition the value set definition
+	 * @throws SQLException 
 	 */
 	private void doAddValueSetDefinitionDependentEntry(
-			ValueSetDefinition valueSetDefinition) {
+			ValueSetDefinition valueSetDefinition) throws SQLException {
 	
 		String valueSetDefinitionURI = valueSetDefinition
 				.getValueSetDefinitionURI();
@@ -466,7 +468,7 @@ public class VersionableEventValueSetDefinitionService extends AbstractDatabaseS
 	 */
 	@Override
 	public ValueSetDefinition getValueSetDefinitionByDate(String valueSetDefURI,
-			Date date) throws LBRevisionException {
+			Date date) throws LBRevisionException, SQLException {
 		
 		if( date == null )
 			return null;

@@ -18,6 +18,7 @@
  */
 package org.lexevs.dao.database.service.property;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -296,7 +297,7 @@ public class VersionableEventPropertyService extends RevisableAbstractDatabaseSe
 	@Override
 	@DatabaseErrorIdentifier(errorCode=REMOVE_CODINGSCHEME_PROPERTY_ERROR)
 	public void removeCodingSchemeProperty(String codingSchemeUri,
-			String version, Property property) {
+			String version, Property property) throws SQLException {
 
 		String codingSchemeUId = 
 			this.getCodingSchemeUId(codingSchemeUri, version);
@@ -316,7 +317,7 @@ public class VersionableEventPropertyService extends RevisableAbstractDatabaseSe
 	@Override
 	@DatabaseErrorIdentifier(errorCode=REMOVE_ENTITY_PROPERTY_ERROR)
 	public void removeEntityProperty(String codingSchemeUri, String version,
-			String entityCode, String entityCodeNamespace, Property property) {
+			String entityCode, String entityCodeNamespace, Property property) throws SQLException {
 
 		String codingSchemeUId = this.getCodingSchemeUId(codingSchemeUri,
 				version);
@@ -338,7 +339,7 @@ public class VersionableEventPropertyService extends RevisableAbstractDatabaseSe
 	@Override
 	@DatabaseErrorIdentifier(errorCode=REMOVE_RELATION_PROPERTY_ERROR)
 	public void removeRelationProperty(String codingSchemeUri, String version,
-			String relationContainerName, Property property) {
+			String relationContainerName, Property property) throws SQLException {
 
 		String codingSchemeUId = this.getCodingSchemeUId(codingSchemeUri,
 				version);
@@ -397,13 +398,14 @@ public class VersionableEventPropertyService extends RevisableAbstractDatabaseSe
 	 * @param parentUid the parent uid
 	 * @param property the property
 	 * @param propertyType the property type
+	 * @throws SQLException 
 	 */
 	protected void doRemoveProperty(
 			String codingSchemeUri, 
 			String version,
 			final String parentUid,
 			final Property property, 
-			final PropertyType propertyType) {
+			final PropertyType propertyType) throws SQLException {
 
 		String codingSchemeUId = this.getCodingSchemeUId(codingSchemeUri,
 				version);
@@ -451,13 +453,14 @@ public class VersionableEventPropertyService extends RevisableAbstractDatabaseSe
 	 * @param propertyType the property type
 	 * 
 	 * @throws LBException the LB exception
+	 * @throws SQLException 
 	 */
 	protected void doReviseProperty(
 			String codingSchemeUri, 
 			String version,
 			final String parentUid,
 			final Property property, 
-			final PropertyType propertyType) throws LBException {
+			final PropertyType propertyType) throws LBException, SQLException {
 		
 		if (validRevision(new ParentUidReferencingId(codingSchemeUri, version, parentUid), property)) {
 
@@ -487,7 +490,7 @@ public class VersionableEventPropertyService extends RevisableAbstractDatabaseSe
 	public List<Property> resolvePropertiesOfCodingSchemeByRevision(
 			String codingSchemeURI,
 			String version,
-			String revisionId){
+			String revisionId) throws SQLException{
 		String codingSchemeUid = this.getCodingSchemeUId(codingSchemeURI,
 				version);
 		return this.doResolvePropertiesOfParentByRevision(codingSchemeURI, version, codingSchemeUid, revisionId);	
@@ -501,7 +504,7 @@ public class VersionableEventPropertyService extends RevisableAbstractDatabaseSe
 			String version, 
 			String entityCode, 
 			String entityCodeNamespace,
-			String revisionId){
+			String revisionId) throws SQLException{
 		EntityDao entityDao = this.getDaoManager().getEntityDao(codingSchemeURI, version);
 		
 		String codingSchemeUid = this.getCodingSchemeUId(codingSchemeURI,
@@ -520,7 +523,7 @@ public class VersionableEventPropertyService extends RevisableAbstractDatabaseSe
 	@Override
 	public List<Property> resolvePropertiesOfRelationByRevision(
 			String codingSchemeURI, String version, String relationsName,
-			String revisionId) {
+			String revisionId) throws SQLException {
 		AssociationDao associationDao = 
 			this.getDaoManager().getAssociationDao(codingSchemeURI, version);
 		
@@ -541,12 +544,13 @@ public class VersionableEventPropertyService extends RevisableAbstractDatabaseSe
 	 * @param revisionId the revision id
 	 * 
 	 * @return the list< property>
+	 * @throws SQLException 
 	 */
 	protected List<Property> doResolvePropertiesOfParentByRevision(
 			String codingSchemeUri, 
 			String version,
 			String parentUid,
-			String revisionId) {
+			String revisionId) throws SQLException {
 		
 		String codingSchemeUid = this.getCodingSchemeUId(codingSchemeUri,
 				version);
@@ -584,7 +588,7 @@ public class VersionableEventPropertyService extends RevisableAbstractDatabaseSe
 	 */
 	@Override
 	public void reviseCodingSchemeProperty(String codingSchemeUri,
-			String version, Property property) throws LBException {
+			String version, Property property) throws LBException, SQLException {
 		
 		String parentUid = this.getCodingSchemeUId(codingSchemeUri, version);
 		
@@ -602,7 +606,7 @@ public class VersionableEventPropertyService extends RevisableAbstractDatabaseSe
 	@Override
 	public void reviseEntityProperty(String codingSchemeUri, String version,
 			String entityCode, String entityCodeNamespace, Property property)
-			throws LBException {
+			throws LBException, SQLException {
 		
 		String codingSchemeUid = this.getCodingSchemeUId(codingSchemeUri, version);
 		
@@ -621,7 +625,7 @@ public class VersionableEventPropertyService extends RevisableAbstractDatabaseSe
 	 */
 	@Override
 	public void reviseRelationProperty(String codingSchemeUri, String version,
-			String relationContainerName, Property property) throws LBException {
+			String relationContainerName, Property property) throws LBException, SQLException {
 
 		String codingSchemeUid = this.getCodingSchemeUId(codingSchemeUri, version);
 		
@@ -644,7 +648,7 @@ public class VersionableEventPropertyService extends RevisableAbstractDatabaseSe
 	@Override
 	@DatabaseErrorIdentifier(errorCode=UPDATE_CODINGSCHEME_PROPERTY_ERROR)
 	public void updateCodingSchemeProperty(String codingSchemeUri,
-			String version, Property property) {
+			String version, Property property) throws SQLException {
 		String codingSchemeUId = this.getCodingSchemeUId(codingSchemeUri, version);
 
 		try {
@@ -666,7 +670,7 @@ public class VersionableEventPropertyService extends RevisableAbstractDatabaseSe
 	@Override
 	@DatabaseErrorIdentifier(errorCode=UPDATE_ENTITY_PROPERTY_ERROR)
 	public void updateEntityProperty(String codingSchemeUri, String version,
-			String entityCode, String entityCodeNamespace, Property property) {
+			String entityCode, String entityCodeNamespace, Property property) throws SQLException {
 		String codingSchemeUId = this.getCodingSchemeUId(codingSchemeUri, version);
 
 		try {
@@ -686,7 +690,7 @@ public class VersionableEventPropertyService extends RevisableAbstractDatabaseSe
 	@Override
 	@DatabaseErrorIdentifier(errorCode=UPDATE_ENTITY_PROPERTY_ERROR)
 	public void updateRelationProperty(String codingSchemeUri, String version,
-			String relationContainerName, Property property) {
+			String relationContainerName, Property property) throws SQLException {
 
 		String codingSchemeUId = this.getCodingSchemeUId(codingSchemeUri, version);
 
@@ -707,13 +711,14 @@ public class VersionableEventPropertyService extends RevisableAbstractDatabaseSe
 	 * @param propertyType the property type
 	 * 
 	 * @throws LBException the LB exception
+	 * @throws SQLException 
 	 */
 	protected void doUpdateProperty(
 			String codingSchemeUri, 
 			String version,
 			final String parentUid,
 			final Property property, 
-			final PropertyType propertyType) throws LBException {
+			final PropertyType propertyType) throws LBException, SQLException {
 		Assert.notNull(property);
 		Assert.notNull(property.getPropertyId());
 		Assert.notNull(property.getPropertyName());

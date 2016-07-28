@@ -18,6 +18,8 @@
  */
 package org.lexevs.dao.database.inserter;
 
+import java.sql.SQLException;
+
 /**
  * The Interface BatchInserter.
  * 
@@ -32,7 +34,8 @@ public interface BatchInserter extends Inserter {
 	
 	/**
 	 * Execute batch.
+	 * @throws SQLException 
 	 */
-	public void executeBatch();
+	public void executeBatch() throws SQLException;
 	
 }

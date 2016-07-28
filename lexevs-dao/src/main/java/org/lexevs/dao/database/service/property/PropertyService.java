@@ -18,6 +18,7 @@
  */
 package org.lexevs.dao.database.service.property;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.LexGrid.LexBIG.Exceptions.LBException;
@@ -77,7 +78,7 @@ public interface PropertyService {
 	 * @param property the coding scheme property.
 	 */
 	public void insertCodingSchemeProperty(String codingSchemeUri,
-			String version, Property property);
+			String version, Property property) throws SQLException;
 
 	/**
 	 * update coding schme property.
@@ -87,7 +88,7 @@ public interface PropertyService {
 	 * @param property the coding scheme property.
 	 */
 	public void updateCodingSchemeProperty(String codingSchemeUri,
-			String version, Property property);
+			String version, Property property) throws SQLException;
 
 	/**
 	 * remove coding schme property.
@@ -95,9 +96,10 @@ public interface PropertyService {
 	 * @param codingSchemeUri the coding scheme uri.
 	 * @param version the coding scheme version.
 	 * @param property the coding scheme property.
+	 * @throws SQLException 
 	 */
 	public void removeCodingSchemeProperty(String codingSchemeUri,
-			String version, Property property);
+			String version, Property property) throws SQLException;
 
 	/**
 	 * Insert entity property.
@@ -109,7 +111,7 @@ public interface PropertyService {
 	 * @param property the property
 	 */
 	public void insertEntityProperty(String codingSchemeUri, String version,
-			String entityCode, String entityCodeNamespace, Property property);
+			String entityCode, String entityCodeNamespace, Property property) throws SQLException;
 
 	/**
 	 * Update entity property.
@@ -121,7 +123,7 @@ public interface PropertyService {
 	 * @param property the property
 	 */
 	public void updateEntityProperty(String codingSchemeUri, String version,
-			String entityCode, String entityCodeNamespace, Property property);
+			String entityCode, String entityCodeNamespace, Property property) throws SQLException;
 
 	/**
 	 * Remove entity property.
@@ -131,9 +133,10 @@ public interface PropertyService {
 	 * @param entityCode the entity code
 	 * @param entityCodeNamespace the entity code namespace
 	 * @param property the property
+	 * @throws SQLException 
 	 */
 	public void removeEntityProperty(String codingSchemeUri, String version,
-			String entityCode, String entityCodeNamespace, Property property);
+			String entityCode, String entityCodeNamespace, Property property) throws SQLException;
 
 	/**
 	 * Insert batch entity properties.
@@ -146,7 +149,7 @@ public interface PropertyService {
 	 */
 	public void insertBatchEntityProperties(String codingSchemeUri,
 			String version, String entityCode, String entityCodeNamespace,
-			List<Property> batch);
+			List<Property> batch) throws SQLException;
 
 	/**
 	 * Insert relation property.
@@ -157,7 +160,7 @@ public interface PropertyService {
 	 * @param property the relation property object.
 	 */
 	public void insertRelationProperty(String codingSchemeUri, String version,
-			String relationContainerName, Property property);
+			String relationContainerName, Property property) throws SQLException;
 
 	/**
 	 * Update relation property.
@@ -168,7 +171,7 @@ public interface PropertyService {
 	 * @param property the relation property object.
 	 */
 	public void updateRelationProperty(String codingSchemeUri, String version,
-			String relationContainerName, Property property);
+			String relationContainerName, Property property) throws SQLException;
 
 	/**
 	 * Remove relation property.
@@ -179,7 +182,7 @@ public interface PropertyService {
 	 * @param property the relation property object.
 	 */
 	public void removeRelationProperty(String codingSchemeUri, String version,
-			String relationContainerName, Property property);
+			String relationContainerName, Property property) throws SQLException;
 
 	/**
 	 * Revise a coding scheme property.
@@ -189,9 +192,10 @@ public interface PropertyService {
 	 * @param property the coding scheme property object.
 	 * 
 	 * @throws LBException the LB exception
+	 * @throws SQLException 
 	 */
 	public void reviseCodingSchemeProperty(String codingSchemeUri,
-			String version, Property property) throws LBException;
+			String version, Property property) throws LBException, SQLException;
 
 	/**
 	 * Revise a entity property.
@@ -203,10 +207,11 @@ public interface PropertyService {
 	 * @param property the entity property object.
 	 * 
 	 * @throws LBException the LB exception
+	 * @throws SQLException 
 	 */
 	public void reviseEntityProperty(String codingSchemeUri, String version,
 			String entityCode, String entityCodeNamespace, Property property)
-			throws LBException;
+			throws LBException, SQLException;
 
 	/**
 	 * Revise a relations property.
@@ -217,9 +222,10 @@ public interface PropertyService {
 	 * @param property the relation property object.
 	 * 
 	 * @throws LBException the LB exception
+	 * @throws SQLException 
 	 */
 	public void reviseRelationProperty(String codingSchemeUri, String version,
-			String relationContainerName, Property property) throws LBException;
+			String relationContainerName, Property property) throws LBException, SQLException;
 	
 	/**
 	 * Resolve properties of coding scheme by revision.
@@ -233,7 +239,7 @@ public interface PropertyService {
 	public List<Property> resolvePropertiesOfCodingSchemeByRevision(
 			String codingSchemeURI,
 			String version,
-			String revisionId);
+			String revisionId) throws SQLException;
 	
 	/**
 	 * Resolve properties of entity by revision.
@@ -251,7 +257,7 @@ public interface PropertyService {
 			String version, 
 			String entityCode, 
 			String entityCodeNamespace,
-			String revisionId);
+			String revisionId) throws SQLException;
 	
 	/**
 	 * Resolve properties of relation by revision.
@@ -267,5 +273,5 @@ public interface PropertyService {
 			String codingSchemeURI,
 			String version, 
 			String relationsName,
-			String revisionId);
+			String revisionId) throws SQLException;
 }

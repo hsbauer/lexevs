@@ -18,6 +18,8 @@
  */
 package org.lexevs.dao.database.service.listener;
 
+import java.sql.SQLException;
+
 import org.LexGrid.relations.AssociationSource;
 import org.LexGrid.relations.Relations;
 import org.lexevs.dao.database.service.event.association.AssociationBatchInsertEvent;
@@ -46,15 +48,16 @@ public abstract class AbstractPreAssociationInsertValidatingListener extends
 	 * @param source the source
 	 * 
 	 * @return true, if successful
+	 * @throws SQLException 
 	 */
 	protected abstract boolean doValidateNullNamespace(String uri, String version,
-			Relations relation, AssociationSource source);
+			Relations relation, AssociationSource source) throws SQLException;
 
 	/* (non-Javadoc)
 	 * @see org.lexevs.dao.database.service.listener.DefaultServiceEventListener#onPreBatchAssociationInsert(org.lexevs.dao.database.service.event.association.AssociationBatchInsertEvent)
 	 */
 	@Override
-	public boolean onPreBatchAssociationInsert(AssociationBatchInsertEvent event) {
+	public boolean onPreBatchAssociationInsert(AssociationBatchInsertEvent event) throws SQLException {
 		if (event == null || event.getRelation() == null
 				|| event.getSources() == null) {
 			return true;
@@ -72,7 +75,7 @@ public abstract class AbstractPreAssociationInsertValidatingListener extends
 	 * @see org.lexevs.dao.database.service.listener.DefaultServiceEventListener#onPreAssociationInsert(org.lexevs.dao.database.service.event.association.AssociationBatchInsertEvent)
 	 */
 	@Override
-	public boolean onPreAssociationInsert(AssociationBatchInsertEvent event) {
+	public boolean onPreAssociationInsert(AssociationBatchInsertEvent event) throws SQLException {
 		if (event == null || event.getRelation() == null
 				|| event.getSources() == null) {
 			return true;

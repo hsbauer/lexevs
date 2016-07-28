@@ -18,6 +18,7 @@
  */
 package org.lexevs.dao.database.service.codednodegraph;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -77,7 +78,7 @@ public class VersionableEventCodedNodeGraphService extends AbstractDatabaseServi
 			String targetEntityCode, 
 			String targetEntityCodeNamespace,
 			GraphQuery query, 
-			boolean useTransitive) {
+			boolean useTransitive) throws SQLException {
 		List<String> returnList = new ArrayList<String>();
 		
 		String codingSchemeUid = this.getCodingSchemeUId(codingSchemeUri, codingSchemeVersion);
@@ -124,7 +125,7 @@ public class VersionableEventCodedNodeGraphService extends AbstractDatabaseServi
 			boolean resolve,
 			LocalNameList propertyNames, 
 	        PropertyType[] propertyTypes, 
-			String tripleUid) {
+			String tripleUid) throws SQLException {
 		return this.getAssociatedConceptsFromUidSource(
 				codingSchemeUri, 
 				codingSchemeVersion, 
@@ -146,7 +147,7 @@ public class VersionableEventCodedNodeGraphService extends AbstractDatabaseServi
 			boolean resolve,
 			LocalNameList propertyNames, 
 	        PropertyType[] propertyTypes, 
-			String tripleUid) {
+			String tripleUid) throws SQLException {
 		return this.getAssociatedConceptsFromUidTarget(
 				codingSchemeUri, 
 				codingSchemeVersion, 
@@ -172,7 +173,7 @@ public class VersionableEventCodedNodeGraphService extends AbstractDatabaseServi
 			GraphQuery query, 
 			List<Sort> sorts,
 			int start,
-			int pageSize) {
+			int pageSize) throws SQLException {
 		String codingSchemeUid = this.getCodingSchemeUId(codingSchemeUri, codingSchemeVersion);
 		
 		String associationPredicateUid = this.
@@ -208,7 +209,7 @@ public class VersionableEventCodedNodeGraphService extends AbstractDatabaseServi
 	public List<String> getAssociationPredicateNamesForCodingScheme(
 			String codingSchemeUri, 
 			String codingSchemeVersion,
-			String relationsContainerName) {
+			String relationsContainerName) throws SQLException {
 		String codingSchemeUid = this.getCodingSchemeUId(codingSchemeUri, codingSchemeVersion);
 		
 		return this.getDaoManager().
@@ -227,7 +228,7 @@ public class VersionableEventCodedNodeGraphService extends AbstractDatabaseServi
 			String relationsContainerName,
 			String objectEntityCode,
 			String objectEntityCodeNamespace, 
-			GraphQuery query) {
+			GraphQuery query) throws SQLException {
 		String codingSchemeUid = this.getCodingSchemeUId(codingSchemeUri, codingSchemeVersion);
 		
 		return this.getDaoManager().
@@ -260,7 +261,7 @@ public class VersionableEventCodedNodeGraphService extends AbstractDatabaseServi
 			GraphQuery query, 
 			List<Sort> sorts,
 			int start,
-			int pageSize) {
+			int pageSize) throws SQLException {
 	String codingSchemeUid = this.getCodingSchemeUId(codingSchemeUri, codingSchemeVersion);
 		
 		String associationPredicateUid = this.
@@ -300,7 +301,7 @@ public class VersionableEventCodedNodeGraphService extends AbstractDatabaseServi
 			String relationsContainerName,
 			String subjectEntityCode,
 			String subjectEntityCodeNamespace, 
-			GraphQuery query) {
+			GraphQuery query) throws SQLException {
 		String codingSchemeUid = this.getCodingSchemeUId(codingSchemeUri, codingSchemeVersion);
 
 		return this.getDaoManager().
@@ -407,7 +408,7 @@ public class VersionableEventCodedNodeGraphService extends AbstractDatabaseServi
 			LocalNameList propertyNames, 
 	        PropertyType[] propertyTypes, 
 	        List<Sort> sorts,
-			List<String> tripleUids) {
+			List<String> tripleUids) throws SQLException {
 
 			return doGetAssociatedConcepts(
 					codingSchemeUri, 
@@ -433,6 +434,7 @@ public class VersionableEventCodedNodeGraphService extends AbstractDatabaseServi
 	 * @param tripleNode the triple node
 	 * 
 	 * @return the list<? extends associated concept>
+	 * @throws SQLException 
 	 */
 	protected List<? extends AssociatedConcept> doGetAssociatedConcepts(
 			String codingSchemeUri, 
@@ -442,7 +444,7 @@ public class VersionableEventCodedNodeGraphService extends AbstractDatabaseServi
 	        PropertyType[] propertyTypes, 
 			List<String> tripleUids, 
 			List<Sort> sorts,
-			TripleNode tripleNode){
+			TripleNode tripleNode) throws SQLException{
 		String codingSchemeUid = this.getCodingSchemeUId(codingSchemeUri, codingSchemeVersion);
 		
 		List<EntityReferencingAssociatedConcept> associatedConcepts = this.getDaoManager().getCodedNodeGraphDao(codingSchemeUri, codingSchemeVersion).
@@ -502,7 +504,7 @@ public class VersionableEventCodedNodeGraphService extends AbstractDatabaseServi
 			LocalNameList propertyNames, 
 	        PropertyType[] propertyTypes,
 	        List<Sort> sorts,
-			List<String> tripleUids) {
+			List<String> tripleUids) throws SQLException {
 		
 		return doGetAssociatedConcepts(
 				codingSchemeUri, 
@@ -524,7 +526,7 @@ public class VersionableEventCodedNodeGraphService extends AbstractDatabaseServi
 			String codingSchemeUri, 
 			String codingSchemeVersion,
 			List<Sort> sorts,
-			List<String> tripleUids) {
+			List<String> tripleUids) throws SQLException {
 		String codingSchemeUid = this.getCodingSchemeUId(codingSchemeUri, codingSchemeVersion);
 
 		return this.getDaoManager().getCodedNodeGraphDao(codingSchemeUri, codingSchemeVersion).
@@ -543,7 +545,7 @@ public class VersionableEventCodedNodeGraphService extends AbstractDatabaseServi
 			String codingSchemeUri, 
 			String codingSchemeVersion,
 			List<Sort> sorts,
-			List<String> tripleUids) {
+			List<String> tripleUids) throws SQLException {
 		String codingSchemeUid = this.getCodingSchemeUId(codingSchemeUri, codingSchemeVersion);
 
 		return this.getDaoManager().getCodedNodeGraphDao(codingSchemeUri, codingSchemeVersion).
@@ -570,7 +572,7 @@ public class VersionableEventCodedNodeGraphService extends AbstractDatabaseServi
 			TraverseAssociations traverse,
 			List<Sort> sorts,
 			int start,
-			int pageSize) {
+			int pageSize) throws SQLException {
 
 		String codingSchemeUid = this.getCodingSchemeUId(codingSchemeUri, codingSchemeVersion);
 
@@ -652,7 +654,7 @@ public class VersionableEventCodedNodeGraphService extends AbstractDatabaseServi
 			TraverseAssociations traverse,
 			List<Sort> sorts,
 			int start,
-			int pageSize) {
+			int pageSize) throws SQLException {
 
 		String codingSchemeUid = this.getCodingSchemeUId(codingSchemeUri, codingSchemeVersion);
 
@@ -712,7 +714,7 @@ public class VersionableEventCodedNodeGraphService extends AbstractDatabaseServi
 			String relationsContainerName,
 			List<Sort> sorts,
 			int start, 
-			int pageSize) {
+			int pageSize) throws SQLException {
 		String mappingCodingSchemeUid = this.getCodingSchemeUId(codingSchemeUri, codingSchemeVersion);
 		
 		String sourceCodingSchemeUid = null;
@@ -753,7 +755,7 @@ public class VersionableEventCodedNodeGraphService extends AbstractDatabaseServi
 			AbsoluteCodingSchemeVersionReference sourceCodingScheme,
 			AbsoluteCodingSchemeVersionReference targetCodingScheme,
 			String relationsContainerName,
-			List<String> tripleUids) {
+			List<String> tripleUids) throws SQLException {
 		String mappingCodingSchemeUid = this.getCodingSchemeUId(codingSchemeUri, codingSchemeVersion);
 		
 		String sourceCodingSchemeUid = null;
@@ -791,7 +793,7 @@ public class VersionableEventCodedNodeGraphService extends AbstractDatabaseServi
 			String relationsContainerName,
 			List<ConceptReference> sourceConceptReferences,
 			List<ConceptReference> targetConceptReferences,
-			List<ConceptReference> sourceOrTargetConceptReferences) {
+			List<ConceptReference> sourceOrTargetConceptReferences) throws SQLException {
 		String mappingCodingSchemeUid = this.getCodingSchemeUId(codingSchemeUri, codingSchemeVersion);
 		
 		return this.getDaoManager().
@@ -818,7 +820,7 @@ public class VersionableEventCodedNodeGraphService extends AbstractDatabaseServi
 			List<ConceptReference> sourceOrTargetConceptReferences,
 			List<Sort> sorts,
 			int start, 
-			int pageSize) {
+			int pageSize) throws SQLException {
 		String mappingCodingSchemeUid = this.getCodingSchemeUId(codingSchemeUri, codingSchemeVersion);
 		
 		String sourceCodingSchemeUid = null;
@@ -861,7 +863,7 @@ public class VersionableEventCodedNodeGraphService extends AbstractDatabaseServi
 			String relationsContainerName,
 			List<ConceptReference> sourceConceptReferences,
 			List<ConceptReference> targetConceptReferences,
-			List<ConceptReference> sourceOrTargetConceptReferences) {
+			List<ConceptReference> sourceOrTargetConceptReferences) throws SQLException {
 		String mappingCodingSchemeUid = this.getCodingSchemeUId(codingSchemeUri, codingSchemeVersion);
 		
 		return this.getDaoManager().
@@ -883,7 +885,7 @@ public class VersionableEventCodedNodeGraphService extends AbstractDatabaseServi
 	public int getMappingTriplesCount(
 			String codingSchemeUri,
 			String codingSchemeVersion, 
-			String relationsContainerName) {
+			String relationsContainerName) throws SQLException {
 	String mappingCodingSchemeUid = this.getCodingSchemeUId(codingSchemeUri, codingSchemeVersion);
 		
 		return this.getDaoManager().

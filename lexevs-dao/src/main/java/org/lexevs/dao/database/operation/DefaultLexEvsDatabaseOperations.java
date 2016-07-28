@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -144,7 +145,7 @@ public class DefaultLexEvsDatabaseOperations implements LexEvsDatabaseOperations
 	public void addRootRelationNode(String codingSchemeUri,
 			String codingSchemeVersion, List<String> associationNames,
 			String relationContainerName, RootOrTail rootOrTail,
-			TraverseAssociations traverse) {
+			TraverseAssociations traverse) throws SQLException {
 		rootBuilder.addRootRelationNode(
 				codingSchemeUri, 
 				codingSchemeVersion, 
@@ -442,17 +443,17 @@ public class DefaultLexEvsDatabaseOperations implements LexEvsDatabaseOperations
 	 * @see org.lexevs.dao.database.operation.LexEvsDatabaseOperations#computeTransitiveTable(java.lang.String, java.lang.String, java.lang.String)
 	 */
 	public void computeTransitiveTable(String codingSchemeUri,
-			String codingSchemeVersion) {
+			String codingSchemeVersion) throws SQLException {
 		transitivityBuilder.computeTransitivityTable(codingSchemeUri, codingSchemeVersion);
 	}
 	
 	public void reComputeTransitiveTable(String codingSchemeUri,
-			String codingSchemeVersion) {
+			String codingSchemeVersion) throws SQLException {
 		transitivityBuilder.reComputeTransitivityTable(codingSchemeUri, codingSchemeVersion);
 	}
 	
 	public TransitivityTableState isTransitiveTableComputed(String codingSchemeUri,
-			String codingSchemeVersion) {
+			String codingSchemeVersion) throws SQLException {
 		return transitivityBuilder.isTransitiveTableComputed(codingSchemeUri, codingSchemeVersion);
 	}
 

@@ -18,6 +18,7 @@
  */
 package org.lexevs.dao.database.service.codednodegraph;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -185,6 +186,7 @@ public interface CodedNodeGraphService {
 	 * @param useTransitive the use transitive
 	 * 
 	 * @return the list< string>
+	 * @throws SQLException 
 	 */
 	public List<String> listCodeRelationships(
 			String codingSchemeUri,
@@ -195,7 +197,7 @@ public interface CodedNodeGraphService {
 			String targetEntityCode,
 			String targetEntityCodeNamespace, 
 			GraphQuery query,
-			boolean useTransitive);
+			boolean useTransitive) throws SQLException;
 
 	/**
 	 * Gets the root concept references.
@@ -225,7 +227,7 @@ public interface CodedNodeGraphService {
 			TraverseAssociations traverse,
 			List<Sort> sorts,
 			int start,
-			int pageSize);
+			int pageSize) throws SQLException;
 	
 	/**
 	 * Gets the tail concept references.
@@ -255,7 +257,7 @@ public interface CodedNodeGraphService {
 			TraverseAssociations traverse,
 			List<Sort> sorts,
 			int start,
-			int pageSize);
+			int pageSize) throws SQLException;
 	
 	/**
 	 * Gets the triple uids containing subject.
@@ -283,7 +285,7 @@ public interface CodedNodeGraphService {
 			GraphQuery query,
 			List<Sort> sorts,
 			int start, 
-			int pageSize);
+			int pageSize) throws SQLException;
 	
 	/**
 	 * Gets the triple uids containing subject count.
@@ -296,6 +298,7 @@ public interface CodedNodeGraphService {
 	 * @param query the query
 	 * 
 	 * @return the triple uids containing subject count
+	 * @throws SQLException 
 	 */
 	public Map<String, Integer> getTripleUidsContainingSubjectCount(
 			String codingSchemeUri,
@@ -303,7 +306,7 @@ public interface CodedNodeGraphService {
 			String relationsContainerName,
 			String subjectEntityCode,
 			String subjectEntityCodeNamespace,
-			GraphQuery query);
+			GraphQuery query) throws SQLException;
 	
 	/**
 	 * Gets the triple uids containing object.
@@ -320,6 +323,7 @@ public interface CodedNodeGraphService {
 	 * @param pageSize the page size
 	 * 
 	 * @return the triple uids containing object
+	 * @throws SQLException 
 	 */
 	public List<String> getTripleUidsContainingObject(
 			String codingSchemeUri,
@@ -331,7 +335,7 @@ public interface CodedNodeGraphService {
 			GraphQuery query,
 			List<Sort> sorts,
 			int start, 
-			int pageSize);
+			int pageSize) throws SQLException;
 	
 	/**
 	 * Gets the triple uids containing object count.
@@ -344,6 +348,7 @@ public interface CodedNodeGraphService {
 	 * @param query the query
 	 * 
 	 * @return the triple uids containing object count
+	 * @throws SQLException 
 	 */
 	public Map<String, Integer> getTripleUidsContainingObjectCount(
 			String codingSchemeUri,
@@ -351,7 +356,7 @@ public interface CodedNodeGraphService {
 			String relationsContainerName,
 			String objectEntityCode,
 			String objectEntityCodeNamespace,
-			GraphQuery query);
+			GraphQuery query) throws SQLException;
 	
 	/**
 	 * Gets the associated concept from uid source.
@@ -371,7 +376,7 @@ public interface CodedNodeGraphService {
 			boolean resolve,
 			LocalNameList propertyNames, 
 	        PropertyType[] propertyTypes, 
-			String tripleUid);
+			String tripleUid) throws SQLException;
 	
 	/**
 	 * Gets the associated concepts from uid source.
@@ -393,7 +398,7 @@ public interface CodedNodeGraphService {
 			LocalNameList propertyNames, 
 	        PropertyType[] propertyTypes, 
 			List<Sort> list, 
-			List<String> tripleUid);
+			List<String> tripleUid) throws SQLException;
 	
 	/**
 	 * Gets the concept references from uid source.
@@ -409,7 +414,7 @@ public interface CodedNodeGraphService {
 			String codingSchemeUri,
 			String codingSchemeVersion,
 			List<Sort> sorts,
-			List<String> tripleUid);
+			List<String> tripleUid) throws SQLException;
 	
 	/**
 	 * Gets the associated concept from uid target.
@@ -429,7 +434,7 @@ public interface CodedNodeGraphService {
 			boolean resolve,
 			LocalNameList propertyNames, 
 	        PropertyType[] propertyTypes, 
-			String tripleUid);
+			String tripleUid) throws SQLException;
 	
 	/**
 	 * Gets the associated concepts from uid target.
@@ -451,7 +456,7 @@ public interface CodedNodeGraphService {
 			LocalNameList propertyNames, 
 	        PropertyType[] propertyTypes, 
 	        List<Sort> sorts,
-			List<String> tripleUid);
+			List<String> tripleUid) throws SQLException;
 	
 	/**
 	 * Gets the concept references from uid target.
@@ -467,7 +472,7 @@ public interface CodedNodeGraphService {
 			String codingSchemeUri,
 			String codingSchemeVersion,
 			List<Sort> sorts,
-			List<String> tripleUid);
+			List<String> tripleUid) throws SQLException;
 	
 	/**
 	 * Gets the association predicate names for coding scheme.
@@ -481,7 +486,7 @@ public interface CodedNodeGraphService {
 	public List<String> getAssociationPredicateNamesForCodingScheme(
 			String codingSchemeUri,
 			String codingSchemeVersion,
-			String relationsContainerName);
+			String relationsContainerName) throws SQLException;
 	
 	/**
 	 * Gets the association predicate uids for names.
@@ -497,7 +502,7 @@ public interface CodedNodeGraphService {
 			String codingSchemeUri,
 			String codingSchemeVersion,
 			String relationsContainerName,
-			List<String> associationNames);
+			List<String> associationNames) throws SQLException;
 
 	/**
 	 * Gets the relation names for coding scheme.
@@ -508,7 +513,7 @@ public interface CodedNodeGraphService {
 	 * @return the relation names for coding scheme
 	 */
 	public List<String> getRelationNamesForCodingScheme(String codingSchemeUri,
-			String codingSchemeVersion);
+			String codingSchemeVersion) throws SQLException;
 
 	/**
 	 * Gets the triple uids for mapping relations container.
@@ -532,7 +537,7 @@ public interface CodedNodeGraphService {
 			String relationsContainerName,
 			List<Sort> sorts, 
 			int start, 
-			int pageSize);
+			int pageSize) throws SQLException;
 	
 	public List<String> getTripleUidsForMappingRelationsContainerForCodes(
 			String codingSchemeUri,
@@ -545,7 +550,7 @@ public interface CodedNodeGraphService {
 			List<ConceptReference> sourceOrTargetConceptReferences,
 			List<Sort> sorts,
 			int start, 
-			int pageSize);
+			int pageSize) throws SQLException;
 	
 	public List<String> getTripleUidsForMappingRelationsContainerForCodes(
 			String codingSchemeUri,
@@ -553,7 +558,7 @@ public interface CodedNodeGraphService {
 			String relationsContainerName,
 			List<ConceptReference> sourceConceptReferences,
 			List<ConceptReference> targetConceptReferences,
-			List<ConceptReference> sourceOrTargetConceptReferences);
+			List<ConceptReference> sourceOrTargetConceptReferences) throws SQLException;
 
 	/**
 	 * Gets the mapping triples.
@@ -573,7 +578,7 @@ public interface CodedNodeGraphService {
 			AbsoluteCodingSchemeVersionReference sourceCodingScheme,
 			AbsoluteCodingSchemeVersionReference targetCodingScheme,
 			String relationsContainerName, 
-			List<String> tripleUids);
+			List<String> tripleUids) throws SQLException;
 	
 	/**
 	 * Gets the mapping triples count.
@@ -587,7 +592,7 @@ public interface CodedNodeGraphService {
 	public int getMappingTriplesCount(
 			String codingSchemeUri,
 			String codingSchemeVersion,
-			String relationsContainerName);
+			String relationsContainerName) throws SQLException;
 	
 	public int getMappingTriplesCountForCodes(
 			String codingSchemeUri,
@@ -595,6 +600,6 @@ public interface CodedNodeGraphService {
 			String relationsContainerName,
 			List<ConceptReference> sourceConceptReferences,
 			List<ConceptReference> targetConceptReferences,
-			List<ConceptReference> sourceOrTargetConceptReferences);
+			List<ConceptReference> sourceOrTargetConceptReferences) throws SQLException;
 
 }

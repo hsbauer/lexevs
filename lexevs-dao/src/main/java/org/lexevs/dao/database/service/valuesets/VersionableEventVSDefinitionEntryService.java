@@ -18,6 +18,8 @@
  */
 package org.lexevs.dao.database.service.valuesets;
 
+import java.sql.SQLException;
+
 import org.LexGrid.LexBIG.Exceptions.LBException;
 import org.LexGrid.LexBIG.Exceptions.LBParameterException;
 import org.LexGrid.LexBIG.Exceptions.LBRevisionException;
@@ -38,7 +40,7 @@ public class VersionableEventVSDefinitionEntryService extends AbstractDatabaseSe
 	 */
 	@Override
 	public void insertVSDefinitionEntry(String valueSetDefinitionURI,
-			DefinitionEntry defEntry) {
+			DefinitionEntry defEntry) throws SQLException {
 
 		String valueSetDefUId = this.getDaoManager()
 				.getCurrentValueSetDefinitionDao()
@@ -53,7 +55,7 @@ public class VersionableEventVSDefinitionEntryService extends AbstractDatabaseSe
 	 */
 	@Override
 	public void removeVSDefinitionEntry(String valueSetDefinitionURI,
-			DefinitionEntry defEntry) {
+			DefinitionEntry defEntry) throws SQLException {
 		
 		VSDefinitionEntryDao vsDefinitionEntryDao = this.getDaoManager()
 				.getCurrentVSDefinitionEntryDao();
@@ -74,7 +76,7 @@ public class VersionableEventVSDefinitionEntryService extends AbstractDatabaseSe
 	 */
 	@Override
 	public void updateVSDefinitionEntry(String valueSetDefinitionURI,
-			DefinitionEntry defEntry) {
+			DefinitionEntry defEntry) throws SQLException {
 
 		VSDefinitionEntryDao vsDefinitionEntryDao = this.getDaoManager()
 				.getCurrentVSDefinitionEntryDao();
@@ -97,7 +99,7 @@ public class VersionableEventVSDefinitionEntryService extends AbstractDatabaseSe
 	 */
 	@Override
 	public void updateVSDefinitionEntryVersionableChanges(
-			String valueSetDefinitionURI, DefinitionEntry defEntry) {
+			String valueSetDefinitionURI, DefinitionEntry defEntry) throws SQLException {
 
 		VSDefinitionEntryDao vsDefinitionEntryDao = this.getDaoManager()
 				.getCurrentVSDefinitionEntryDao();
@@ -122,7 +124,7 @@ public class VersionableEventVSDefinitionEntryService extends AbstractDatabaseSe
 	 * @see org.lexevs.dao.database.service.valuesets.VSDefinitionEntryService#revise(java.lang.String, org.LexGrid.valueSets.DefinitionEntry)
 	 */
 	@Override
-	public void revise(String valueSetDefinitionURI, DefinitionEntry defEntry) throws LBException {
+	public void revise(String valueSetDefinitionURI, DefinitionEntry defEntry) throws LBException, SQLException {
 
 		if( validRevision(valueSetDefinitionURI, defEntry)) {
 			
@@ -153,9 +155,10 @@ public class VersionableEventVSDefinitionEntryService extends AbstractDatabaseSe
 	 * @return true, if successful
 	 * 
 	 * @throws LBException the LB exception
+	 * @throws SQLException 
 	 */
 	private boolean validRevision(String valueSetDefinitionURI,
-			DefinitionEntry defEntry) throws LBException {
+			DefinitionEntry defEntry) throws LBException, SQLException {
 		
 		if(  defEntry == null) 
 			throw new LBParameterException("definition entry is null.");
@@ -221,7 +224,7 @@ public class VersionableEventVSDefinitionEntryService extends AbstractDatabaseSe
 	@Override
 	public DefinitionEntry resolveDefinitionEntryByRevision(
 			String valueSetDefURI, String ruleOrder, String revisionId)
-			throws LBRevisionException {
+			throws LBRevisionException, SQLException {
 		VSDefinitionEntryDao vsDefinitionEntryDao = this.getDaoManager()
 				.getCurrentVSDefinitionEntryDao();
 

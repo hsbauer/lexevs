@@ -19,6 +19,7 @@
 package org.lexevs.paging;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -99,7 +100,11 @@ public abstract class AbstractPageableIterator<T> implements Iterator<T>, Iterab
 			return false;
 		}
 		
-		pageIfNecessary();
+		try {
+			pageIfNecessary();
+		} catch (SQLException e) {
+			throw new RuntimeException("SQL Exception on paging in hasNext()", e);
+		}
 		
 		if(cache == null || cache.size() == 0) {
 			isExhausted = true;
@@ -121,7 +126,11 @@ public abstract class AbstractPageableIterator<T> implements Iterator<T>, Iterab
 	 */
 	@Override
 	public T next() {
-		pageIfNecessary();
+		try {
+			pageIfNecessary();
+		} catch (SQLException e) {
+			throw new RuntimeException("SQL Exception on paging in next()", e);
+		}
 		
 		T returnItem = cache.get( inCachePosition );
 		
@@ -137,8 +146,9 @@ public abstract class AbstractPageableIterator<T> implements Iterator<T>, Iterab
 	
 	/**
 	 * Page if necessary.
+	 * @throws SQLException 
 	 */
-	protected void pageIfNecessary() {
+	protected void pageIfNecessary() throws SQLException {
 		if(isPageNeeded()) {
 			page();
 		}
@@ -165,8 +175,9 @@ public abstract class AbstractPageableIterator<T> implements Iterator<T>, Iterab
 	
 	/**
 	 * Page.
+	 * @throws SQLException 
 	 */
-	protected final void page() {
+	protected final void page() throws SQLException {
 		cache = doExecutePage();
 
 		inCachePosition = 0;
@@ -176,8 +187,9 @@ public abstract class AbstractPageableIterator<T> implements Iterator<T>, Iterab
 	 * Do execute page.
 	 * 
 	 * @return the list<? extends t>
+	 * @throws SQLException 
 	 */
-	protected List<? extends T> doExecutePage(){
+	protected List<? extends T> doExecutePage() throws SQLException{
 		List<? extends T> returnList = this.pager.doPage(this, globalPosition, pageSize);
 
 		return returnList;
@@ -198,8 +210,9 @@ public abstract class AbstractPageableIterator<T> implements Iterator<T>, Iterab
 	 * @param pageSize the page size
 	 * 
 	 * @return the list<? extends t>
+	 * @throws SQLException 
 	 */
-	protected abstract List<? extends T> doPage(int currentPosition, int pageSize);
+	protected abstract List<? extends T> doPage(int currentPosition, int pageSize) throws SQLException;
 	
 	/**
 	 * Decorate next.
@@ -255,8 +268,9 @@ public abstract class AbstractPageableIterator<T> implements Iterator<T>, Iterab
 		 * @param pageSize the page size
 		 * 
 		 * @return the list<? extends t>
+		 * @throws SQLException 
 		 */
-		public List<? extends T> doPage(AbstractPageableIterator<T> abstractPageableIterator, int currentPosition, int pageSize){
+		public List<? extends T> doPage(AbstractPageableIterator<T> abstractPageableIterator, int currentPosition, int pageSize) throws SQLException{
 			List<? extends T> returnList = abstractPageableIterator.doPage(currentPosition, pageSize);
 			
 			return returnList;

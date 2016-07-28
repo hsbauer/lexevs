@@ -18,6 +18,7 @@
  */
 package org.lexevs.dao.database.ibatis.batch;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -60,7 +61,7 @@ public class InOrderOrderingBatchInserterDecorator implements BatchInserter {
 	 * @see org.lexevs.dao.database.ibatis.batch.BatchInserter#executeBatch()
 	 */
 	@Override
-	public void executeBatch() {
+	public void executeBatch() throws SQLException {
 		
 		for(Integer group : statementMap.keySet()) {
 			for(String sql : statementMap.get(group).keySet()){

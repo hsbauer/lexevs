@@ -18,6 +18,7 @@
  */
 package org.lexevs.dao.database.access.ncihistory;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
@@ -28,37 +29,37 @@ import org.lexevs.dao.database.access.LexGridSchemaVersionAwareDao;
 
 public interface NciHistoryDao extends LexGridSchemaVersionAwareDao {
 
-	public List<SystemRelease> getBaseLines(String codingSchemeUri, Date releasedAfter, Date releasedBefore);
+	public List<SystemRelease> getBaseLines(String codingSchemeUri, Date releasedAfter, Date releasedBefore) throws SQLException;
 	
-	public String getSystemReleaseUidForDate(String codingSchemeUri, Date editDate);
+	public String getSystemReleaseUidForDate(String codingSchemeUri, Date editDate) throws SQLException;
 
-	public SystemRelease getEarliestBaseLine(String codingSchemeUri);
+	public SystemRelease getEarliestBaseLine(String codingSchemeUri) throws SQLException;
 
-	public SystemRelease getLatestBaseLine(String codingSchemeUri);
+	public SystemRelease getLatestBaseLine(String codingSchemeUri) throws SQLException;
 
-	public SystemRelease getSystemReleaseForReleaseUri(String codingSchemeUri, String releaseURN);
+	public SystemRelease getSystemReleaseForReleaseUri(String codingSchemeUri, String releaseURN) throws SQLException;
 
-	public List<NCIChangeEvent> getEditActionList(String codingSchemeUri, String conceptCode, Date date);
+	public List<NCIChangeEvent> getEditActionList(String codingSchemeUri, String conceptCode, Date date) throws SQLException;
 
-	public List<NCIChangeEvent> getEditActionList(String codingSchemeUri, String conceptCode, Date beginDate, Date endDate);
+	public List<NCIChangeEvent> getEditActionList(String codingSchemeUri, String conceptCode, Date beginDate, Date endDate) throws SQLException;
 
-	public List<NCIChangeEvent> getEditActionList(String codingSchemeUri, String conceptCode, String releaseURN);
+	public List<NCIChangeEvent> getEditActionList(String codingSchemeUri, String conceptCode, String releaseURN) throws SQLException;
 
-	public CodingSchemeVersion getConceptCreateVersion(String codingSchemeUri, String conceptCode);
+	public CodingSchemeVersion getConceptCreateVersion(String codingSchemeUri, String conceptCode) throws SQLException;
 
 	public List<CodingSchemeVersion> getConceptChangeVersions(String codingSchemeUri, String conceptCode,
-			Date beginDate, Date endDate);
+			Date beginDate, Date endDate) throws SQLException;
 
-	public List<NCIChangeEvent> getDescendants(String codingSchemeUri, String conceptCode);
+	public List<NCIChangeEvent> getDescendants(String codingSchemeUri, String conceptCode) throws SQLException;
 
-	public List<NCIChangeEvent> getAncestors(String codingSchemeUri, String conceptCode);
+	public List<NCIChangeEvent> getAncestors(String codingSchemeUri, String conceptCode) throws SQLException;
 
-	public void insertSystemRelease(String codingSchemeUri, SystemRelease systemRelease);
+	public void insertSystemRelease(String codingSchemeUri, SystemRelease systemRelease) throws SQLException;
 	
-	public void insertNciChangeEvent(String releaseUid, NCIChangeEvent changeEvent);
+	public void insertNciChangeEvent(String releaseUid, NCIChangeEvent changeEvent) throws SQLException;
 
 	public SystemRelease getSystemReleaseForReleaseUid(String codingSchemeUri,
-			String releaseUid);
+			String releaseUid) throws SQLException;
 	
-	public void removeNciHistory(String codingSchemeUri);
+	public void removeNciHistory(String codingSchemeUri) throws SQLException;
 }

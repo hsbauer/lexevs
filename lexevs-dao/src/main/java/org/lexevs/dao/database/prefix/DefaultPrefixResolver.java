@@ -18,6 +18,8 @@
  */
 package org.lexevs.dao.database.prefix;
 
+import java.sql.SQLException;
+
 import org.LexGrid.LexBIG.Exceptions.LBInvocationException;
 import org.LexGrid.LexBIG.Exceptions.LBParameterException;
 import org.apache.commons.lang.StringUtils;
@@ -93,7 +95,7 @@ public class DefaultPrefixResolver implements PrefixResolver {
 	 * @see org.lexevs.dao.database.prefix.PrefixResolver#resolvePrefixForCodingScheme(java.lang.String)
 	 */
 	@CacheMethod
-	public String resolvePrefixForCodingScheme(final String codingSchemeId) {
+	public String resolvePrefixForCodingScheme(final String codingSchemeId) throws SQLException {
 		String prefix =
 			databaseServiceManager.getDaoCallbackService().executeInDaoLayer(new DaoCallback<String>() {
 
@@ -125,7 +127,7 @@ public class DefaultPrefixResolver implements PrefixResolver {
 	}
 
 	@CacheMethod
-	public String resolvePrefixForHistoryCodingScheme(final String codingSchemeId) {
+	public String resolvePrefixForHistoryCodingScheme(final String codingSchemeId) throws SQLException {
 
 		String prefix = this.resolvePrefixForCodingScheme(codingSchemeId);
 		

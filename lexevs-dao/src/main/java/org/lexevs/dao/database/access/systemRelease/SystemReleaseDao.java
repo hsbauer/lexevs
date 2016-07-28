@@ -18,6 +18,7 @@
  */
 package org.lexevs.dao.database.access.systemRelease;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.LexGrid.versions.SystemRelease;
@@ -34,22 +35,25 @@ public interface SystemReleaseDao extends LexGridSchemaVersionAwareDao {
 	 * insert system release entry.
 	 * 
 	 * @param systemRelease
+	 * @throws SQLException 
 	 */
-	public String insertSystemReleaseEntry(SystemRelease systemRelease);
+	public String insertSystemReleaseEntry(SystemRelease systemRelease) throws SQLException;
 	
 	/**
 	 * get system release entry for a given uri.
 	 * @param systemReleaseUri
 	 * @return
+	 * @throws SQLException 
 	 */
-	public SystemRelease getSystemReleaseMetadataByUri(String systemReleaseUri);
+	public SystemRelease getSystemReleaseMetadataByUri(String systemReleaseUri) throws SQLException;
 	
 	/**
 	 * get system release entry for a given unique id.
 	 * @param systemReleaseId
 	 * @return
+	 * @throws SQLException 
 	 */
-	public SystemRelease getSystemReleaseMetadataById(String systemReleaseId);
+	public SystemRelease getSystemReleaseMetadataById(String systemReleaseId) throws SQLException;
 	
 	/**
 	 * get all system release entries.
@@ -61,6 +65,7 @@ public interface SystemReleaseDao extends LexGridSchemaVersionAwareDao {
 	 * get system release id by uri.
 	 * @param systemReleaseUri
 	 * @return
+	 * @throws SQLException 
 	 */
-	public String getSystemReleaseUIdByUri(String systemReleaseUri);
+	public String getSystemReleaseUIdByUri(String systemReleaseUri) throws SQLException;
 }

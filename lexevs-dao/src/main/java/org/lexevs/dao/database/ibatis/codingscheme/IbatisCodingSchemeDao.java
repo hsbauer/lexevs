@@ -682,7 +682,7 @@ public class IbatisCodingSchemeDao extends AbstractIbatisDao implements CodingSc
 	@ClearCache
 	public void insertURIMap(final String codingSchemeId,
 			final List<URIMap> supportedProperties) {
-		this.getSqlMapClientTemplate().execute(new SqlMapClientCallback(){
+		this.getSqlMapClientTemplate().execute(new SqlSession(){
 	
 			public Object doInSqlMapClient(SqlMapExecutor executor)
 			throws SQLException {

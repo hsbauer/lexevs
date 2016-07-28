@@ -18,6 +18,7 @@
  */
 package org.lexevs.dao.database.ibatis.association;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.LexGrid.relations.AssociationData;
@@ -116,7 +117,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion
 	}
 
 	public String insertAssociationData(String codingSchemeUId, String associationPredicateUId,
-			AssociationSource source, AssociationData data) {
+			AssociationSource source, AssociationData data) throws SQLException {
 
 		return this.insertAssociationData(
 				codingSchemeUId, 
@@ -132,7 +133,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion
 			String associationPredicateUId, 
 			String sourceEntityCode,
 			String sourceEntityCodeNamespace, 
-			AssociationData data) {
+			AssociationData data) throws SQLException {
 		AssociationSource source = new AssociationSource();
 		source.setSourceEntityCode(sourceEntityCode);
 		source.setSourceEntityCodeNamespace(sourceEntityCodeNamespace);
@@ -146,7 +147,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion
 			String associationPredicateUId, 
 			AssociationSource source,
 			AssociationData data, 
-			Inserter inserter) {
+			Inserter inserter) throws SQLException {
 		
 		String prefix = this.getPrefixResolver().resolvePrefixForCodingScheme(
 				codingSchemeUId);
@@ -174,7 +175,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion
 	}
 	
 	@Override
-	public AssociationSource getTripleByUid(String codingSchemeUId, String tripleUid) {
+	public AssociationSource getTripleByUid(String codingSchemeUId, String tripleUid) throws SQLException {
 		String prefix = this.getPrefixResolver().resolvePrefixForCodingScheme(codingSchemeUId);
 		
 		return 
@@ -184,7 +185,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion
 	}
 
 	protected String doInsertAssociationData(String prefix, String associationPredicateUId,
-			String associationDataUId, AssociationSource source, AssociationData data, Inserter inserter) {
+			String associationDataUId, AssociationSource source, AssociationData data, Inserter inserter) throws SQLException {
 
 		String entryStateUId = this.createUniqueId();
 
@@ -259,7 +260,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion
 	@Override
 	public AssociationData getAssociationDataByUid(
 			String codingSchemeUId,
-			String associationDataUid) {
+			String associationDataUid) throws SQLException {
 		
 		String prefix = this.getPrefixResolver().resolvePrefixForCodingScheme(
 				codingSchemeUId);
@@ -274,7 +275,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion
 	public AssociationData getHistoryAssociationDataByRevision(
 			String codingSchemeUId, 
 			String associationDataUid, 
-			String revisionId) {
+			String revisionId) throws SQLException {
 		
 		String prefix = this.getPrefixResolver().resolvePrefixForHistoryCodingScheme(
 				codingSchemeUId);
@@ -295,7 +296,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion
 
 	@Override
 	public String getAssociationDataUId(String codingSchemeUId,
-			String associationInstanceId) {
+			String associationInstanceId) throws SQLException {
 		
 		String prefix = this.getPrefixResolver().resolvePrefixForCodingScheme(
 				codingSchemeUId);
@@ -309,7 +310,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion
 	@Override
 	public String insertHistoryAssociationData(String codingSchemeUId,
 			String associationDataUId, Boolean assnQualExist,
-			Boolean contextExist) {
+			Boolean contextExist) throws SQLException {
 
 		String historyPrefix = this.getPrefixResolver()
 				.resolvePrefixForHistoryCodingScheme(codingSchemeUId);
@@ -346,7 +347,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion
 	@Override
 	public String updateAssociationData(String codingSchemeUId,
 			String associationDataUId,
-			AssociationData data) {
+			AssociationData data) throws SQLException {
 
 		String prefix = this.getPrefixResolver().resolvePrefixForCodingScheme(
 				codingSchemeUId);
@@ -423,7 +424,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion
 
 	@Override
 	public void deleteAllAssocQualsByAssocDataUId(String codingSchemeUId,
-			String associationDataUId) {
+			String associationDataUId) throws SQLException {
 
 		String prefix = this.getPrefixResolver().resolvePrefixForCodingScheme(
 				codingSchemeUId);
@@ -435,7 +436,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion
 	
 	@Override
 	public void deleteAssociationData(String codingSchemeUId,
-			String associationDataUId) {
+			String associationDataUId) throws SQLException {
 
 		String prefix = this.getPrefixResolver().resolvePrefixForCodingScheme(
 				codingSchemeUId);
@@ -448,7 +449,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion
 	public String updateVersionableChanges(
 			String codingSchemeUId,
 			String associationDataUId, 
-			AssociationData data) {
+			AssociationData data) throws SQLException {
 		String prefix = this.getPrefixResolver().resolvePrefixForCodingScheme(
 				codingSchemeUId);
 
@@ -467,7 +468,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion
 	}
 
 	@Override
-	public String getLatestRevision(String csUId, String assocDataUId) {
+	public String getLatestRevision(String csUId, String assocDataUId) throws SQLException {
 		String prefix = this.getPrefixResolver().resolvePrefixForCodingScheme(csUId);
 		
 		return (String) this.getSqlMapClientTemplate().queryForObject(
@@ -476,7 +477,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion
 	}
 
 	@Override
-	public boolean entryStateExists(String codingSchemeUid, String entryStateUId) {
+	public boolean entryStateExists(String codingSchemeUid, String entryStateUId) throws SQLException {
 		String prefix = this.getPrefixResolver().resolvePrefixForCodingScheme(codingSchemeUid);
 		
 		return super.entryStateExists(prefix, entryStateUId);
@@ -485,7 +486,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion
 	@Override
 	public String getEntryStateUId(
 			String codingSchemeUId, 
-			String associationDataUId) {
+			String associationDataUId) throws SQLException {
 		String prefix = this.getPrefixResolver().resolvePrefixForCodingScheme(
 				codingSchemeUId);
 

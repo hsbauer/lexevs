@@ -18,6 +18,8 @@
  */
 package org.lexevs.dao.database.service.association;
 
+import java.sql.SQLException;
+
 import org.LexGrid.LexBIG.Exceptions.LBException;
 import org.LexGrid.LexBIG.Exceptions.LBRevisionException;
 import org.LexGrid.relations.AssociationData;
@@ -64,7 +66,7 @@ public class VersionableEventAssociationDataService extends
 	@Override
 	protected boolean entryStateExists(
 			CodingSchemeUriVersionBasedEntryId id,
-			String entryStateUid) {
+			String entryStateUid) throws SQLException {
 		String codingSchemeUId = this.getCodingSchemeUid(id);
 
 		return getAssociationDataDao(id).entryStateExists(codingSchemeUId, entryStateUid);
@@ -76,7 +78,7 @@ public class VersionableEventAssociationDataService extends
 	@Override
 	protected AssociationData getCurrentEntry(
 			CodingSchemeUriVersionBasedEntryId id, 
-			String entryUId) {
+			String entryUId) throws SQLException {
 		String codingSchemeUId = this.getCodingSchemeUid(id);
 
 		return getAssociationDataDao(id).getAssociationDataByUid(codingSchemeUId, entryUId);
@@ -87,7 +89,7 @@ public class VersionableEventAssociationDataService extends
 	 */
 	@Override
 	protected String getCurrentEntryStateUid(
-			CodingSchemeUriVersionBasedEntryId id, String entryUid) {
+			CodingSchemeUriVersionBasedEntryId id, String entryUid) throws SQLException {
 		String codingSchemeUId = this.getCodingSchemeUid(id);
 
 		return getAssociationDataDao(id).getEntryStateUId(codingSchemeUId, entryUid);
@@ -98,7 +100,7 @@ public class VersionableEventAssociationDataService extends
 	 */
 	@Override
 	protected String getEntryUid(CodingSchemeUriVersionBasedEntryId id,
-			AssociationData entry) {
+			AssociationData entry) throws SQLException {
 		String codingSchemeUId = this.getCodingSchemeUid(id);
 
 		return getAssociationDataDao(id).getAssociationDataUId(codingSchemeUId, entry.getAssociationInstanceId());
@@ -110,7 +112,7 @@ public class VersionableEventAssociationDataService extends
 	@Override
 	protected AssociationData getHistoryEntryByRevisionId(
 			CodingSchemeUriVersionBasedEntryId id, String entryUid,
-			String revisionId) {
+			String revisionId) throws SQLException {
 		String codingSchemeUId = this.getCodingSchemeUid(id);
 
 		return getAssociationDataDao(id).getHistoryAssociationDataByRevision(codingSchemeUId, entryUid, revisionId);
@@ -121,7 +123,7 @@ public class VersionableEventAssociationDataService extends
 	 */
 	@Override
 	protected String getLatestRevisionId(CodingSchemeUriVersionBasedEntryId id,
-			String entryUId) {
+			String entryUId) throws SQLException {
 		String codingSchemeUId = this.getCodingSchemeUid(id);
 
 		return getAssociationDataDao(id).getLatestRevision(codingSchemeUId, entryUId);
@@ -134,7 +136,7 @@ public class VersionableEventAssociationDataService extends
 	protected void insertIntoHistory(
 			CodingSchemeUriVersionBasedEntryId id,
 			AssociationData currentEntry, 
-			String entryUId) {
+			String entryUId) throws SQLException {
 		String codingSchemeUId = this.getCodingSchemeUid(id);
 
 		getAssociationDataDao(id).insertHistoryAssociationData(
@@ -151,7 +153,7 @@ public class VersionableEventAssociationDataService extends
 	protected String updateEntryVersionableAttributes(
 			CodingSchemeUriVersionBasedEntryId id, 
 			String entryUId,
-			AssociationData revisedEntity) {
+			AssociationData revisedEntity) throws SQLException {
 		String codingSchemeUId = this.getCodingSchemeUid(id);
 
 		return getAssociationDataDao(id).updateVersionableChanges(
@@ -173,7 +175,7 @@ public class VersionableEventAssociationDataService extends
 			String associationPredicateName,
 			String sourceEntityCode,
 			String sourceEntityCodeNamespace,
-			AssociationData data) {
+			AssociationData data) throws SQLException {
 
 		String codingSchemeUId = this.getCodingSchemeUId(codingSchemeUri,
 				version);
@@ -198,7 +200,7 @@ public class VersionableEventAssociationDataService extends
 	public void updateAssociationData(
 			String codingSchemeUri, 
 			String version,
-			final AssociationData data) {
+			final AssociationData data) throws SQLException {
 	
 		final String codingSchemeUId = this.getCodingSchemeUId(codingSchemeUri,
 				version);
@@ -217,7 +219,7 @@ public class VersionableEventAssociationDataService extends
 					new UpdateTemplate() {
 
 						@Override
-						public String update() {
+						public String update() throws SQLException {
 							return associationDataDao
 								.updateAssociationData(codingSchemeUId, associationDataUId, data);
 						}
@@ -237,7 +239,7 @@ public class VersionableEventAssociationDataService extends
 	public void removeAssociationData(
 			String codingSchemeUri, 
 			String version,
-			AssociationData data) {
+			AssociationData data) throws SQLException {
 
 		CodingSchemeDao codingSchemeDao = getDaoManager().getCodingSchemeDao(codingSchemeUri, version);
 		
@@ -297,7 +299,7 @@ public class VersionableEventAssociationDataService extends
 			String relationContainerName,
 			String associationPredicateName,
 			AssociationSource source,
-			AssociationData data) throws LBException {
+			AssociationData data) throws LBException, SQLException {
 		
 		this.revise(
 				codingSchemeUri, 
@@ -321,7 +323,7 @@ public class VersionableEventAssociationDataService extends
 			String associationPredicateName,
 			String sourceEntityCode,
 			String sourceEntityCodeNamespace,
-			AssociationData data) throws LBException {
+			AssociationData data) throws LBException, SQLException {
 		CodingSchemeUriVersionBasedEntryId id = new CodingSchemeUriVersionBasedEntryId(codingSchemeUri, version);
 
 		if (validRevision(new CodingSchemeUriVersionBasedEntryId(codingSchemeUri, version), data)) {
@@ -368,7 +370,7 @@ public class VersionableEventAssociationDataService extends
 			String relationContainerName,
 			String associationPredicateName, 
 			String associationInstanceId, 
-			String revisionId) throws LBRevisionException {
+			String revisionId) throws LBRevisionException, SQLException {
 		CodingSchemeUriVersionBasedEntryId id = new CodingSchemeUriVersionBasedEntryId(codingSchemeUri, version);
 		
 		String codingSchemeUid = this.getCodingSchemeUId(codingSchemeUri, version);

@@ -18,6 +18,8 @@
  */
 package org.lexevs.dao.database.service.valuesets;
 
+import java.sql.SQLException;
+
 import org.LexGrid.LexBIG.Exceptions.LBException;
 import org.LexGrid.LexBIG.Exceptions.LBRevisionException;
 import org.LexGrid.valueSets.DefinitionEntry;
@@ -32,8 +34,9 @@ public interface VSDefinitionEntryService {
 	 * 
 	 * @param valueSetDefinitionURI the value set definition uri
 	 * @param defEntry the def entry
+	 * @throws SQLException 
 	 */
-	public void insertVSDefinitionEntry(String valueSetDefinitionURI, DefinitionEntry defEntry);
+	public void insertVSDefinitionEntry(String valueSetDefinitionURI, DefinitionEntry defEntry) throws SQLException;
 
 	/**
 	 * Removes the vs definition entry.
@@ -41,7 +44,7 @@ public interface VSDefinitionEntryService {
 	 * @param valueSetDefinitionURI the value set definition uri
 	 * @param defEntry the def entry
 	 */
-	public void removeVSDefinitionEntry(String valueSetDefinitionURI, DefinitionEntry defEntry);
+	public void removeVSDefinitionEntry(String valueSetDefinitionURI, DefinitionEntry defEntry) throws SQLException;
 	
 	/**
 	 * Update vs definition entry.
@@ -49,7 +52,7 @@ public interface VSDefinitionEntryService {
 	 * @param valueSetDefinitionURI the value set definition uri
 	 * @param defEntry the def entry
 	 */
-	public void updateVSDefinitionEntry(String valueSetDefinitionURI, DefinitionEntry defEntry);
+	public void updateVSDefinitionEntry(String valueSetDefinitionURI, DefinitionEntry defEntry) throws SQLException;
 	
 	/**
 	 * Update vs definition entry versionable changes.
@@ -57,7 +60,7 @@ public interface VSDefinitionEntryService {
 	 * @param valueSetDefinitionURI the value set definition uri
 	 * @param defEntry the def entry
 	 */
-	public void updateVSDefinitionEntryVersionableChanges(String valueSetDefinitionURI, DefinitionEntry defEntry);
+	public void updateVSDefinitionEntryVersionableChanges(String valueSetDefinitionURI, DefinitionEntry defEntry) throws SQLException;
 	
 	/**
 	 * Revise.
@@ -67,7 +70,7 @@ public interface VSDefinitionEntryService {
 	 * 
 	 * @throws LBException the LB exception
 	 */
-	public void revise(String valueSetDefinitionURI, DefinitionEntry defEntry) throws LBException;
+	public void revise(String valueSetDefinitionURI, DefinitionEntry defEntry) throws LBException , SQLException;
 	
 	/**
 	 * Resolve definition entry by revision.
@@ -82,5 +85,5 @@ public interface VSDefinitionEntryService {
 	 */
 	public DefinitionEntry resolveDefinitionEntryByRevision(
 			String valueSetDefURI, String ruleOrder, String revisionId)
-			throws LBRevisionException;
+			throws LBRevisionException , SQLException;
 }

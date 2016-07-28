@@ -132,7 +132,7 @@ public class HibernateRegistryDao extends HibernateDaoSupport implements Registr
 		
 		Criterion uriRestriction = Restrictions.eq("resourceUri", uri);
 		
-		List<RegistryEntry> entries = this.getHibernateTemplate().findByCriteria(		
+		List<RegistryEntry> entries = (List<RegistryEntry>) this.getHibernateTemplate().findByCriteria(		
 				criteria.add(Restrictions.and(uriRestriction, typeRestriction)));
 		
 		return entries;

@@ -18,6 +18,7 @@
  */
 package org.lexevs.dao.database.ibatis.valuesets;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.LexGrid.versions.EntryState;
@@ -69,7 +70,7 @@ public class IbatisVSEntryStateDao extends AbstractIbatisDao implements VSEntryS
 	private IbatisRevisionDao ibatisRevisionDao = null;
 	
 
-	public EntryState getEntryStateByUId(String entryStateUId) {
+	public EntryState getEntryStateByUId(String entryStateUId) throws SQLException {
 		return (EntryState) this.getSqlMapClientTemplate().queryForObject(GET_ENTRY_STATE_BY_ID_SQL, 
 			new PrefixedParameter(this.getPrefixResolver().resolveDefaultPrefix(), entryStateUId));
 	}
@@ -88,10 +89,11 @@ public class IbatisVSEntryStateDao extends AbstractIbatisDao implements VSEntryS
 	 * @param previousEntryStateId the previous entry state id
 	 * @param entryState the entry state
 	 * @param inserter the ibatis inserter
+	 * @throws SQLException 
 	 */
 	public void insertEntryState(String prefix, String entryStateId,
 			String entryId, String entryType, String previousEntryStateId,
-			EntryState entryState, Inserter inserter){
+			EntryState entryState, Inserter inserter) throws SQLException{
 		
 		if(entryState == null){
 			return;
@@ -114,7 +116,7 @@ public class IbatisVSEntryStateDao extends AbstractIbatisDao implements VSEntryS
 	
 	public String insertEntryState(
 			String entryUId, String entryType, String previousEntryStateUId,
-			EntryState entryState) {
+			EntryState entryState) throws SQLException {
 		
 		String entryStateUId = this.createUniqueId();
 		
@@ -132,7 +134,7 @@ public class IbatisVSEntryStateDao extends AbstractIbatisDao implements VSEntryS
 	
 	public void insertEntryState( String entryStateUId,
 			String entryUId, String entryType, String previousEntryStateUId,
-			EntryState entryState) {
+			EntryState entryState) throws SQLException {
 		this.insertEntryState(
 				this.getPrefixResolver().resolveDefaultPrefix(), 
 				entryStateUId, 
@@ -145,7 +147,7 @@ public class IbatisVSEntryStateDao extends AbstractIbatisDao implements VSEntryS
 	
 	@Override
 	public void deleteAllEntryStatesOfVsPropertiesByParentUId(
-			String parentUId, String parentType) {
+			String parentUId, String parentType) throws SQLException {
 
 		String prefix = this.getPrefixResolver().resolveDefaultPrefix();
 		
@@ -165,6 +167,7 @@ public class IbatisVSEntryStateDao extends AbstractIbatisDao implements VSEntryS
 	 * @param entryState the entry state
 	 * 
 	 * @return the insert entry state bean
+	 * @throws SQLException 
 	 */
 	protected InsertEntryStateBean buildInsertEntryStateBean(
 			String prefix, 
@@ -172,7 +175,7 @@ public class IbatisVSEntryStateDao extends AbstractIbatisDao implements VSEntryS
 			String entryUId, 
 			String entryType,
 			String previousEntryStateUId,
-			EntryState entryState){
+			EntryState entryState) throws SQLException{
 		
 		String revisionUId = null;		
 		String prevRevisionUId = null;
@@ -221,7 +224,7 @@ public class IbatisVSEntryStateDao extends AbstractIbatisDao implements VSEntryS
 
 	@Override
 	public void deleteAllEntryStatesOfValueSetDefinitionByUId(
-			String valueSetDefGuid) {
+			String valueSetDefGuid) throws SQLException {
 		
 		String prefix = this.getPrefixResolver().resolveDefaultPrefix();
 		
@@ -240,7 +243,7 @@ public class IbatisVSEntryStateDao extends AbstractIbatisDao implements VSEntryS
 	
 	@Override
 	public void deleteAllEntryStateByEntryUIdAndType(
-			String valueSetDefGuid, String entryType) {
+			String valueSetDefGuid, String entryType) throws SQLException {
 		
 		String prefix = this.getPrefixResolver().resolveDefaultPrefix();
 		
@@ -249,7 +252,7 @@ public class IbatisVSEntryStateDao extends AbstractIbatisDao implements VSEntryS
 				new PrefixedParameterTuple(prefix, valueSetDefGuid, entryType));
 	}
 	
-	public void deleteAllEntryStateEntriesByEntryUId(String entryUId) {
+	public void deleteAllEntryStateEntriesByEntryUId(String entryUId) throws SQLException {
 
 		String prefix = this.getPrefixResolver().resolveDefaultPrefix();
 		
@@ -260,7 +263,7 @@ public class IbatisVSEntryStateDao extends AbstractIbatisDao implements VSEntryS
 
 	@Override
 	public void deleteAllEntryStatesOfPickListDefinitionByUId(
-			String pickListUId) {
+			String pickListUId) throws SQLException {
 
 		String prefix = this.getPrefixResolver().resolveDefaultPrefix();
 		
@@ -284,7 +287,7 @@ public class IbatisVSEntryStateDao extends AbstractIbatisDao implements VSEntryS
 
 	@Override
 	public void deleteAllEntryStatesOfPLEntryNodeByUId(
-			String pickListEntryNodeUId) {
+			String pickListEntryNodeUId) throws SQLException {
 
 		/* 1. Delete all PL entry properties entry states. */
 		this.deleteAllEntryStatesOfVsPropertiesByParentUId(

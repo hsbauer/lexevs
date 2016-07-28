@@ -18,6 +18,7 @@
  */
 package org.lexevs.system.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.LexGrid.LexBIG.DataModel.Core.AbsoluteCodingSchemeVersionReference;
@@ -150,7 +151,7 @@ public class DelegatingSystemResourceService extends SystemEventSupport implemen
 
 	@Override
 	@ClearCache(clearAll=true)
-	public void removeNciHistoryResourceToSystemFromSystem(String uri) {
+	public void removeNciHistoryResourceToSystemFromSystem(String uri) throws SQLException {
 		try {
 			if(primarySystemResourceService.containsNonCodingSchemeResource(uri)){
 				primarySystemResourceService.removeNciHistoryResourceToSystemFromSystem(uri);
@@ -167,7 +168,7 @@ public class DelegatingSystemResourceService extends SystemEventSupport implemen
 	 */
 	@ClearCache(clearAll=true)
 	public void removeCodingSchemeResourceFromSystem(String uri, String version)
-			throws LBParameterException {
+			throws LBParameterException, SQLException {
 		if(primarySystemResourceService.containsCodingSchemeResource(uri, version)){
 			primarySystemResourceService.removeCodingSchemeResourceFromSystem(uri, version);
 		} else if (delegateSystemResourceService.containsCodingSchemeResource(uri, version)){
@@ -180,7 +181,7 @@ public class DelegatingSystemResourceService extends SystemEventSupport implemen
 	
 	@ClearCache(clearAll=true)
 	public void removeValueSetDefinitionResourceFromSystem(String uri, String version)
-		throws LBParameterException {
+		throws LBParameterException, SQLException {
 		if(primarySystemResourceService.containsValueSetDefinitionResource(uri, version)){
 			primarySystemResourceService.removeValueSetDefinitionResourceFromSystem(uri, version);
 		} else {
@@ -191,7 +192,7 @@ public class DelegatingSystemResourceService extends SystemEventSupport implemen
 	
 	@ClearCache(clearAll=true)
 	public void removePickListDefinitionResourceFromSystem(String pickListId, String version)
-	throws LBParameterException {
+	throws LBParameterException, SQLException {
 		if(primarySystemResourceService.containsPickListDefinitionResource(pickListId, version)){
 			primarySystemResourceService.removePickListDefinitionResourceFromSystem(pickListId, version);
 		} else {

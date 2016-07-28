@@ -2681,7 +2681,7 @@ public class IbatisCodedNodeGraphDaoTest extends LexEvsDbUnitTestBase {
 	}
 	
 	@Test
-	public void testGetTripleUidsForMappingRelationsContainerAndCodesWithOne() {
+	public void testGetTripleUidsForMappingRelationsContainerAndCodesWithOne() throws SQLException {
 		JdbcTemplate template = new JdbcTemplate(this.getDataSource());
 
 		template.execute("insert into " +
@@ -2729,7 +2729,7 @@ public class IbatisCodedNodeGraphDaoTest extends LexEvsDbUnitTestBase {
 	}
 	
 	@Test
-	public void testGetTripleUidsForMappingRelationsContainerAndCodesWithOneSourceAndTarget() {
+	public void testGetTripleUidsForMappingRelationsContainerAndCodesWithOneSourceAndTarget() throws SQLException {
 		JdbcTemplate template = new JdbcTemplate(this.getDataSource());
 
 		
@@ -2781,7 +2781,7 @@ public class IbatisCodedNodeGraphDaoTest extends LexEvsDbUnitTestBase {
 	}
 	
 	@Test
-	public void testGetTripleUidsForMappingRelationsContainerAndCodesWithOneSourceAndTargetAndOrSource(){
+	public void testGetTripleUidsForMappingRelationsContainerAndCodesWithOneSourceAndTargetAndOrSource() throws SQLException{
 		JdbcTemplate template = new JdbcTemplate(this.getDataSource());
 	
 		template.execute("insert into " +
@@ -2837,7 +2837,7 @@ public class IbatisCodedNodeGraphDaoTest extends LexEvsDbUnitTestBase {
 	}
 	
 	@Test
-	public void testGetTripleUidsForMappingRelationsContainerAndCodesWithOneSourceAndTargetAndOrTarget(){
+	public void testGetTripleUidsForMappingRelationsContainerAndCodesWithOneSourceAndTargetAndOrTarget() throws SQLException{
 		JdbcTemplate template = new JdbcTemplate(this.getDataSource());
 
 		
@@ -2894,7 +2894,7 @@ public class IbatisCodedNodeGraphDaoTest extends LexEvsDbUnitTestBase {
 	}
 	
 	@Test
-	public void testGetTripleUidsForMappingRelationsContainerAndCodesWithOneSourceAndTargetAndOrInvalid(){
+	public void testGetTripleUidsForMappingRelationsContainerAndCodesWithOneSourceAndTargetAndOrInvalid() throws SQLException{
 		JdbcTemplate template = new JdbcTemplate(this.getDataSource());
 	
 		template.execute("insert into " +
@@ -2950,7 +2950,7 @@ public class IbatisCodedNodeGraphDaoTest extends LexEvsDbUnitTestBase {
 	}
 	
 	@Test
-	public void testGetTripleUidsForMappingRelationsContainerAndCodesWithTwo() {
+	public void testGetTripleUidsForMappingRelationsContainerAndCodesWithTwo() throws SQLException {
 		JdbcTemplate template = new JdbcTemplate(this.getDataSource());
 
 		template.execute("insert into " +

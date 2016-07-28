@@ -781,7 +781,7 @@ public class IbatisEntityDao extends AbstractIbatisDao implements EntityDao {
 		
 		this.getSqlMapClientTemplate().update(
 				UPDATE_ENTITY_ENTRYSTATE_UID, 
-				new PrefixedParameterTuple(prefix, entityUId, entryStateUId),1);
+				new PrefixedParameterTuple(prefix, entityUId, entryStateUId));
 		
 	}
 	

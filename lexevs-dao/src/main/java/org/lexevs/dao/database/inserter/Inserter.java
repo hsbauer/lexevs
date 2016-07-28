@@ -18,6 +18,8 @@
  */
 package org.lexevs.dao.database.inserter;
 
+import java.sql.SQLException;
+
 /**
  * The Interface Inserter.
  * 
@@ -30,6 +32,7 @@ public interface Inserter {
 	 * 
 	 * @param sql the sql
 	 * @param parameter the parameter
+	 * @throws SQLException 
 	 */
-	public void insert(String sql, Object parameter);
+	public void insert(String sql, Object parameter) throws SQLException;
 }

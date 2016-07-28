@@ -9,7 +9,7 @@
  * advertising, promotion or otherwise in connection with this software without
  * prior written authorization of the copyright holder.
  * 
- * Licensed under the Eclipse Public License, Version 1.0 (the "License");
+ * Licensed under the Eclipse Public License, Version 1.0 (the "License") throws SQLException;
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at 
  * 
@@ -17,6 +17,8 @@
  * 
  */
 package org.lexevs.dao.database.access.valuesets;
+
+import java.sql.SQLException;
 
 import org.LexGrid.versions.EntryState;
 import org.lexevs.dao.database.access.LexGridSchemaVersionAwareDao;
@@ -35,7 +37,7 @@ public interface VSEntryStateDao extends LexGridSchemaVersionAwareDao {
 	 * 
 	 * @return the entry state
 	 */
-	public EntryState getEntryStateByUId(String entryStateUId);
+	public EntryState getEntryStateByUId(String entryStateUId) throws SQLException;
 
 	/**
 	 * Update entry state.
@@ -43,7 +45,7 @@ public interface VSEntryStateDao extends LexGridSchemaVersionAwareDao {
 	 * @param entryStateId the entry state UID
 	 * @param entryState the entry state
 	 */
-	public void updateEntryState(String entryStateUId, EntryState entryState);
+	public void updateEntryState(String entryStateUId, EntryState entryState) throws SQLException;
 
 	/**
 	 * Insert entry state.
@@ -56,7 +58,7 @@ public interface VSEntryStateDao extends LexGridSchemaVersionAwareDao {
 	 */
 	public void insertEntryState( String entryStateUId,
 			String entryUId, String entryType, String previousEntryStateUId,
-			EntryState entryState);	
+			EntryState entryState) throws SQLException;	
 	
 	/**
 	 * Insert entry state.
@@ -70,22 +72,22 @@ public interface VSEntryStateDao extends LexGridSchemaVersionAwareDao {
 			String entryUId,
 			String entryType,
 			String previousEntryStateUId,
-			EntryState entryState);
+			EntryState entryState) throws SQLException;
 			
 	public void deleteAllEntryStatesOfVsPropertiesByParentUId(
-			String parentUId, String parentType);
+			String parentUId, String parentType) throws SQLException;
 
 	public void deleteAllEntryStatesOfValueSetDefinitionByUId(
-			String valueSetDefGuid);	
+			String valueSetDefGuid) throws SQLException;	
 	
-	public void deleteAllEntryStateEntriesByEntryUId(String entryUId);
+	public void deleteAllEntryStateEntriesByEntryUId(String entryUId) throws SQLException;
 
 	public void deleteAllEntryStatesOfPickListDefinitionByUId(
-			String pickListUId);
+			String pickListUId) throws SQLException;
 
 	public void deleteAllEntryStatesOfPLEntryNodeByUId(
-			String pickListEntryNodeUId);
+			String pickListEntryNodeUId) throws SQLException;
 	
 	public void deleteAllEntryStateByEntryUIdAndType(
-			String entryGuid, String entryType);
+			String entryGuid, String entryType) throws SQLException;
 }

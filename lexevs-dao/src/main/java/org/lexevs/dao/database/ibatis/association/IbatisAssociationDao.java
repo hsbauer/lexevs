@@ -523,7 +523,7 @@ public class IbatisAssociationDao extends AbstractIbatisDao implements Associati
 		
 		this.getSqlMapClientTemplate().update(
 				UPDATE_ASSOCIATIONENTITY_FOR_ENTITY_ID_SQL, 
-				bean, 1);
+				bean);
 	}
 
 	/* (non-Javadoc)

@@ -24,7 +24,7 @@ import java.sql.Types;
 import org.lexevs.dao.database.key.incrementer.PrimaryKeyIncrementer;
 import org.lexevs.dao.database.key.incrementer.PrimaryKeyIncrementerFactory;
 import org.lexevs.dao.database.key.incrementer.PrimaryKeyIncrementer.KeyType;
-import org.springframework.batch.classify.Classifier;
+import org.springframework.classify.Classifier;
 
 import com.ibatis.sqlmap.client.extensions.ParameterSetter;
 import com.ibatis.sqlmap.client.extensions.ResultGetter;

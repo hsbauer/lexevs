@@ -18,6 +18,7 @@
  */
 package org.lexevs.system.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.LexGrid.LexBIG.DataModel.Core.AbsoluteCodingSchemeVersionReference;
@@ -116,8 +117,9 @@ public interface SystemResourceService {
 	 * @param version the version
 	 * 
 	 * @throws LBParameterException the LB parameter exception
+	 * @throws SQLException 
 	 */
-	public void removeCodingSchemeResourceFromSystem(String uri, String version) throws LBParameterException;
+	public void removeCodingSchemeResourceFromSystem(String uri, String version) throws LBParameterException, SQLException;
 	
 	/**
 	 * Removes the value set definition resource from system.
@@ -126,8 +128,9 @@ public interface SystemResourceService {
 	 * @param version the version
 	 * 
 	 * @throws LBParameterException the LB parameter exception
+	 * @throws SQLException 
 	 */
-	public void removeValueSetDefinitionResourceFromSystem(String valueSetDefinitionURI, String version) throws LBParameterException;
+	public void removeValueSetDefinitionResourceFromSystem(String valueSetDefinitionURI, String version) throws LBParameterException, SQLException;
 	
 	/**
 	 * Removes the pick list definition resource from system.
@@ -136,10 +139,11 @@ public interface SystemResourceService {
 	 * @param version the version
 	 * 
 	 * @throws LBParameterException the LB parameter exception
+	 * @throws SQLException 
 	 */
-	public void removePickListDefinitionResourceFromSystem(String pickListId, String version) throws LBParameterException;
+	public void removePickListDefinitionResourceFromSystem(String pickListId, String version) throws LBParameterException, SQLException;
 	
-	public void removeNciHistoryResourceToSystemFromSystem(String uri);
+	public void removeNciHistoryResourceToSystemFromSystem(String uri) throws SQLException;
 	/**
 	 * Gets the internal version string for tag.
 	 * 

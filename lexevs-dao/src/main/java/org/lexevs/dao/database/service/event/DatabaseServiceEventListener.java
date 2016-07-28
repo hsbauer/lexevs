@@ -18,6 +18,8 @@
  */
 package org.lexevs.dao.database.service.event;
 
+import java.sql.SQLException;
+
 import org.lexevs.dao.database.service.event.association.AssociationBatchInsertEvent;
 import org.lexevs.dao.database.service.event.codingscheme.CodingSchemeInsertErrorEvent;
 import org.lexevs.dao.database.service.event.codingscheme.CodingSchemeUpdateEvent;
@@ -130,8 +132,9 @@ public interface DatabaseServiceEventListener {
 	 * @param event the event
 	 * 
 	 * @return true, if successful
+	 * @throws SQLException 
 	 */
-	public boolean onPreEntityInsert(EntityInsertOrRemoveEvent event);
+	public boolean onPreEntityInsert(EntityInsertOrRemoveEvent event) throws SQLException;
 	
 	/**
 	 * On post entity insert.
@@ -148,8 +151,9 @@ public interface DatabaseServiceEventListener {
 	 * @param event the event
 	 * 
 	 * @return true, if successful
+	 * @throws SQLException 
 	 */
-	public boolean onPreBatchEntityInsert(EntityBatchInsertEvent event);
+	public boolean onPreBatchEntityInsert(EntityBatchInsertEvent event) throws SQLException;
 	
 	/**
 	 * On post batch entity insert.
@@ -193,8 +197,9 @@ public interface DatabaseServiceEventListener {
 	 * @param event the event
 	 * 
 	 * @return true, if successful
+	 * @throws SQLException 
 	 */
-	public boolean onPreBatchAssociationInsert(AssociationBatchInsertEvent event);
+	public boolean onPreBatchAssociationInsert(AssociationBatchInsertEvent event) throws SQLException;
 
 	/**
 	 * On pre association insert.
@@ -202,14 +207,16 @@ public interface DatabaseServiceEventListener {
 	 * @param event the event
 	 * 
 	 * @return true, if successful
+	 * @throws SQLException 
 	 */
-	public boolean onPreAssociationInsert(AssociationBatchInsertEvent event);
+	public boolean onPreAssociationInsert(AssociationBatchInsertEvent event) throws SQLException;
 
 	/**
 	 * On coding scheme insert error.
 	 * 
 	 * @param codingSchemeInsertErrorEvent the coding scheme insert error event
+	 * @throws SQLException 
 	 */
 	public  <T extends Exception> void onCodingSchemeInsertError(
-			CodingSchemeInsertErrorEvent<T> codingSchemeInsertErrorEvent);
+			CodingSchemeInsertErrorEvent<T> codingSchemeInsertErrorEvent) throws SQLException;
 }

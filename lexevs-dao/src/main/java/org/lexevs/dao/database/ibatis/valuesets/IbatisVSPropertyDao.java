@@ -324,8 +324,7 @@ public class IbatisVSPropertyDao extends AbstractIbatisDao implements VSProperty
 						propertyGuid, 
 						entryStateUId, 
 						type, 
-						property),
-						1);	
+						property));	
 		
 		if (property.getSourceCount() != 0) {
 
@@ -758,8 +757,7 @@ public class IbatisVSPropertyDao extends AbstractIbatisDao implements VSProperty
 						propertyUId, 
 						entryStateUId, 
 						type, 
-						property),
-						1);	
+						property));	
 		
 		this.getSqlMapClientTemplate().update(
 				UPDATE_MULTI_ATTRIB_ENTRYSTATE_UID_BY_PROP_ID_TYPE_SQL,

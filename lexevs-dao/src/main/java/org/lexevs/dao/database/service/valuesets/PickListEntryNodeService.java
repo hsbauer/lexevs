@@ -18,6 +18,8 @@
  */
 package org.lexevs.dao.database.service.valuesets;
 
+import java.sql.SQLException;
+
 import org.LexGrid.LexBIG.Exceptions.LBException;
 import org.LexGrid.LexBIG.Exceptions.LBRevisionException;
 import org.LexGrid.valueSets.PickListEntryNode;
@@ -32,8 +34,9 @@ public interface PickListEntryNodeService {
 	 * 
 	 * @param pickListId the pick list id
 	 * @param pickListEntryNode the pick list entry node
+	 * @throws SQLException 
 	 */
-	public void insertPickListEntryNode(String pickListId, PickListEntryNode pickListEntryNode);
+	public void insertPickListEntryNode(String pickListId, PickListEntryNode pickListEntryNode) throws SQLException;
 	
 	/**
 	 * Removes the pick list entry node.
@@ -41,7 +44,7 @@ public interface PickListEntryNodeService {
 	 * @param pickListId the pick list id
 	 * @param pickListEntryNode the pick list entry node
 	 */
-	public void removePickListEntryNode(String pickListId, PickListEntryNode pickListEntryNode);
+	public void removePickListEntryNode(String pickListId, PickListEntryNode pickListEntryNode) throws SQLException;
 	
 	/**
 	 * Update pick list entry node.
@@ -51,7 +54,7 @@ public interface PickListEntryNodeService {
 	 * 
 	 * @throws LBException the LB exception
 	 */
-	public void updatePickListEntryNode(String pickListId, PickListEntryNode pickListEntryNode) throws LBException;
+	public void updatePickListEntryNode(String pickListId, PickListEntryNode pickListEntryNode) throws LBException , SQLException;
 	
 	/**
 	 * Insert dependent changes.
@@ -61,7 +64,7 @@ public interface PickListEntryNodeService {
 	 * 
 	 * @throws LBException the LB exception
 	 */
-	public void insertDependentChanges(String pickListId, PickListEntryNode pickListEntryNode) throws LBException;
+	public void insertDependentChanges(String pickListId, PickListEntryNode pickListEntryNode) throws LBException , SQLException;
 	
 	/**
 	 * Update versionable attributes.
@@ -71,7 +74,7 @@ public interface PickListEntryNodeService {
 	 * 
 	 * @throws LBException the LB exception
 	 */
-	public void updateVersionableAttributes(String pickListId, PickListEntryNode pickListEntryNode) throws LBException;
+	public void updateVersionableAttributes(String pickListId, PickListEntryNode pickListEntryNode) throws LBException , SQLException;
 	
 	/**
 	 * Revise.
@@ -81,7 +84,7 @@ public interface PickListEntryNodeService {
 	 * 
 	 * @throws LBException the LB exception
 	 */
-	public void revise(String pickListId, PickListEntryNode pickListEntryNode) throws LBException;
+	public void revise(String pickListId, PickListEntryNode pickListEntryNode) throws LBException , SQLException;
 
 	/**
 	 * Resolve pick list entry node by revision.
@@ -95,6 +98,6 @@ public interface PickListEntryNodeService {
 	 * @throws LBRevisionException the LB revision exception
 	 */
 	public PickListEntryNode resolvePickListEntryNodeByRevision(String pickListId,
-			String plEntryId, String revisionId) throws LBRevisionException;
+			String plEntryId, String revisionId) throws LBRevisionException , SQLException;
 
 }

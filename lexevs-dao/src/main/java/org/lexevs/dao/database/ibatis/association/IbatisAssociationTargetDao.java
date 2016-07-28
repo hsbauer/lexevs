@@ -18,6 +18,7 @@
  */
 package org.lexevs.dao.database.ibatis.association;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.LexGrid.relations.AssociationQualification;
@@ -118,7 +119,7 @@ private VersionsDao versionsDao;
 	}
 
 	@Override
-	public AssociationSource getTripleByUid(String codingSchemeUId, String tripleUid) {
+	public AssociationSource getTripleByUid(String codingSchemeUId, String tripleUid) throws SQLException {
 		String prefix = this.getPrefixResolver().resolvePrefixForCodingScheme(codingSchemeUId);
 		
 		return 
@@ -129,7 +130,7 @@ private VersionsDao versionsDao;
 
 	@Override
 	public AssociationSource getHistoryTripleByRevision(String codingSchemeUId,
-			String tripleUid, String revisionId) {
+			String tripleUid, String revisionId) throws SQLException {
 		String prefix = this.getPrefixResolver().resolvePrefixForHistoryCodingScheme(codingSchemeUId);
 		String actualTableSetPrefix = this.getPrefixResolver().resolvePrefixForCodingScheme(codingSchemeUId);
 		
@@ -146,7 +147,7 @@ private VersionsDao versionsDao;
 	}
 
 	@Override
-	public String getEntryStateUId(String codingSchemeUId, String associationTargetUid) {
+	public String getEntryStateUId(String codingSchemeUId, String associationTargetUid) throws SQLException {
 		String prefix = this.getPrefixResolver().resolvePrefixForCodingScheme(
 				codingSchemeUId);
 
@@ -157,7 +158,7 @@ private VersionsDao versionsDao;
 
 	@Override
 	public String insertAssociationTarget(String codingSchemeUId, String associationPredicateUId,
-			AssociationSource source, AssociationTarget target) {
+			AssociationSource source, AssociationTarget target) throws SQLException {
 
 		return this.insertAssociationTarget(
 				codingSchemeUId, 
@@ -173,7 +174,7 @@ private VersionsDao versionsDao;
 			String associationPredicateUId, 
 			String sourceEntityCode,
 			String sourceEntityCodeNamespace, 
-			AssociationTarget target) {
+			AssociationTarget target) throws SQLException {
 		AssociationSource source = new AssociationSource();
 		source.setSourceEntityCode(sourceEntityCode);
 		source.setSourceEntityCodeNamespace(sourceEntityCodeNamespace);
@@ -185,7 +186,7 @@ private VersionsDao versionsDao;
 	@Override
 	public String updateAssociationTarget(String codingSchemeUId, 
 			String associationTargetUId,
-			AssociationTarget target) {
+			AssociationTarget target) throws SQLException {
 
 		String prefix = this.getPrefixResolver().resolvePrefixForCodingScheme(
 				codingSchemeUId);
@@ -267,7 +268,7 @@ private VersionsDao versionsDao;
 	@Override
 	public String insertAssociationTarget(String codingSchemeUId,
 			String associationPredicateUId, AssociationSource source,
-			AssociationTarget target, Inserter inserter) {
+			AssociationTarget target, Inserter inserter) throws SQLException {
 		
 		String prefix = this.getPrefixResolver().resolvePrefixForCodingScheme(
 				codingSchemeUId);
@@ -297,7 +298,7 @@ private VersionsDao versionsDao;
 	protected String doInsertAssociationTarget(String prefix, String associationPredicateUId,
 			String associationTargetUId, 
 			AssociationSource source, AssociationTarget target,
-			Inserter inserter) {
+			Inserter inserter) throws SQLException {
 
 		String entryStateUId = this.createUniqueId();
 
@@ -372,7 +373,7 @@ private VersionsDao versionsDao;
 
 	@Override
 	public String getAssociationTargetUId(String codingSchemeUId,
-			String associationInstanceId) {
+			String associationInstanceId) throws SQLException {
 
 		String prefix = this.getPrefixResolver().resolvePrefixForCodingScheme(
 				codingSchemeUId);
@@ -386,7 +387,7 @@ private VersionsDao versionsDao;
 	@Override
 	public String insertHistoryAssociationTarget(String codingSchemeUId,
 			String associationTargetUId, Boolean assnQualExists,
-			Boolean contextExists) {
+			Boolean contextExists) throws SQLException {
 
 		String historyPrefix = this.getPrefixResolver()
 				.resolvePrefixForHistoryCodingScheme(codingSchemeUId);
@@ -438,7 +439,7 @@ private VersionsDao versionsDao;
 
 	@Override
 	public void deleteAssnTargetByUId(String codingSchemeUId,
-			String associationTargetUId) {
+			String associationTargetUId) throws SQLException {
 
 		String prefix = this.getPrefixResolver().resolvePrefixForCodingScheme(
 				codingSchemeUId);
@@ -450,7 +451,7 @@ private VersionsDao versionsDao;
 	@Override
 	public String updateVersionableChanges(String codingSchemeUId,
 			String associationTargetUId,
-			AssociationTarget target) {
+			AssociationTarget target) throws SQLException {
 
 		String prefix = this.getPrefixResolver().resolvePrefixForCodingScheme(
 				codingSchemeUId);
@@ -480,7 +481,7 @@ private VersionsDao versionsDao;
 	}
 
 	@Override
-	public String getLatestRevision(String csUId, String targetUId) {
+	public String getLatestRevision(String csUId, String targetUId) throws SQLException {
 
 		String prefix = this.getPrefixResolver().resolvePrefixForCodingScheme(csUId);
 		
@@ -491,7 +492,7 @@ private VersionsDao versionsDao;
 
 	@Override
 	public void deleteAssociationMultiAttribsByAssociationTargetUId(
-			String codingSchemeUId, String associationTargetUId) {
+			String codingSchemeUId, String associationTargetUId) throws SQLException {
 
 		String prefix = this.getPrefixResolver().resolvePrefixForCodingScheme(
 				codingSchemeUId);
@@ -508,7 +509,7 @@ private VersionsDao versionsDao;
 	}
 	
 	@Override
-	public boolean entryStateExists(String codingSchemeUId, String entryStateUId) {
+	public boolean entryStateExists(String codingSchemeUId, String entryStateUId) throws SQLException {
 
 		String prefix = this.getPrefixResolver().resolvePrefixForCodingScheme(
 				codingSchemeUId);

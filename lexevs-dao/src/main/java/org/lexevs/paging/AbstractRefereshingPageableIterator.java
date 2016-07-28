@@ -19,6 +19,7 @@
 package org.lexevs.paging;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.List;
 
 import org.LexGrid.annotations.LgProxyClass;
@@ -53,7 +54,7 @@ public abstract class AbstractRefereshingPageableIterator<R,T> extends AbstractP
 	 * @see org.lexevs.paging.AbstractPageableIterator#doExecutePage()
 	 */
 	@Override
-	protected List<? extends T> doExecutePage() {
+	protected List<? extends T> doExecutePage() throws SQLException {
 		RefreshResult<R, T> result = refershingPager.doRefershingPage(this, this.getGlobalPosition(), this.getPageSize());
 		
 		this.doRefresh(result.getRefresh());
@@ -85,8 +86,9 @@ public abstract class AbstractRefereshingPageableIterator<R,T> extends AbstractP
 		 * @param pageSize the page size
 		 * 
 		 * @return the refresh result< r, t>
+		 * @throws SQLException 
 		 */
-		public RefreshResult<R,T> doRefershingPage(AbstractRefereshingPageableIterator<R,T> abstractPageableIterator, int currentPosition, int pageSize){
+		public RefreshResult<R,T> doRefershingPage(AbstractRefereshingPageableIterator<R,T> abstractPageableIterator, int currentPosition, int pageSize) throws SQLException{
 			List<? extends T> returnList = abstractPageableIterator.doPage(currentPosition, pageSize);
 			
 			RefreshResult<R,T> result = new RefreshResult<R,T>();

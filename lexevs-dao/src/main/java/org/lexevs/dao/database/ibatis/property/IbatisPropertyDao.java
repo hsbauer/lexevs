@@ -52,7 +52,7 @@ import org.lexevs.dao.database.inserter.BatchInserter;
 import org.lexevs.dao.database.inserter.Inserter;
 import org.lexevs.dao.database.schemaversion.LexGridSchemaVersion;
 import org.lexevs.dao.database.utility.DaoUtility;
-import org.springframework.batch.classify.Classifier;
+import org.springframework.classify.Classifier;
 import org.springframework.orm.ibatis.SqlMapClientCallback;
 import org.springframework.util.Assert;
 

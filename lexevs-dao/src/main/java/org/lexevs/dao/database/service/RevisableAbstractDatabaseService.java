@@ -18,6 +18,8 @@
  */
 package org.lexevs.dao.database.service;
 
+import java.sql.SQLException;
+
 import org.LexGrid.LexBIG.Exceptions.LBException;
 import org.LexGrid.LexBIG.Exceptions.LBParameterException;
 import org.LexGrid.LexBIG.Exceptions.LBRevisionException;
@@ -151,8 +153,9 @@ public abstract class RevisableAbstractDatabaseService<T extends Versionable, I 
 	 * @param type the type
 	 * 
 	 * @return the string
+	 * @throws SQLException 
 	 */
-	protected String resolveCurrentEntryStateUid(I id, String entryUid, EntryStateType type) {
+	protected String resolveCurrentEntryStateUid(I id, String entryUid, EntryStateType type) throws SQLException {
 		String codingSchemeUri = id.getCodingSchemeUri();
 		String version = id.getCodingSchemeVersion();
 		
@@ -218,12 +221,13 @@ public abstract class RevisableAbstractDatabaseService<T extends Versionable, I 
 		 * @param type the type
 		 * 
 		 * @return the string
+		 * @throws SQLException 
 		 */
 		String doChange(
 				I id, 
 				String entryUid,
 				T revisedEntry, 
-				EntryStateType type);
+				EntryStateType type) throws SQLException;
 	}
 	
 	/**
@@ -235,12 +239,13 @@ public abstract class RevisableAbstractDatabaseService<T extends Versionable, I 
 	 * @param template the template
 	 * 
 	 * @throws LBException the LB exception
+	 * @throws SQLException 
 	 */
 	protected void makeChange(
 			I id, 
 			T revisedEntry, 
 			EntryStateType type, 
-			ChangeDatabaseStateTemplate<I,T> template) throws LBException {
+			ChangeDatabaseStateTemplate<I,T> template) throws LBException, SQLException {
 		
 		Assert.noNullElements(new Object[] {id, revisedEntry, type, template} );
 		
@@ -297,16 +302,17 @@ public abstract class RevisableAbstractDatabaseService<T extends Versionable, I 
 	 * @param type the type
 	 * 
 	 * @throws LBException the LB exception
+	 * @throws SQLException 
 	 */
 	protected void insertVersionableChanges(
 			I id, 
 			T revisedEntry,
-			EntryStateType type) throws LBException {
+			EntryStateType type) throws LBException, SQLException {
 
 		this.makeChange(id, revisedEntry, type, new ChangeDatabaseStateTemplate<I,T>() {
 
 			@Override
-			public String doChange(I id, String entryUid, T revisedEntry, EntryStateType type) {
+			public String doChange(I id, String entryUid, T revisedEntry, EntryStateType type) throws SQLException {
 				return updateEntryVersionableAttributes(id, entryUid, revisedEntry);	
 			}
 		});
@@ -323,8 +329,9 @@ public abstract class RevisableAbstractDatabaseService<T extends Versionable, I 
 		 * Update.
 		 * 
 		 * @return the string
+		 * @throws SQLException 
 		 */
-		public String update();
+		public String update() throws SQLException;
 	}
 	
 	/**
@@ -336,13 +343,14 @@ public abstract class RevisableAbstractDatabaseService<T extends Versionable, I 
 	 * @param updateTemplate the update template
 	 * 
 	 * @throws LBException the LB exception
+	 * @throws SQLException 
 	 */
-	protected void updateEntry(I id, T updatedEntry, EntryStateType type, final UpdateTemplate updateTemplate) throws LBException {
+	protected void updateEntry(I id, T updatedEntry, EntryStateType type, final UpdateTemplate updateTemplate) throws LBException, SQLException {
 		
 		this.makeChange(id, updatedEntry, type, new ChangeDatabaseStateTemplate<I,T>() {
 
 			@Override
-			public String doChange(I id, String entryUid, T revisedEntry, EntryStateType type) {
+			public String doChange(I id, String entryUid, T revisedEntry, EntryStateType type) throws SQLException {
 				return updateTemplate.update();	
 			}
 		});
@@ -356,9 +364,10 @@ public abstract class RevisableAbstractDatabaseService<T extends Versionable, I 
 	 * @param type the type
 	 * 
 	 * @throws LBException the LB exception
+	 * @throws SQLException 
 	 */
 	protected void insertDependentChanges(I id,
-			T revisedEntry, EntryStateType type) throws LBException {
+			T revisedEntry, EntryStateType type) throws LBException, SQLException {
 		this.makeChange(id, revisedEntry, type, new ChangeDatabaseStateTemplate<I,T>() {
 
 			@Override
@@ -378,9 +387,10 @@ public abstract class RevisableAbstractDatabaseService<T extends Versionable, I 
 	 * @return the t
 	 * 
 	 * @throws LBRevisionException the LB revision exception
+	 * @throws SQLException 
 	 */
 	public T resolveEntryByRevision(
-			I id, String entryUid, String revisionId) throws LBRevisionException {
+			I id, String entryUid, String revisionId) throws LBRevisionException, SQLException {
 		
 		if (entryUid == null) {
 			throw new LBRevisionException(
@@ -465,8 +475,9 @@ public abstract class RevisableAbstractDatabaseService<T extends Versionable, I 
 	 * @return true, if successful
 	 * 
 	 * @throws LBException the LB exception
+	 * @throws SQLException 
 	 */
-	protected boolean validRevision(I id, T entry) throws LBException {
+	protected boolean validRevision(I id, T entry) throws LBException, SQLException {
 		
 		String invalid = "Invalid Revision. ";
 		
@@ -547,8 +558,9 @@ public abstract class RevisableAbstractDatabaseService<T extends Versionable, I 
 	 * @param revisionId the revision id
 	 * 
 	 * @return the t
+	 * @throws SQLException 
 	 */
-	protected abstract T addDependentAttributesByRevisionId(I id, String entryUid, T entry, String revisionId);
+	protected abstract T addDependentAttributesByRevisionId(I id, String entryUid, T entry, String revisionId) throws SQLException;
 
 	/**
 	 * Insert into history.
@@ -556,8 +568,9 @@ public abstract class RevisableAbstractDatabaseService<T extends Versionable, I 
 	 * @param id the id
 	 * @param currentEntry the current entry
 	 * @param entryUId the entry u id
+	 * @throws SQLException 
 	 */
-	protected abstract void insertIntoHistory(I id, T currentEntry, String entryUId);
+	protected abstract void insertIntoHistory(I id, T currentEntry, String entryUId) throws SQLException;
 
 	/**
 	 * Do insert dependent changes.
@@ -566,8 +579,9 @@ public abstract class RevisableAbstractDatabaseService<T extends Versionable, I 
 	 * @param revisedEntry the revised entry
 	 * 
 	 * @throws LBException the LB exception
+	 * @throws SQLException 
 	 */
-	protected abstract void doInsertDependentChanges(I id, T revisedEntry) throws LBException;
+	protected abstract void doInsertDependentChanges(I id, T revisedEntry) throws LBException, SQLException;
 
 	/**
 	 * Update entity versionable attributes.
@@ -577,8 +591,9 @@ public abstract class RevisableAbstractDatabaseService<T extends Versionable, I 
 	 * @param revisedEntity the revised entity
 	 * 
 	 * @return the string
+	 * @throws SQLException 
 	 */
-	protected abstract String updateEntryVersionableAttributes(I id, String entryUId, T revisedEntity);
+	protected abstract String updateEntryVersionableAttributes(I id, String entryUId, T revisedEntity) throws SQLException;
 	
 	/**
 	 * Gets the current entry.
@@ -587,8 +602,9 @@ public abstract class RevisableAbstractDatabaseService<T extends Versionable, I 
 	 * @param entryUId the entry u id
 	 * 
 	 * @return the current entry
+	 * @throws SQLException 
 	 */
-	protected abstract T getCurrentEntry(I id, String entryUId);
+	protected abstract T getCurrentEntry(I id, String entryUId) throws SQLException;
 	
 	/**
 	 * Gets the history entry by revision id.
@@ -598,8 +614,9 @@ public abstract class RevisableAbstractDatabaseService<T extends Versionable, I 
 	 * @param revisionId the revision id
 	 * 
 	 * @return the history entry by revision id
+	 * @throws SQLException 
 	 */
-	protected abstract T getHistoryEntryByRevisionId(I id, String entryUid, String revisionId);
+	protected abstract T getHistoryEntryByRevisionId(I id, String entryUid, String revisionId) throws SQLException;
 	
 	/**
 	 * Gets the latest revision id.
@@ -609,7 +626,7 @@ public abstract class RevisableAbstractDatabaseService<T extends Versionable, I 
 	 * 
 	 * @return the latest revision id
 	 */
-	protected abstract String getLatestRevisionId(I id, String entryUId);
+	protected abstract String getLatestRevisionId(I id, String entryUId) throws SQLException;
 
 	/**
 	 * Gets the entry uid.
@@ -619,7 +636,7 @@ public abstract class RevisableAbstractDatabaseService<T extends Versionable, I 
 	 * 
 	 * @return the entry uid
 	 */
-	protected abstract String getEntryUid(I id, T entry);
+	protected abstract String getEntryUid(I id, T entry) throws SQLException;
 	
 	/**
 	 * Entry state exists.
@@ -628,8 +645,9 @@ public abstract class RevisableAbstractDatabaseService<T extends Versionable, I 
 	 * @param entryStateUid the entry state uid
 	 * 
 	 * @return true, if successful
+	 * @throws SQLException 
 	 */
-	protected abstract boolean entryStateExists(I id, String entryStateUid);
+	protected abstract boolean entryStateExists(I id, String entryStateUid) throws SQLException;
 	
 	/**
 	 * Gets the current entry state uid.
@@ -639,7 +657,7 @@ public abstract class RevisableAbstractDatabaseService<T extends Versionable, I 
 	 * 
 	 * @return the current entry state uid
 	 */
-	protected abstract String getCurrentEntryStateUid(I id, String entryUid);
+	protected abstract String getCurrentEntryStateUid(I id, String entryUid) throws SQLException;
 	
 	/**
 	 * Gets the coding scheme uid.
@@ -656,7 +674,7 @@ public abstract class RevisableAbstractDatabaseService<T extends Versionable, I 
 			getCodingSchemeDao(uri, version).getCodingSchemeUIdByUriAndVersion(uri, version);
 	}
 	
-	protected boolean isValidRevisionId(String revisionId) {
+	protected boolean isValidRevisionId(String revisionId) throws SQLException {
 		String revisionUid = 
 			getDaoManager().getRevisionDao().getRevisionUIdById(revisionId);
 		

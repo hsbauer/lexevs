@@ -18,8 +18,12 @@
  */
 package org.lexevs.dao.database.ibatis.batch;
 
+import java.sql.SQLException;
+
 import org.lexevs.dao.database.inserter.Inserter;
-import org.springframework.orm.ibatis.SqlMapClientTemplate;
+
+import com.ibatis.sqlmap.client.SqlMapClient;
+
 
 /**
  * The Class SqlMapClientTemplateInserter.
@@ -29,21 +33,21 @@ import org.springframework.orm.ibatis.SqlMapClientTemplate;
 public class SqlMapClientTemplateInserter implements Inserter{
 
 	/** The sql map client template. */
-	private SqlMapClientTemplate sqlMapClientTemplate;
+	private SqlMapClient sqlMapClientTemplate;
 	
 	/**
 	 * Instantiates a new sql map client template inserter.
 	 * 
 	 * @param sqlMapClientTemplate the sql map client template
 	 */
-	public SqlMapClientTemplateInserter(SqlMapClientTemplate sqlMapClientTemplate){
+	public SqlMapClientTemplateInserter(SqlMapClient sqlMapClientTemplate){
 		this.sqlMapClientTemplate = sqlMapClientTemplate;
 	}
 	
 	/* (non-Javadoc)
 	 * @see org.lexevs.dao.database.ibatis.batch.Inserter#insert(java.lang.String, java.lang.Object)
 	 */
-	public void insert(String sql, Object parameter) {
+	public void insert(String sql, Object parameter) throws SQLException {
 		sqlMapClientTemplate.insert(sql, parameter);
 	}
 
@@ -52,7 +56,7 @@ public class SqlMapClientTemplateInserter implements Inserter{
 	 * 
 	 * @param sqlMapClientTemplate the new sql map client template
 	 */
-	public void setSqlMapClientTemplate(SqlMapClientTemplate sqlMapClientTemplate) {
+	public void setSqlMapClientTemplate(SqlMapClient sqlMapClientTemplate) {
 		this.sqlMapClientTemplate = sqlMapClientTemplate;
 	}
 
@@ -61,7 +65,7 @@ public class SqlMapClientTemplateInserter implements Inserter{
 	 * 
 	 * @return the sql map client template
 	 */
-	public SqlMapClientTemplate getSqlMapClientTemplate() {
+	public SqlMapClient getSqlMapClientTemplate() {
 		return sqlMapClientTemplate;
 	}
 

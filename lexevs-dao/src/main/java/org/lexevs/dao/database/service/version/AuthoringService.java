@@ -18,6 +18,8 @@
  */
 package org.lexevs.dao.database.service.version;
 
+import java.sql.SQLException;
+
 import org.LexGrid.LexBIG.Exceptions.LBException;
 import org.LexGrid.LexBIG.Exceptions.LBRevisionException;
 import org.LexGrid.commonTypes.Versionable;
@@ -42,8 +44,9 @@ public interface AuthoringService {
 	 * @param indexNewCodingScheme the index new coding scheme
 	 * 
 	 * @throws LBRevisionException the LB revision exception
+	 * @throws SQLException 
 	 */
-	public void loadSystemRelease(SystemRelease systemRelease, Boolean indexNewCodingScheme) throws LBRevisionException;
+	public void loadSystemRelease(SystemRelease systemRelease, Boolean indexNewCodingScheme) throws LBRevisionException, SQLException;
 
 	/**
 	 * Method Loads the revision of an entry point object in lexEVS system.
@@ -60,7 +63,7 @@ public interface AuthoringService {
 	 * 
 	 * @throws LBRevisionException the LB revision exception
 	 */
-	public void loadRevision(Revision revision, String systemReleaseURI, Boolean indexNewCodingScheme) throws LBRevisionException;
+	public void loadRevision(Revision revision, String systemReleaseURI, Boolean indexNewCodingScheme) throws LBRevisionException , SQLException;
 	
 	/**
 	 * Method Loads an entry point versionable object by wrapping it into a
@@ -75,7 +78,7 @@ public interface AuthoringService {
 	 * 
 	 * @throws LBRevisionException the LB revision exception
 	 */
-	public void loadRevision(Versionable versionable, String releaseURI, Boolean indexNewCodingScheme) throws LBRevisionException;
+	public void loadRevision(Versionable versionable, String releaseURI, Boolean indexNewCodingScheme) throws LBRevisionException ,SQLException;
 	
 	/**
 	 * insert system release entry.
@@ -84,7 +87,7 @@ public interface AuthoringService {
 	 * 
 	 * @return the string
 	 */
-	public String insertSystemReleaseMetadata(SystemRelease systemRelease);
+	public String insertSystemReleaseMetadata(SystemRelease systemRelease) throws SQLException;
 	
 	/**
 	 * get system release entry for a given uri.
@@ -93,7 +96,7 @@ public interface AuthoringService {
 	 * 
 	 * @return the system release metadata by uri
 	 */
-	public SystemRelease getSystemReleaseMetadataByUri(String systemReleaseUri);
+	public SystemRelease getSystemReleaseMetadataByUri(String systemReleaseUri) throws SQLException;
 	
 	/**
 	 * get system release entry for a given unique id.
@@ -102,7 +105,7 @@ public interface AuthoringService {
 	 * 
 	 * @return the system release metadata by id
 	 */
-	public SystemRelease getSystemReleaseMetadataById(String systemReleaseId);
+	public SystemRelease getSystemReleaseMetadataById(String systemReleaseId) throws SQLException;
 	
 	/**
 	 * removes revision record if not referenced by any existing entries.
@@ -113,5 +116,5 @@ public interface AuthoringService {
 	 * 
 	 * @throws LBException the LB exception
 	 */
-	public boolean removeRevisionRecordbyId(String revisionId) throws LBException;
+	public boolean removeRevisionRecordbyId(String revisionId) throws LBException , SQLException;
 }

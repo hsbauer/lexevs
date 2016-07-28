@@ -18,6 +18,7 @@
  */
 package org.lexevs.dao.database.ibatis.valuesets;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.LexGrid.LexBIG.Exceptions.LBRevisionException;
@@ -80,7 +81,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 	
 	@Override
 	public String insertDefinitionEntry(String valueSetDefinitionUId,
-			DefinitionEntry vsdEntry) {
+			DefinitionEntry vsdEntry) throws SQLException {
 		String vsdEntryGuid = this.createUniqueId();
 		String vsdEntryStateGuid = this.createUniqueId();
 		
@@ -137,7 +138,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 	}
 
 	@Override
-	public void deleteDefinitionEntry(String vsDefinitionEntryUId) {
+	public void deleteDefinitionEntry(String vsDefinitionEntryUId) throws SQLException {
 
 		String prefix = this.getPrefixResolver().resolveDefaultPrefix();
 		
@@ -150,7 +151,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 
 	@Override
 	public String getDefinitionEntryUId(String valueSetDefinitionURI,
-			String ruleOrder) {
+			String ruleOrder) throws SQLException {
 		
 		String prefix = this.getPrefixResolver().resolveDefaultPrefix();
 		
@@ -165,7 +166,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 
 	@Override
 	public String insertHistoryDefinitionEntry(String valueSetDefUId, String vsDefinitionUId,
-			DefinitionEntry defEntry) {
+			DefinitionEntry defEntry) throws SQLException {
 
 		String historyPrefix = this.getPrefixResolver().resolveHistoryPrefix();
 		String prefix = this.getPrefixResolver().resolveDefaultPrefix();
@@ -196,7 +197,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 
 	@Override
 	public String updateDefinitionEntry(String vsDefinitionUId,
-			DefinitionEntry defEntry) {
+			DefinitionEntry defEntry) throws SQLException {
 		
 		String entryStateUId = this.createUniqueId();
 		String prefix = this.getPrefixResolver().resolveDefaultPrefix();
@@ -214,7 +215,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 
 	@Override
 	public String updateDefinitionEntryVersionableAttrib(
-			String vsDefinitionUId, DefinitionEntry defEntry) {
+			String vsDefinitionUId, DefinitionEntry defEntry) throws SQLException {
 		
 		String entryStateUId = this.createUniqueId();
 		String prefix = this.getPrefixResolver().resolveDefaultPrefix();
@@ -245,7 +246,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 	}
 
 	@Override
-	public String getLatestRevision(String vsDefEntryUId) {
+	public String getLatestRevision(String vsDefEntryUId) throws SQLException {
 		String prefix = this.getPrefixResolver().resolveDefaultPrefix();
 		
 		return (String) this.getSqlMapClientTemplate().queryForObject(
@@ -270,7 +271,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 	@Override
 	public DefinitionEntry resolveDefinitionEntryByRevision(
 			String valueSetDefURI, String ruleOrder, String revisionId)
-			throws LBRevisionException {
+			throws LBRevisionException, SQLException {
 
 		String prefix = this.getPrefixResolver().resolveDefaultPrefix();
 
@@ -323,7 +324,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 		return definitionEntry;
 	}
 
-	public DefinitionEntry getVSDefinitionEntryByUId(String vsdEntryUId) {
+	public DefinitionEntry getVSDefinitionEntryByUId(String vsdEntryUId) throws SQLException {
 		
 		String prefix = this.getPrefixResolver().resolveDefaultPrefix();
 		

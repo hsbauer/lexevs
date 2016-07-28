@@ -18,6 +18,8 @@
  */
 package org.lexevs.dao.database.service.valuesets;
 
+import java.sql.SQLException;
+
 import org.LexGrid.LexBIG.Exceptions.LBException;
 import org.LexGrid.LexBIG.Exceptions.LBRevisionException;
 import org.LexGrid.commonTypes.Property;
@@ -37,7 +39,7 @@ public interface VSPropertyService {
 	 */
 	public void insertValueSetDefinitionProperty(
 			String valueSetDefinitionUri, 
-			Property property);
+			Property property) throws SQLException;
 	
 	/**
 	 * Update value set definition property.
@@ -47,7 +49,7 @@ public interface VSPropertyService {
 	 */
 	public void updateValueSetDefinitionProperty(
 			String valueSetDefinitionUri, 
-			Property property);
+			Property property) throws SQLException;
 
 	/**
 	 * Removes the value set definition property.
@@ -57,7 +59,7 @@ public interface VSPropertyService {
 	 */
 	public void removeValueSetDefinitionProperty(
 	String valueSetDefinitionUri, 
-	Property property);
+	Property property) throws SQLException;
 
 	/**
 	 * Insert value set def prop versionable changes.
@@ -67,7 +69,7 @@ public interface VSPropertyService {
 	 */
 	public void insertValueSetDefPropVersionableChanges(
 	String valueSetDefinitionUri, 
-	Property property);
+	Property property) throws SQLException;
 
 	/**
 	 * Insert pick list definition property.
@@ -77,7 +79,7 @@ public interface VSPropertyService {
 	 */
 	public void insertPickListDefinitionProperty(
 			String pickListId, 
-			Property property);
+			Property property) throws SQLException;
 	
 	/**
 	 * Update pick list definition property.
@@ -87,7 +89,7 @@ public interface VSPropertyService {
 	 */
 	public void updatePickListDefinitionProperty(
 			String pickListId, 
-			Property property);
+			Property property) throws SQLException;
 
 	/**
 	 * Removes the pick list definition property.
@@ -96,7 +98,7 @@ public interface VSPropertyService {
 	 * @param property the property
 	 */
 	public void removePickListDefinitionProperty(String pickListId,
-			Property property);
+			Property property) throws SQLException;
 
 	/**
 	 * Insert pick list def prop versionable changes.
@@ -106,7 +108,7 @@ public interface VSPropertyService {
 	 */
 	public void insertPickListDefPropVersionableChanges(
 	String pickListId, 
-	Property property);
+	Property property) throws SQLException;
 
 	/**
 	 * Insert pick list entry node property.
@@ -114,11 +116,12 @@ public interface VSPropertyService {
 	 * @param pickListId the pick list id
 	 * @param pickListEntryNodeId the pick list entry id
 	 * @param property the property
+	 * @throws SQLException 
 	 */
 	public void insertPickListEntryNodeProperty(
 			String pickListId,
 			String pickListEntryNodeId, 
-			Property property);
+			Property property) throws SQLException;
 	
 	
 	/**
@@ -131,7 +134,7 @@ public interface VSPropertyService {
 	public void updatePickListEntryNodeProperty(
 			String pickListId,
 			String pickListEntryNodeId, 
-			Property property);
+			Property property) throws SQLException;
 	
 	/**
 	 * Removes the pick list entry node property.
@@ -142,7 +145,7 @@ public interface VSPropertyService {
 	 */
 	public void removePickListEntryNodeProperty(String pickListId,
 			String pickListEntryNodeId, 
-			Property property);
+			Property property) throws SQLException;
 	
 	/**
 	 * Insert pick list entry node prop versionable changes.
@@ -154,7 +157,7 @@ public interface VSPropertyService {
 	public void insertPickListEntryNodePropVersionableChanges(
 			String pickListId, 
 			String pickListEntryNodeId,
-			Property property);
+			Property property) throws SQLException;
 	
 	/**
 	 * Revise value set definition property.
@@ -166,7 +169,7 @@ public interface VSPropertyService {
 	 */
 	public void reviseValueSetDefinitionProperty(
 			String valueSetDefinitionUri, 
-			Property property) throws LBException;
+			Property property) throws LBException , SQLException;
 	
 	/**
 	 * Revise pick list definition property.
@@ -178,7 +181,7 @@ public interface VSPropertyService {
 	 */
 	public void revisePickListDefinitionProperty(
 			String pickListId, 
-			Property property) throws LBException;
+			Property property) throws LBException , SQLException;
 	
 	/**
 	 * Revise pick list entry node property.
@@ -192,7 +195,7 @@ public interface VSPropertyService {
 	public void revisePickListEntryNodeProperty(
 			String pickListId,
 			String pickListEntryNodeId, 
-			Property property) throws LBException;
+			Property property) throws LBException , SQLException;
 	
 	/**
 	 * Resolve value set definition property by revision.
@@ -207,7 +210,7 @@ public interface VSPropertyService {
 	 */
 	public Property resolveValueSetDefinitionPropertyByRevision(
 			String valueSetDefURI, String propertyId, String revisionId)
-			throws LBRevisionException;
+			throws LBRevisionException , SQLException;
 
 	/**
 	 * Resolve pick list definition property by revision.
@@ -222,7 +225,7 @@ public interface VSPropertyService {
 	 */
 	public Property resolvePickListDefinitionPropertyByRevision(
 			String pickListId, String propertyId, String revisionId)
-			throws LBRevisionException;
+			throws LBRevisionException , SQLException;
 
 	/**
 	 * Resolve pick list entry node property by revision.
@@ -238,5 +241,5 @@ public interface VSPropertyService {
 	 */
 	public Property resolvePickListEntryNodePropertyByRevision(
 			String pickListId, String plEntryId, String propertyId,
-			String revisionId) throws LBRevisionException;
+			String revisionId) throws LBRevisionException , SQLException;
 }

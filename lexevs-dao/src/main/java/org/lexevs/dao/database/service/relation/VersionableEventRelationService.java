@@ -18,6 +18,7 @@
  */
 package org.lexevs.dao.database.service.relation;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.LexGrid.LexBIG.Exceptions.LBException;
@@ -67,7 +68,7 @@ public class VersionableEventRelationService extends RevisableAbstractDatabaseSe
 	@Override
 	protected Relations addDependentAttributesByRevisionId(
 			CodingSchemeUriVersionBasedEntryId id, String entryUid,
-			Relations entry, String revisionId) {
+			Relations entry, String revisionId) throws SQLException {
 		entry.setProperties(new Properties());
 		
 		List<Property> properties = 
@@ -91,7 +92,7 @@ public class VersionableEventRelationService extends RevisableAbstractDatabaseSe
 	@Override
 	protected void doInsertDependentChanges(
 			CodingSchemeUriVersionBasedEntryId id, Relations revisedEntry)
-		throws LBException {
+		throws LBException, SQLException {
 		
 		CodingSchemeDao codingSchemeDao = getDaoManager().getCodingSchemeDao(
 				id.getCodingSchemeUri(), id.getCodingSchemeVersion());
@@ -279,7 +280,7 @@ public class VersionableEventRelationService extends RevisableAbstractDatabaseSe
 			String codingSchemeURI,
 			String version, 
 			String relationsName,
-			String revisionId) throws LBRevisionException {
+			String revisionId) throws LBRevisionException, SQLException {
 		CodingSchemeUriVersionBasedEntryId id = 
 			new CodingSchemeUriVersionBasedEntryId(
 					codingSchemeURI, version);
@@ -320,7 +321,7 @@ public class VersionableEventRelationService extends RevisableAbstractDatabaseSe
 	@Transactional(rollbackFor=Exception.class)
 	@DatabaseErrorIdentifier(errorCode=UPDATE_RELATION_ERROR)
 	public void updateRelation(String codingSchemeUri, String version,
-			final Relations relation) throws LBException {
+			final Relations relation) throws LBException, SQLException {
 
 		final AssociationDao associationDao = this.getDaoManager().getAssociationDao(
 				codingSchemeUri, version);
@@ -350,7 +351,7 @@ public class VersionableEventRelationService extends RevisableAbstractDatabaseSe
 	@DatabaseErrorIdentifier(errorCode=REMOVE_RELATION_ERROR)
 	@Transactional
 	public void removeRelation(String codingSchemeUri, String version,
-			Relations relation) {
+			Relations relation) throws SQLException {
 
 		CodingSchemeDao codingSchemeDao = getDaoManager().getCodingSchemeDao(codingSchemeUri, version);
 		
@@ -385,7 +386,7 @@ public class VersionableEventRelationService extends RevisableAbstractDatabaseSe
 	@Override
 	@Transactional(rollbackFor=Exception.class)
 	public void revise(String codingSchemeUri, String version,
-			Relations relation) throws LBException {
+			Relations relation) throws LBException, SQLException {
 
 		if (validRevision(new CodingSchemeUriVersionBasedEntryId(codingSchemeUri, version), relation)) {
 			ChangeType changeType = relation.getEntryState().getChangeType();
@@ -487,8 +488,9 @@ public class VersionableEventRelationService extends RevisableAbstractDatabaseSe
 	 * @param revisedEntry the revised entry
 	 * 
 	 * @return true, if successful
+	 * @throws SQLException 
 	 */
-	private boolean doAddRelationDependentEntry(CodingSchemeUriVersionBasedEntryId id, Relations revisedEntry) {
+	private boolean doAddRelationDependentEntry(CodingSchemeUriVersionBasedEntryId id, Relations revisedEntry) throws SQLException {
 		
 		String codingSchemeUri = id.getCodingSchemeUri();
 		String version = id.getCodingSchemeVersion();

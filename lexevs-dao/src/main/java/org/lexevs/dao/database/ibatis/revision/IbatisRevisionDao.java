@@ -18,6 +18,7 @@
  */
 package org.lexevs.dao.database.ibatis.revision;
 
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
@@ -80,7 +81,7 @@ public static String VERSIONS_NAMESPACE = "Versions.";
 	}
 
 	@Override
-	public String getRevisionUIdById(String revisionId) {
+	public String getRevisionUIdById(String revisionId) throws SQLException {
 		if(	revisionId == null )
 			return null;
 		
@@ -93,7 +94,7 @@ public static String VERSIONS_NAMESPACE = "Versions.";
 	}
 	
 	@Override
-	public String insertRevisionEntry(Revision revision, String releaseURI) throws LBRevisionException {
+	public String insertRevisionEntry(Revision revision, String releaseURI) throws LBRevisionException, SQLException {
 
 		String revisionUId = this.createUniqueId();
 		
@@ -130,7 +131,7 @@ public static String VERSIONS_NAMESPACE = "Versions.";
 	}
 
 	@Transactional
-	public String getRevisionIdForDate(Timestamp dateTime) {
+	public String getRevisionIdForDate(Timestamp dateTime) throws SQLException {
 		return (String) this.getSqlMapClientTemplate()
 				.queryForObject(GET_REVISION_ID_BY_DATE, dateTime);		
 	}
@@ -159,7 +160,7 @@ public static String VERSIONS_NAMESPACE = "Versions.";
 	 * @see org.lexevs.dao.database.access.revision.RevisionDao#removeRevisionById(java.lang.String)
 	 */
 	@Override
-	public boolean removeRevisionById(String revisionId) throws LBException{
+	public boolean removeRevisionById(String revisionId) throws LBException, SQLException{
 		if (StringUtils.isEmpty(revisionId))
 			throw new LBException("Revision ID can not be empty");
 		

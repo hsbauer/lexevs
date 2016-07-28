@@ -18,6 +18,7 @@
  */
 package org.lexevs.dao.database.operation.transitivity;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,7 +65,7 @@ public class DefaultTransitivityBuilder implements TransitivityBuilder {
 	
 	@Override
 	public TransitivityTableState isTransitiveTableComputed(String codingSchemeUri,
-			String codingSchemeVersion) {
+			String codingSchemeVersion) throws SQLException {
 		
 		List<String> transitiveAssociations = 
 			this.getTransitiveAssociationPredicateIds(codingSchemeUri, codingSchemeVersion);
@@ -82,7 +83,7 @@ public class DefaultTransitivityBuilder implements TransitivityBuilder {
 
 	@Override
 	public void reComputeTransitivityTable(String codingSchemeUri,
-			String codingSchemeVersion) {
+			String codingSchemeVersion) throws SQLException {
 		if(this.getTransitiveTableCount(codingSchemeUri, codingSchemeVersion) > 0){
 			logger.warn("Transitivity Table for Coding Scheme: " + codingSchemeUri + " Version: " + codingSchemeVersion  + " has existing data, " +
 					"which will be removed and re-computed.");
@@ -93,7 +94,7 @@ public class DefaultTransitivityBuilder implements TransitivityBuilder {
 		this.computeTransitivityTable(codingSchemeUri, codingSchemeVersion);	
 	}
 
-	public void computeTransitivityTable(String codingSchemeUri, String version) {
+	public void computeTransitivityTable(String codingSchemeUri, String version) throws SQLException {
 		
 		BatchInsertController batchController = new BatchInsertController(codingSchemeUri, version);
 
@@ -210,11 +211,11 @@ public class DefaultTransitivityBuilder implements TransitivityBuilder {
 			final String version,
 			final String associationPredicateUid, 
 			final String sourceEntityCode,
-			final String sourceEntityCodeNamespace) {
+			final String sourceEntityCodeNamespace) throws SQLException {
 		return databaseServiceManager.getDaoCallbackService().executeInDaoLayer(new DaoCallback<List<Node>>(){
 
 			@Override
-			public List<Node> execute(DaoManager daoManager) {
+			public List<Node> execute(DaoManager daoManager) throws SQLException {
 				String codingSchemeUid = daoManager.getCurrentCodingSchemeDao().
 				getCodingSchemeUIdByUriAndVersion(codingSchemeUri, version);
 
@@ -227,11 +228,11 @@ public class DefaultTransitivityBuilder implements TransitivityBuilder {
 	protected List<Node> getDistinctSourceTriples(
 			final String codingSchemeUri, 
 			final String version, 
-			final String associationPredicateUid) {
+			final String associationPredicateUid) throws SQLException {
 		return databaseServiceManager.getDaoCallbackService().executeInDaoLayer(new DaoCallback<List<Node>>(){
 
 			@Override
-			public List<Node> execute(DaoManager daoManager) {
+			public List<Node> execute(DaoManager daoManager) throws SQLException {
 				String codingSchemeUid = daoManager.getCurrentCodingSchemeDao().
 				getCodingSchemeUIdByUriAndVersion(codingSchemeUri, version);
 
@@ -250,7 +251,7 @@ public class DefaultTransitivityBuilder implements TransitivityBuilder {
 			ArrayList<StringTuple> targetCodes, 
 			LRUMap insertedCache,
 			BatchInsertController batchInsertController, 
-			String path) {
+			String path) throws SQLException {
 		// The next target of each of the passed in targetCodes needs to be
 		// added to the transitive table.
 
@@ -371,12 +372,12 @@ public class DefaultTransitivityBuilder implements TransitivityBuilder {
 
 	protected List<String> getTransitiveAssociationPredicateIds(
 			final String codingSchemeUri, 
-			final String version){
+			final String version) throws SQLException{
 
 		return databaseServiceManager.getDaoCallbackService().executeInDaoLayer(new DaoCallback<List<String>>(){
 
 			@Override
-			public List<String> execute(DaoManager daoManager) {
+			public List<String> execute(DaoManager daoManager) throws SQLException {
 				List<String> transitivePredicateIds = new ArrayList<String>();
 
 				CodingSchemeDao codingSchemeDao = daoManager.getCurrentCodingSchemeDao();
@@ -456,7 +457,7 @@ public class DefaultTransitivityBuilder implements TransitivityBuilder {
 		return (associationEntity != null && BooleanUtils.toBoolean(associationEntity.getIsTransitive()));
 	}
 
-	protected RegistryEntry getRegistryEntryForCodingSchemeName(String codingSchemeName, String codingSchemeUri, String version) {
+	protected RegistryEntry getRegistryEntryForCodingSchemeName(String codingSchemeName, String codingSchemeUri, String version) throws SQLException {
 		try {
 			CodingScheme cs = 
 				this.getDatabaseServiceManager().getCodingSchemeService().getCodingSchemeByUriAndVersion(codingSchemeUri, version);
@@ -560,7 +561,7 @@ public class DefaultTransitivityBuilder implements TransitivityBuilder {
 		}
 		
 		@Override
-		protected List<Triple> doPage(int currentPosition, int pageSize) {
+		protected List<Triple> doPage(int currentPosition, int pageSize) throws SQLException {
 			return getTriples(codingSchemeUri, version, associationPredicateId, currentPosition, pageSize);
 		}
 		
@@ -569,7 +570,7 @@ public class DefaultTransitivityBuilder implements TransitivityBuilder {
 				final String version,
 				final String associationPredicateId, 
 				final int start, 
-				final int pageSize){
+				final int pageSize) throws SQLException{
 			return databaseServiceManager.getDaoCallbackService().executeInDaoLayer(new DaoCallback<List<Triple>>(){
 
 				@Override
@@ -586,11 +587,11 @@ public class DefaultTransitivityBuilder implements TransitivityBuilder {
 	
 	protected int getTransitiveTableCount(
 			final String codingSchemeUri,
-			final String version){
+			final String version) throws SQLException{
 		return databaseServiceManager.getDaoCallbackService().executeInDaoLayer(new DaoCallback<Integer>(){
 
 			@Override
-			public Integer execute(DaoManager daoManager) {
+			public Integer execute(DaoManager daoManager) throws SQLException {
 				String codingSchemeUid = daoManager.getCurrentCodingSchemeDao().
 				getCodingSchemeUIdByUriAndVersion(codingSchemeUri, version);
 
@@ -602,11 +603,11 @@ public class DefaultTransitivityBuilder implements TransitivityBuilder {
 	
 	protected void deleteFromTransitiveTable(
 			final String codingSchemeUri,
-			final String version){
+			final String version) throws SQLException{
 		databaseServiceManager.getDaoCallbackService().executeInDaoLayer(new DaoCallback<Void>(){
 
 			@Override
-			public Void execute(DaoManager daoManager) {
+			public Void execute(DaoManager daoManager) throws SQLException {
 				String codingSchemeUid = daoManager.getCurrentCodingSchemeDao().
 				getCodingSchemeUIdByUriAndVersion(codingSchemeUri, version);
 
@@ -626,7 +627,7 @@ public class DefaultTransitivityBuilder implements TransitivityBuilder {
 		
 		private List<TransitiveClosureBatchInsertItem> batch = new ArrayList<TransitiveClosureBatchInsertItem>();
 		
-		private BatchInsertController(final String codingSchemeUri, final String version) {
+		private BatchInsertController(final String codingSchemeUri, final String version) throws SQLException {
 			codingSchemeUid = databaseServiceManager.getDaoCallbackService().executeInDaoLayer(new DaoCallback<String>(){
 
 				@Override

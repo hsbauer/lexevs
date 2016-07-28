@@ -18,6 +18,7 @@
  */
 package org.lexevs.dao.database.ibatis.valuesets;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -107,7 +108,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion
 
 	@Override
 	public String getPickListEntryNodeUId(String pickListId,
-			String pickListEntryNodeId) {
+			String pickListEntryNodeId) throws SQLException {
 
 		String prefix = this.getPrefixResolver().resolveDefaultPrefix();
 
@@ -118,7 +119,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion
 	}
 	
 	@Override
-	public String insertPickListEntry(String pickListGuid, PickListEntryNode entryNode) {
+	public String insertPickListEntry(String pickListGuid, PickListEntryNode entryNode) throws SQLException {
 		if (entryNode == null)
 			return null;
 		
@@ -214,7 +215,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion
 
 	@Override
 	public void removeAllPickListEntryNodeMultiAttributes(
-			String pickListEntryNodeUId) {
+			String pickListEntryNodeUId) throws SQLException {
 		
 		String prefix = this.getPrefixResolver().resolveDefaultPrefix();
 		
@@ -258,7 +259,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion
 	}
 
 	@Override
-	public String insertHistoryPickListEntryNode(String pickListEntryNodeUId) {
+	public String insertHistoryPickListEntryNode(String pickListEntryNodeUId) throws SQLException {
 
 		String prefix = this.getPrefixResolver().resolveDefaultPrefix();
 		String histPrefix = this.getPrefixResolver().resolveHistoryPrefix();
@@ -298,7 +299,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion
 
 	@Override
 	public String updatePickListEntryNode(String pickListEntryNodeUId,
-			PickListEntryNode pickListEntryNode) {
+			PickListEntryNode pickListEntryNode) throws SQLException {
 
 		InsertOrUpdatePickListEntryBean bean = buildInsertOrUpdatePickListEntryBean(
 				pickListEntryNodeUId, pickListEntryNode);
@@ -351,7 +352,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion
 
 	@Override
 	public String updateVersionableAttributes(String pickListEntryNodeUId,
-			PickListEntryNode pickListEntryNode) {
+			PickListEntryNode pickListEntryNode) throws SQLException {
 		
 		String entryStateUId = this.createUniqueId();
 		String prefix = this.getPrefixResolver().resolveDefaultPrefix();
@@ -417,7 +418,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion
 	}
 
 	@Override
-	public String getPickListEntryStateUId(String pickListEntryNodeUId) {
+	public String getPickListEntryStateUId(String pickListEntryNodeUId) throws SQLException {
 
 		String prefix = this.getPrefixResolver().resolveDefaultPrefix();
 
@@ -428,7 +429,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion
 
 	@Override
 	public void updateEntryStateUId(String pickListEntryNodeUId,
-			String entryStateUId) {
+			String entryStateUId) throws SQLException {
 		
 		String prefix = this.getPrefixResolver().resolveDefaultPrefix();
 		
@@ -444,7 +445,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion
 	}
 
 	@Override
-	public void createEntryStateIfAbsent(String entryStateUId, String vsPLEntryUId) {
+	public void createEntryStateIfAbsent(String entryStateUId, String vsPLEntryUId) throws SQLException {
 
 		String prefix = this.getPrefixResolver().resolveDefaultPrefix();
 		
@@ -461,7 +462,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion
 	}
 
 	@Override
-	public String getLatestRevision(String pickListEntryNodeUId) {
+	public String getLatestRevision(String pickListEntryNodeUId) throws SQLException {
 
 		String prefix = this.getPrefixResolver().resolveDefaultPrefix();
 		
@@ -485,7 +486,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion
 	}
 
 	@Override
-	public void deletePLEntryNodeByUId(String pickListEntryNodeUId) {
+	public void deletePLEntryNodeByUId(String pickListEntryNodeUId) throws SQLException {
 
 		String prefix = this.getPrefixResolver().resolveDefaultPrefix();
 		
@@ -502,7 +503,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion
 	@SuppressWarnings("unchecked")
 	@Override
 	public PickListEntryNode resolvePLEntryNodeByRevision(
-			String pickListId, String plEntryId, String revisionId) throws LBRevisionException {
+			String pickListId, String plEntryId, String revisionId) throws LBRevisionException, SQLException {
 		
 		String prefix = this.getPrefixResolver().resolveDefaultPrefix();
 		
@@ -629,7 +630,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion
 		return pickListEntryNode;
 	}
 
-	public PickListEntryNode getPLEntryByUId(String vsPLEntryUId) {
+	public PickListEntryNode getPLEntryByUId(String vsPLEntryUId) throws SQLException {
 
 		PickListEntryNode plEntryNode = null;
 

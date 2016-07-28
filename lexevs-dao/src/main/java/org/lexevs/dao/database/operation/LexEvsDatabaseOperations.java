@@ -19,6 +19,7 @@
 package org.lexevs.dao.database.operation;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -84,10 +85,10 @@ public interface LexEvsDatabaseOperations {
 	public boolean isCodingSchemeLoaded(String codingSchemeUri, String version);
 	
 	public void reComputeTransitiveTable(String codingSchemeUri,
-			String codingSchemeVersion);
+			String codingSchemeVersion) throws SQLException;
 	
 	public TransitivityTableState isTransitiveTableComputed(String codingSchemeUri,
-			String codingSchemeVersion);
+			String codingSchemeVersion) throws SQLException;
 
 	/**
 	 * Gets the database utility.
@@ -132,12 +133,13 @@ public interface LexEvsDatabaseOperations {
 	 * @param codingSchemeName the coding scheme name
 	 * @param codingSchemeUri the coding scheme uri
 	 * @param version the version
+	 * @throws SQLException 
 	 */
-	public void computeTransitiveTable(String codingSchemeUri, String codingSchemeVersion);
+	public void computeTransitiveTable(String codingSchemeUri, String codingSchemeVersion) throws SQLException;
 	
 	public void addRootRelationNode(String codingSchemeUri, String codingSchemeVersion, 
 			List<String> associationNames, String relationContainerName, 
-			RootOrTail rootOrTail, TraverseAssociations traverse);
+			RootOrTail rootOrTail, TraverseAssociations traverse) throws SQLException;
 
 	void dropCodingSchemeHistoryTablesByPrefix(String prefix);
 

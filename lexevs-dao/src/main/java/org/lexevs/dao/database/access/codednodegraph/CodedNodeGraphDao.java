@@ -18,6 +18,7 @@
  */
 package org.lexevs.dao.database.access.codednodegraph;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -56,7 +57,7 @@ public interface CodedNodeGraphDao extends LexGridSchemaVersionAwareDao {
 			List<String> mustHaveTargetNamespace,
 			List<String> mustHaveEntityType,
 			Boolean restrictToAnonymous,
-			boolean useTransitive);
+			boolean useTransitive) throws SQLException;
 	
 	public List<String> getTripleUidsContainingSubject(
 			String codingSchemeUid,
@@ -71,7 +72,7 @@ public interface CodedNodeGraphDao extends LexGridSchemaVersionAwareDao {
 			Boolean restrictToAnonymous,
 			List<Sort> sorts,
 			int start, 
-			int pageSize);
+			int pageSize) throws SQLException;
 	
 	public Map<String,Integer> getTripleUidsContainingSubjectCount(
 			String codingSchemeUid,
@@ -83,7 +84,7 @@ public interface CodedNodeGraphDao extends LexGridSchemaVersionAwareDao {
 			List<CodeNamespacePair> mustHaveObjectCodes,
 			List<String> mustHaveObjectNamespace,
 			List<String> mustHaveObjectEntityType,
-			Boolean restrictToAnonymous);
+			Boolean restrictToAnonymous) throws SQLException;
 	
 	public List<CountConceptReference> getCountConceptReferencesContainingSubject(
 			String codingSchemeUid,
@@ -94,7 +95,7 @@ public interface CodedNodeGraphDao extends LexGridSchemaVersionAwareDao {
 			List<CodeNamespacePair> mustHaveObjectCodes,
 			List<String> mustHaveObjectNamespace,
 			List<String> mustHaveObjectEntityType,
-			Boolean restrictToAnonymous);
+			Boolean restrictToAnonymous) throws SQLException;
 			
 	public List<ConceptReference> getConceptReferencesContainingSubject(
 			String codingSchemeUid,
@@ -108,7 +109,7 @@ public interface CodedNodeGraphDao extends LexGridSchemaVersionAwareDao {
 			Boolean restrictToAnonymous,
 			List<Sort> sorts,
 			int start,
-			int pageSize);
+			int pageSize) throws SQLException;
 	
 	public List<String> getTripleUidsContainingObject(
 			String codingSchemeUid,
@@ -123,7 +124,7 @@ public interface CodedNodeGraphDao extends LexGridSchemaVersionAwareDao {
 			Boolean restrictToAnonymous,
 			List<Sort> sorts,
 			int start, 
-			int pageSize);
+			int pageSize) throws SQLException;
 	
 	public Map<String,Integer> getTripleUidsContainingObjectCount(
 			String codingSchemeUid,
@@ -135,7 +136,7 @@ public interface CodedNodeGraphDao extends LexGridSchemaVersionAwareDao {
 			List<CodeNamespacePair> mustHaveSubjectCodes,
 			List<String> mustHaveSubjectNamespace,
 			List<String> mustHaveSubjectEntityType,
-			Boolean restrictToAnonymous);
+			Boolean restrictToAnonymous) throws SQLException;
 	
 	public List<ConceptReference> getConceptReferencesContainingObject(
 			String codingSchemeUid,
@@ -149,7 +150,7 @@ public interface CodedNodeGraphDao extends LexGridSchemaVersionAwareDao {
 			Boolean restrictToAnonymous,
 			List<Sort> sorts,
 			int start,
-			int pageSize);
+			int pageSize) throws SQLException;
 			
 	public List<CountConceptReference> getCountConceptReferencesContainingObject(
 			String codingSchemeUid,
@@ -160,33 +161,33 @@ public interface CodedNodeGraphDao extends LexGridSchemaVersionAwareDao {
 			List<CodeNamespacePair> mustHaveSubjectCodes,
 			List<String> mustHaveSubjectNamespace,
 			List<String> mustHaveObjectEntityType,
-			Boolean restrictToAnonymous);
+			Boolean restrictToAnonymous) throws SQLException;
 	
 	public List<EntityReferencingAssociatedConcept> getAssociatedConceptsFromUid(
 			String codingSchemeUid, 
 			List<String> tripleUids, 
 			List<Sort> sorts, 
-			TripleNode tripleNode);
+			TripleNode tripleNode) throws SQLException;
 	
 	public List<ConceptReference> getConceptReferencesFromUid(
 			String codingSchemeUid, 
 			List<String> tripleUids, 
 			TripleNode tripleNode, 
-			List<Sort> sorts);
+			List<Sort> sorts) throws SQLException;
 	
 	public List<String> getAssociationPredicateNamesForCodingSchemeUid(
 			String codingSchemeUid,
-			String relationsContainerName);
+			String relationsContainerName) throws SQLException;
 	
 	public List<Node> getDistinctSourceNodesForAssociationPredicate(
 			String codingSchemeUid, 
-			String associationPredicateUid);
+			String associationPredicateUid) throws SQLException;
 	
 	public List<Node> getTargetNodesForSource(
 			String codingSchemeUid, 
 			String associationPredicateUid, 
 			String sourceEntityCode, 
-			String sourceEntityCodeNamespace);
+			String sourceEntityCodeNamespace) throws SQLException;
 
 	public List<ConceptReference> getTailNodes(
 			String codingSchemeUid,
@@ -197,7 +198,7 @@ public interface CodedNodeGraphDao extends LexGridSchemaVersionAwareDao {
 			TraverseAssociations traverse,
 			List<Sort> sorts, 
 			int start,
-			int pageSize);
+			int pageSize) throws SQLException;
 	
 	public List<ConceptReference> getRootNodes(
 			String codingSchemeUid,
@@ -208,7 +209,7 @@ public interface CodedNodeGraphDao extends LexGridSchemaVersionAwareDao {
 			TraverseAssociations traverse,
 			List<Sort> sorts, 
 			int start,
-			int pageSize);
+			int pageSize) throws SQLException;
 
 	public List<String> getTripleUidsForMappingRelationsContainer(
 			String mappingCodingSchemeUid, 
@@ -217,7 +218,7 @@ public interface CodedNodeGraphDao extends LexGridSchemaVersionAwareDao {
 			String relationsContainerName,
 			List<Sort> sortOptionList,
 			int start, 
-			int pageSize);
+			int pageSize) throws SQLException;
 	
 	public List<String> getTripleUidsForMappingRelationsContainerAndCodes(
 			String mappingCodingSchemeUid, 
@@ -229,40 +230,40 @@ public interface CodedNodeGraphDao extends LexGridSchemaVersionAwareDao {
 			List<ConceptReference> sourceOrTargetConceptReferences,
 			List<Sort> sortList, 
 			int start, 
-			int pageSize);
+			int pageSize) throws SQLException;
 	
 	public List<String> getTripleUidsForMappingRelationsContainerAndCodes(
 			String mappingCodingSchemeUid, 
 			String relationsContainerName,
 			List<ConceptReference> sourceConceptReferences,
 			List<ConceptReference> targetConceptReferences,
-			List<ConceptReference> sourceOrTargetConceptReferences);
+			List<ConceptReference> sourceOrTargetConceptReferences) throws SQLException;
 	
 	public List<? extends ResolvedConceptReference> getTriplesForMappingRelationsContainer(
 			String mappingCodingSchemeUid, 
 			String sourceCodingSchemeUid,
 			String targetCodingSchemeUid, 
 			String relationsContainerName,
-			List<String> tripleUids);
+			List<String> tripleUids) throws SQLException;
 	
 	public int getTriplesForMappingRelationsContainerAndCodesCount(
 			String mappingCodingSchemeUid, 
 			String relationsContainerName,
 			List<ConceptReference> sourceConceptReferences,
 			List<ConceptReference> targetConceptReferences,
-			List<ConceptReference> sourceOrTargetConceptReferences);
+			List<ConceptReference> sourceOrTargetConceptReferences) throws SQLException;
 	
 	public int getTriplesForMappingRelationsContainerCount(
 			String mappingCodingSchemeUid, 
-			String relationsContainerName);
+			String relationsContainerName) throws SQLException;
 
 	public boolean doesEntityParticipateInRelationships(
 			String mappingCodingSchemeUid,			
 			String relationsContainerName,
 			String code, 
-			String namespace);
+			String namespace) throws SQLException;
 
-	public int getTransitiveTableCount(String codingSchemeUid);
+	public int getTransitiveTableCount(String codingSchemeUid) throws SQLException;
 	
-	public int deleteFromTransitiveTableByCodingSchemeUid(String codingSchemeUid);
+	public int deleteFromTransitiveTableByCodingSchemeUid(String codingSchemeUid) throws SQLException;
 }

@@ -18,6 +18,8 @@
  */
 package org.lexevs.dao.database.service.listener;
 
+import java.sql.SQLException;
+
 import org.LexGrid.LexBIG.Exceptions.LBParameterException;
 import org.LexGrid.codingSchemes.CodingScheme;
 import org.lexevs.dao.database.service.event.codingscheme.CodingSchemeInsertErrorEvent;
@@ -77,7 +79,7 @@ public class CodingSchemeRegisteringListener extends DefaultServiceEventListener
 	 */
 	@Override
 	public <T extends Exception> void onCodingSchemeInsertError(
-			CodingSchemeInsertErrorEvent<T> codingSchemeInsertErrorEvent){
+			CodingSchemeInsertErrorEvent<T> codingSchemeInsertErrorEvent) throws SQLException{
 		SystemResourceService systemResourceService = LexEvsServiceLocator.getInstance().getSystemResourceService();
 		try {
 			systemResourceService.removeCodingSchemeResourceFromSystem(

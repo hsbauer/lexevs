@@ -20,6 +20,7 @@ package org.lexevs.dao.database.service.valuesets;
 
 import java.net.URI;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.List;
 
 import org.LexGrid.LexBIG.Exceptions.LBException;
@@ -53,7 +54,7 @@ public interface ValueSetDefinitionService {
 	 * 
 	 * @throws LBException the LB exception
 	 */
-	public void insertValueSetDefinitions(ValueSetDefinitions valueSetDefinitions, String systemReleaseUri) throws LBException;
+	public void insertValueSetDefinitions(ValueSetDefinitions valueSetDefinitions, String systemReleaseUri) throws LBException , SQLException;
 	
 	/**
 	 * Insert value set definition Entry.
@@ -63,7 +64,7 @@ public interface ValueSetDefinitionService {
 	 * 
 	 * @throws LBException the LB exception
 	 */
-	public void insertDefinitionEntry(ValueSetDefinition valueSetDefinition, DefinitionEntry definitionEntry) throws LBException;
+	public void insertDefinitionEntry(ValueSetDefinition valueSetDefinition, DefinitionEntry definitionEntry) throws LBException , SQLException;
 	
 	/**
 	 * Return all value set definition URIs that match the supplied key.
@@ -74,7 +75,7 @@ public interface ValueSetDefinitionService {
 	 * 
 	 * @throws LBException the LB exception
 	 */
-	public List<String> getValueSetDefinitionURISForName(String valueSetDefinitionName) throws LBException;
+	public List<String> getValueSetDefinitionURISForName(String valueSetDefinitionName) throws LBException , SQLException;
 	
 	/**
 	 * Gets the value set definition by uri.
@@ -83,7 +84,7 @@ public interface ValueSetDefinitionService {
 	 * 
 	 * @return the value set definition
 	 */
-	public ValueSetDefinition getValueSetDefinitionByUri(URI uri);
+	public ValueSetDefinition getValueSetDefinitionByUri(URI uri) throws SQLException;
 	
 	/**
 	 * Returns list of Value Set Definition URIs that contain supplied SupportedAttribute Tag and Value.
@@ -94,14 +95,14 @@ public interface ValueSetDefinitionService {
 	 * 
 	 * @return list of URIs
 	 */
-	public List<String> getValueSetDefinitionURIForSupportedTagAndValue(String supportedTag, String value, String uri);
+	public List<String> getValueSetDefinitionURIForSupportedTagAndValue(String supportedTag, String value, String uri) throws SQLException;
 	
 	/**
 	 * Lists all the value set definition URIs that are loaded in the system.
 	 * 
 	 * @return list of value set definition URIs
 	 */
-	public List<String> listValueSetDefinitionURIs();
+	public List<String> listValueSetDefinitionURIs() throws SQLException;
 	
 	/**
 	 * Return the URI's of all unnamed value set definition(s).
@@ -110,14 +111,14 @@ public interface ValueSetDefinitionService {
 	 * 
 	 * @throws LBException the LB exception
 	 */
-	public List<String> getAllValueSetDefinitionsWithNoName()  throws LBException;
+	public List<String> getAllValueSetDefinitionsWithNoName()  throws LBException , SQLException;
 	
 	/**
 	 * Delete value set definition by value set definition URI.
 	 * 
 	 * @param valueSetDefinitionURI the value set definition uri
 	 */
-	public void removeValueSetDefinition(String valueSetDefinitionURI);
+	public void removeValueSetDefinition(String valueSetDefinitionURI) throws SQLException;
 	
 	/**
 	 * Update value set definition.
@@ -126,7 +127,7 @@ public interface ValueSetDefinitionService {
 	 * 
 	 * @throws LBException the LB exception
 	 */
-	public void updateValueSetDefinition(ValueSetDefinition valueSetDefinition) throws LBException;
+	public void updateValueSetDefinition(ValueSetDefinition valueSetDefinition) throws LBException , SQLException;
 	
 	/**
 	 * Insert dependent changes.
@@ -135,7 +136,7 @@ public interface ValueSetDefinitionService {
 	 * 
 	 * @throws LBException the LB exception
 	 */
-	public void insertDependentChanges(ValueSetDefinition valueSetDefinition) throws LBException;
+	public void insertDependentChanges(ValueSetDefinition valueSetDefinition) throws LBException , SQLException;
 	
 	/**
 	 * Update versionable attributes.
@@ -143,8 +144,9 @@ public interface ValueSetDefinitionService {
 	 * @param valueSetDefinition the value set definition
 	 * 
 	 * @throws LBException the LB exception
+	 * @throws SQLException 
 	 */
-	public void updateVersionableAttributes(ValueSetDefinition valueSetDefinition) throws LBException;
+	public void updateVersionableAttributes(ValueSetDefinition valueSetDefinition) throws LBException, SQLException;
 	
 	/**
 	 * Revise.
@@ -155,7 +157,7 @@ public interface ValueSetDefinitionService {
 	 * 
 	 * @throws LBException the LB exception
 	 */
-	public void revise(ValueSetDefinition valueSetDefinition, Mappings mapping, String releaseURI) throws LBException;
+	public void revise(ValueSetDefinition valueSetDefinition, Mappings mapping, String releaseURI) throws LBException , SQLException;
 	
 	/**
 	 * Gets the value set definition by revision.
@@ -168,7 +170,7 @@ public interface ValueSetDefinitionService {
 	 * @throws LBRevisionException the LB revision exception
 	 */
 	public ValueSetDefinition getValueSetDefinitionByRevision(String valueSetDefURI,
-			String revisionId) throws LBRevisionException;
+			String revisionId) throws LBRevisionException , SQLException;
 	
 	/**
 	 * Gets the value set definition by date.
@@ -181,5 +183,5 @@ public interface ValueSetDefinitionService {
 	 * @throws LBRevisionException the LB revision exception
 	 */
 	public ValueSetDefinition getValueSetDefinitionByDate(String valueSetDefURI,
-			Date date) throws LBRevisionException;
+			Date date) throws LBRevisionException , SQLException;
 }

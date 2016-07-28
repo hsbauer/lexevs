@@ -18,17 +18,19 @@
  */
 package org.lexevs.dao.database.operation.transitivity;
 
+import java.sql.SQLException;
+
 public interface TransitivityBuilder {
 	
 	public enum TransitivityTableState {COMPUTED, NOT_COMPUTED, NO_TRANSITIVE_ASSOCIATIONS_DEFINED}
 	
-	public void computeTransitivityTable(String codingSchemeUri, String codingSchemeVersion);
+	public void computeTransitivityTable(String codingSchemeUri, String codingSchemeVersion) throws SQLException;
 
 	public TransitivityTableState isTransitiveTableComputed(String codingSchemeUri,
-			String codingSchemeVersion);
+			String codingSchemeVersion) throws SQLException;
 
 	public void reComputeTransitivityTable(String codingSchemeUri,
-			String codingSchemeVersion);
+			String codingSchemeVersion) throws SQLException;
 	
 	
 }

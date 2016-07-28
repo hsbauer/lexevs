@@ -18,6 +18,7 @@
  */
 package org.lexevs.dao.database.ibatis.systemRelease;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.LexGrid.versions.SystemRelease;
@@ -49,7 +50,7 @@ public static String VERSIONS_NAMESPACE = "Versions.";
 	}
 	
 	@Override
-	public String getSystemReleaseUIdByUri(String systemReleaseUri) {
+	public String getSystemReleaseUIdByUri(String systemReleaseUri) throws SQLException {
 		
 		return (String) this.getSqlMapClientTemplate().queryForObject(GET_SYSTEM_RELEASE_ID_BY_URI, 
 			systemReleaseUri);
@@ -62,19 +63,19 @@ public static String VERSIONS_NAMESPACE = "Versions.";
 	}
 
 	@Override
-	public SystemRelease getSystemReleaseMetadataById(String systemReleaseId) {
+	public SystemRelease getSystemReleaseMetadataById(String systemReleaseId) throws SQLException {
 		return (SystemRelease) this.getSqlMapClientTemplate().queryForObject(GET_SYSTEM_RELEASE_METADATA_BY_ID, 
 				systemReleaseId);
 	}
 
 	@Override
-	public SystemRelease getSystemReleaseMetadataByUri(String systemReleaseUri) {
+	public SystemRelease getSystemReleaseMetadataByUri(String systemReleaseUri) throws SQLException {
 		return (SystemRelease) this.getSqlMapClientTemplate().queryForObject(GET_SYSTEM_RELEASE_METADATA_BY_URI, 
 				systemReleaseUri);
 	}
 
 	@Override
-	public String insertSystemReleaseEntry(SystemRelease systemRelease) {
+	public String insertSystemReleaseEntry(SystemRelease systemRelease) throws SQLException {
 		if (systemRelease == null)
 			return null;
 		

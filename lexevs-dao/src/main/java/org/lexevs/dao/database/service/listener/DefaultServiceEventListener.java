@@ -17,7 +17,9 @@
  * 
  */
 package org.lexevs.dao.database.service.listener;
-import org.lexevs.dao.database.service.event.DatabaseServiceEventListener;
+import java.sql.SQLException;
+
+import org.lexevs.dao.database.service.event.DatabaseServiceEventListener;
 import org.lexevs.dao.database.service.event.association.AssociationBatchInsertEvent;
 import org.lexevs.dao.database.service.event.codingscheme.CodingSchemeInsertErrorEvent;
 import org.lexevs.dao.database.service.event.codingscheme.CodingSchemeUpdateEvent;
@@ -111,7 +113,7 @@ public class DefaultServiceEventListener implements DatabaseServiceEventListener
 	 * @see org.lexevs.dao.database.service.event.DatabaseServiceEventListener#onPreEntityInsert(org.lexevs.dao.database.service.event.entity.EntityInsertOrRemoveEvent)
 	 */
 	@Override
-	public boolean onPreEntityInsert(EntityInsertOrRemoveEvent entityInsertEvent) {
+	public boolean onPreEntityInsert(EntityInsertOrRemoveEvent entityInsertEvent) throws SQLException {
 		return true;
 	}
 	
@@ -150,7 +152,7 @@ public class DefaultServiceEventListener implements DatabaseServiceEventListener
 	 * @see org.lexevs.dao.database.service.event.DatabaseServiceEventListener#onPreBatchEntityInsert(org.lexevs.dao.database.service.event.entity.EntityBatchInsertEvent)
 	 */
 	@Override
-	public boolean onPreBatchEntityInsert(EntityBatchInsertEvent event) {
+	public boolean onPreBatchEntityInsert(EntityBatchInsertEvent event) throws SQLException {
 		return true;
 	}
 
@@ -172,14 +174,14 @@ public class DefaultServiceEventListener implements DatabaseServiceEventListener
 	/* (non-Javadoc)
 	 * @see org.lexevs.dao.database.service.event.DatabaseServiceEventListener#onPreBatchAssociationInsert(org.lexevs.dao.database.service.event.association.AssociationBatchInsertEvent)
 	 */
-	public boolean onPreBatchAssociationInsert(AssociationBatchInsertEvent event) {
+	public boolean onPreBatchAssociationInsert(AssociationBatchInsertEvent event) throws SQLException {
 		return true;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.lexevs.dao.database.service.event.DatabaseServiceEventListener#onPreAssociationInsert(org.lexevs.dao.database.service.event.association.AssociationBatchInsertEvent)
 	 */
-	public boolean onPreAssociationInsert(AssociationBatchInsertEvent event) {
+	public boolean onPreAssociationInsert(AssociationBatchInsertEvent event) throws SQLException {
 		return true;
 	}
 
@@ -188,7 +190,7 @@ public class DefaultServiceEventListener implements DatabaseServiceEventListener
 	 */
 	@Override
 	public <T extends Exception> void onCodingSchemeInsertError(
-			CodingSchemeInsertErrorEvent<T> codingSchemeInsertErrorEvent) {
+			CodingSchemeInsertErrorEvent<T> codingSchemeInsertErrorEvent) throws SQLException {
 		//
 	}
 }
