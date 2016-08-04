@@ -58,7 +58,7 @@ import org.lexevs.dao.database.ibatis.valuesets.parameter.InsertPickListDefiniti
 import org.lexevs.dao.database.ibatis.valuesets.parameter.PickListEntryNodeBean;
 import org.lexevs.dao.database.schemaversion.LexGridSchemaVersion;
 import org.lexevs.dao.database.utility.DaoUtility;
-import org.springframework.orm.ibatis.SqlMapClientCallback;
+//import org.springframework.orm.ibatis.SqlMapClientCallback;
 
 import com.ibatis.sqlmap.client.SqlMapExecutor;
 
@@ -516,24 +516,25 @@ public class IbatisPickListDao extends AbstractIbatisDao implements PickListDao 
 			final List<URIMap> urimapList) {
 		final String prefix = this.getPrefixResolver().resolveDefaultPrefix();
 		
-		this.getSqlMapClientTemplate().execute(new SqlMapClientCallback(){
-	
-			public Object doInSqlMapClient(SqlMapExecutor executor)
-			throws SQLException {
-				executor.startBatch();
-				for(URIMap uriMap : urimapList){
-					String uriMapId = createUniqueId();
-					executor.insert(INSERT_URIMAPS_SQL, 
-							buildInsertOrUpdateURIMapBean(
-									prefix,
-									uriMapId, 
-									referenceGuid,
-									classToStringMappingClassifier.classify(uriMap.getClass()),
-									uriMap));
-				}
-				return executor.executeBatch();
-			}	
-		});		
+//		this.getSqlMapClientTemplate().execute(new SqlMapClientCallback(){
+//	
+//			public Object doInSqlMapClient(SqlMapExecutor executor)
+//			throws SQLException {
+//				executor.startBatch();
+//				for(URIMap uriMap : urimapList){
+//					String uriMapId = createUniqueId();
+//					executor.insert(INSERT_URIMAPS_SQL, 
+//							buildInsertOrUpdateURIMapBean(
+//									prefix,
+//									uriMapId, 
+//									referenceGuid,
+//									classToStringMappingClassifier.classify(uriMap.getClass()),
+//									uriMap));
+//				}
+//				return executor.executeBatch();
+//			}	
+//		});		
+		//TODO re-implement with sqlsession:  see IbatisAssociaionDao for example
 	}
 	
 	public void insertURIMap(String referenceGuid, URIMap uriMap) {
@@ -860,7 +861,7 @@ public class IbatisPickListDao extends AbstractIbatisDao implements PickListDao 
 	@SuppressWarnings("unchecked")
 	@Override
 	public PickListDefinition resolvePickListByRevision(String pickListId,
-			String revisionId, Integer sortType) throws LBRevisionException {
+			String revisionId, Integer sortType) throws LBRevisionException, SQLException {
 		
 		String prefix = this.getPrefix();
 		String tempRevId = revisionId;

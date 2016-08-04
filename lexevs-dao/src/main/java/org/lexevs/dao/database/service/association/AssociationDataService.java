@@ -18,8 +18,6 @@
  */
 package org.lexevs.dao.database.service.association;
 
-import java.sql.SQLException;
-
 import org.LexGrid.LexBIG.Exceptions.LBException;
 import org.LexGrid.LexBIG.Exceptions.LBRevisionException;
 import org.LexGrid.relations.AssociationData;
@@ -52,7 +50,6 @@ public interface AssociationDataService {
 	 * @param sourceEntityCode the source entity code
 	 * @param sourceEntityCodeNamespace the source entity code namespace
 	 * @param data the data
-	 * @throws SQLException 
 	 */
 	public void insertAssociationData(
 			String codingSchemeUri, 
@@ -61,7 +58,7 @@ public interface AssociationDataService {
 			String associationPredicateName,
 			String sourceEntityCode,
 			String sourceEntityCodeNamespace,
-			AssociationData data) throws SQLException;
+			AssociationData data);
 
 	/**
 	 * Update association data.
@@ -69,12 +66,11 @@ public interface AssociationDataService {
 	 * @param codingSchemeUri the coding scheme uri
 	 * @param version the version
 	 * @param data the data
-	 * @throws SQLException 
 	 */
 	public void updateAssociationData(
 			String codingSchemeUri, 
 			String version,
-			AssociationData data) throws SQLException;
+			AssociationData data);
 
 	/**
 	 * Removes the association data.
@@ -82,12 +78,11 @@ public interface AssociationDataService {
 	 * @param codingSchemeUri the coding scheme uri
 	 * @param version the version
 	 * @param data the data
-	 * @throws SQLException 
 	 */
 	public void removeAssociationData(
 			String codingSchemeUri, 
 			String version,
-			AssociationData data) throws SQLException;
+			AssociationData data);
 
 	/**
 	 * Revise.
@@ -101,7 +96,6 @@ public interface AssociationDataService {
 	 * @param data the data
 	 * 
 	 * @throws LBException the LB exception
-	 * @throws SQLException 
 	 */
 	public void revise(
 			String codingSchemeUri, 
@@ -110,7 +104,7 @@ public interface AssociationDataService {
 			String associationPredicateName,
 			String sourceEntityCode,
 			String sourceEntityCodeNamespace,
-			AssociationData data) throws LBException, SQLException;
+			AssociationData data) throws LBException;
 
 	/**
 	 * Resolve association data by revision.
@@ -125,7 +119,6 @@ public interface AssociationDataService {
 	 * @return the association data
 	 * 
 	 * @throws LBRevisionException the LB revision exception
-	 * @throws SQLException 
 	 */
 	public AssociationData resolveAssociationDataByRevision(
 			String codingSchemeUri,
@@ -133,7 +126,7 @@ public interface AssociationDataService {
 			String relationContainerName,
 			String associationPredicateName, 
 			String associationInstanceId,
-			String revisionId) throws LBRevisionException, SQLException;
+			String revisionId) throws LBRevisionException;
 
 	/**
 	 * Revise.
@@ -146,7 +139,6 @@ public interface AssociationDataService {
 	 * @param data the data
 	 * 
 	 * @throws LBException the LB exception
-	 * @throws SQLException 
 	 */
 	public void revise(
 			String codingSchemeUri, 
@@ -154,5 +146,5 @@ public interface AssociationDataService {
 			String relationContainerName, 
 			String associationPredicateName,
 			AssociationSource source, 
-			AssociationData data) throws LBException, SQLException;
+			AssociationData data) throws LBException;
 }

@@ -18,8 +18,6 @@
  */
 package org.lexevs.dao.database.service.valuesets;
 
-import java.sql.SQLException;
-
 import org.LexGrid.LexBIG.Exceptions.LBException;
 import org.LexGrid.LexBIG.Exceptions.LBRevisionException;
 import org.LexGrid.valueSets.PickListEntryNode;
@@ -34,9 +32,8 @@ public interface PickListEntryNodeService {
 	 * 
 	 * @param pickListId the pick list id
 	 * @param pickListEntryNode the pick list entry node
-	 * @throws SQLException 
 	 */
-	public void insertPickListEntryNode(String pickListId, PickListEntryNode pickListEntryNode) throws SQLException;
+	public void insertPickListEntryNode(String pickListId, PickListEntryNode pickListEntryNode);
 	
 	/**
 	 * Removes the pick list entry node.
@@ -44,7 +41,7 @@ public interface PickListEntryNodeService {
 	 * @param pickListId the pick list id
 	 * @param pickListEntryNode the pick list entry node
 	 */
-	public void removePickListEntryNode(String pickListId, PickListEntryNode pickListEntryNode) throws SQLException;
+	public void removePickListEntryNode(String pickListId, PickListEntryNode pickListEntryNode);
 	
 	/**
 	 * Update pick list entry node.
@@ -54,7 +51,7 @@ public interface PickListEntryNodeService {
 	 * 
 	 * @throws LBException the LB exception
 	 */
-	public void updatePickListEntryNode(String pickListId, PickListEntryNode pickListEntryNode) throws LBException , SQLException;
+	public void updatePickListEntryNode(String pickListId, PickListEntryNode pickListEntryNode) throws LBException;
 	
 	/**
 	 * Insert dependent changes.
@@ -64,7 +61,7 @@ public interface PickListEntryNodeService {
 	 * 
 	 * @throws LBException the LB exception
 	 */
-	public void insertDependentChanges(String pickListId, PickListEntryNode pickListEntryNode) throws LBException , SQLException;
+	public void insertDependentChanges(String pickListId, PickListEntryNode pickListEntryNode) throws LBException;
 	
 	/**
 	 * Update versionable attributes.
@@ -98,6 +95,6 @@ public interface PickListEntryNodeService {
 	 * @throws LBRevisionException the LB revision exception
 	 */
 	public PickListEntryNode resolvePickListEntryNodeByRevision(String pickListId,
-			String plEntryId, String revisionId) throws LBRevisionException , SQLException;
+			String plEntryId, String revisionId) throws LBRevisionException;
 
 }

@@ -18,7 +18,6 @@
  */
 package org.lexevs.dao.database.service.association;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,7 +72,7 @@ public class VersionableEventAssociationTargetService
 	@Override
 	protected boolean entryStateExists(
 			CodingSchemeUriVersionBasedEntryId id,
-			String entryStateUid) throws SQLException {
+			String entryStateUid) {
 		String codingSchemeUid = this.getCodingSchemeUid(id);
 		
 		return this.getAssociationTargetDao(id).entryStateExists(codingSchemeUid, entryStateUid);
@@ -85,7 +84,7 @@ public class VersionableEventAssociationTargetService
 	@Override
 	protected AssociationTarget getCurrentEntry(
 			CodingSchemeUriVersionBasedEntryId id, 
-			String entryUId) throws SQLException {
+			String entryUId) {
 		String codingSchemeUid = this.getCodingSchemeUid(id);
 		
 		AssociationTargetDao associationTargetDao = this.getAssociationTargetDao(id);
@@ -100,7 +99,7 @@ public class VersionableEventAssociationTargetService
 	@Override
 	protected String getCurrentEntryStateUid(
 			CodingSchemeUriVersionBasedEntryId id, 
-			String entryUid) throws SQLException {
+			String entryUid) {
 		String codingSchemeUid = this.getCodingSchemeUid(id);
 		
 		return this.getAssociationTargetDao(id).getEntryStateUId(codingSchemeUid, entryUid);
@@ -112,7 +111,7 @@ public class VersionableEventAssociationTargetService
 	@Override
 	protected String getEntryUid(
 			CodingSchemeUriVersionBasedEntryId id,
-			AssociationTarget entry) throws SQLException {
+			AssociationTarget entry) {
 		String codingSchemeUid = this.getCodingSchemeUid(id);
 	
 		String tripleId = 
@@ -131,7 +130,7 @@ public class VersionableEventAssociationTargetService
 	protected AssociationTarget getHistoryEntryByRevisionId(
 			CodingSchemeUriVersionBasedEntryId id, 
 			String entryUid,
-			String revisionId) throws SQLException {
+			String revisionId) {
 		String codingSchemeUid = this.getCodingSchemeUid(id);
 		
 		AssociationTargetDao associationTargetDao = this.getAssociationTargetDao(id);
@@ -146,7 +145,7 @@ public class VersionableEventAssociationTargetService
 	@Override
 	protected String getLatestRevisionId(
 			CodingSchemeUriVersionBasedEntryId id,
-			String entryUId) throws SQLException {
+			String entryUId) {
 		String codingSchemeUid = this.getCodingSchemeUid(id);
 		
 		AssociationTargetDao associationTargetDao = this.getAssociationTargetDao(id);
@@ -161,7 +160,7 @@ public class VersionableEventAssociationTargetService
 	protected void insertIntoHistory(
 			CodingSchemeUriVersionBasedEntryId id,
 			AssociationTarget currentEntry, 
-			String entryUId) throws SQLException {
+			String entryUId) {
 		String codingSchemeUid = this.getCodingSchemeUid(id);
 
 		String tripleUid = 
@@ -189,7 +188,7 @@ public class VersionableEventAssociationTargetService
 	protected String updateEntryVersionableAttributes(
 			CodingSchemeUriVersionBasedEntryId id, 
 			String entryUId,
-			AssociationTarget revisedEntity) throws SQLException {
+			AssociationTarget revisedEntity) {
 		String codingSchemeUid = this.getCodingSchemeUid(id);
 		
 		AssociationTargetDao associationTargetDao = this.getAssociationTargetDao(id);
@@ -209,7 +208,7 @@ public class VersionableEventAssociationTargetService
 			String relationContainerName,
 			String associationPredicateName, 
 			String associationInstanceId, 
-			String revisionId) throws LBRevisionException, SQLException {
+			String revisionId) throws LBRevisionException {
 		CodingSchemeUriVersionBasedEntryId id = new CodingSchemeUriVersionBasedEntryId(codingSchemeUri, version);
 		
 		String codingSchemeUid = this.getCodingSchemeUId(codingSchemeUri, version);
@@ -231,7 +230,7 @@ public class VersionableEventAssociationTargetService
 			String version,
 			String relationContainerName, 
 			String associationPredicateName,
-			String associationInstanceId) throws SQLException {
+			String associationInstanceId) {
 		String codingSchemeUid = this.getCodingSchemeUId(codingSchemeUri, version);
 		
 		AssociationTargetDao associationTargetDao = this.getAssociationTargetDao(codingSchemeUri, version);
@@ -255,7 +254,7 @@ public class VersionableEventAssociationTargetService
 			String associationPredicateName,
 			String sourceEntityCode,
 			String sourceEntityCodeNamespace,
-			AssociationTarget target) throws SQLException {
+			AssociationTarget target) {
 
 		String codingSchemeUId = this.getCodingSchemeUId(codingSchemeUri,
 				version);
@@ -301,7 +300,7 @@ public class VersionableEventAssociationTargetService
 	public void updateAssociationTarget(
 			String codingSchemeUri, 
 			String version,
-			final AssociationTarget target) throws SQLException {
+			final AssociationTarget target) {
 
 		final String codingSchemeUId = this.getCodingSchemeUId(codingSchemeUri,
 				version);
@@ -320,7 +319,7 @@ public class VersionableEventAssociationTargetService
 					new UpdateTemplate() {
 
 						@Override
-						public String update() throws SQLException {
+						public String update() {
 							return associationTargetDao.updateAssociationTarget(
 									codingSchemeUId, 
 									associationTargetUId, 
@@ -339,7 +338,7 @@ public class VersionableEventAssociationTargetService
 	@Override
 	@Transactional(rollbackFor=Exception.class)
 	@DatabaseErrorIdentifier(errorCode=REMOVE_ASSOCIATIONTARGET_ERROR)
-	public void removeAssociationTarget(String codingSchemeUri, String version, AssociationTarget target) throws SQLException {
+	public void removeAssociationTarget(String codingSchemeUri, String version, AssociationTarget target) {
 
 		CodingSchemeDao codingSchemeDao = getDaoManager().getCodingSchemeDao(
 				codingSchemeUri, version);
@@ -383,7 +382,7 @@ public class VersionableEventAssociationTargetService
 			String associationPredicateName,
 			AssociationSource source,
 			AssociationTarget target)
-			throws LBException, SQLException {
+			throws LBException {
 		
 		this.revise(
 				codingSchemeUri, 
@@ -408,7 +407,7 @@ public class VersionableEventAssociationTargetService
 			String sourceEntityCode,
 			String sourceEntityCodeNamespace,
 			AssociationTarget target)
-			throws LBException, SQLException {
+			throws LBException {
 		CodingSchemeUriVersionBasedEntryId id = new CodingSchemeUriVersionBasedEntryId(codingSchemeUri, version);
 
 		String entryUId = this.getEntryUid(id, target);

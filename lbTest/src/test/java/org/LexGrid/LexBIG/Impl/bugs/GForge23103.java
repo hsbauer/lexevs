@@ -18,6 +18,8 @@
  */
 package org.LexGrid.LexBIG.Impl.bugs;
 
+import java.sql.SQLException;
+
 import org.LexGrid.LexBIG.DataModel.Core.ResolvedConceptReference;
 import org.LexGrid.LexBIG.Exceptions.LBException;
 import org.LexGrid.LexBIG.Impl.function.LexBIGServiceTestCase;
@@ -84,16 +86,18 @@ public class GForge23103 extends LexBIGServiceTestCase {
     
     /**
      * Test source count.
+     * @throws SQLException 
      */
-    public void testSourceCount(){
+    public void testSourceCount() throws SQLException{
         Presentation pres = getPreferredPresentation(testEntity.getPresentation());
         assertTrue("Length: " + pres.getSource().length, pres.getSource().length == 2);  
     }
     
     /**
      * Test source content.
+     * @throws SQLException 
      */
-    public void testSourceContent(){
+    public void testSourceContent() throws SQLException{
         Presentation pres = getPreferredPresentation(testEntity.getPresentation());
         Source[] sources = pres.getSource();
         for(Source source : sources){

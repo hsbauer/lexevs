@@ -118,8 +118,8 @@ public class DefaultLexEVSIndexOperationsCreateMultipleIndexesTest {
 		for(AbsoluteCodingSchemeVersionReference reference: references){
 			assertFalse(ops.doesIndexExist(reference));
 			
-			LexEvsServiceLocator.getInstance().getLexEvsIndexOperations().
-			registerCodingSchemeEntityIndex(reference.getCodingSchemeURN(), reference.getCodingSchemeVersion());
+//			LexEvsServiceLocator.getInstance().getLexEvsIndexOperations().
+//			registerCodingSchemeEntityIndex(reference.getCodingSchemeURN(), reference.getCodingSchemeVersion());
 			assertNotNull(ops.getConcurrentMetaData().getCodingSchemeList().get(count));
 			
 			// Test the index is populated and valid 

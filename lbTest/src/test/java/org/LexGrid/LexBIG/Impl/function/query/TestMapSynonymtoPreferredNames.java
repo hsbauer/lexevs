@@ -18,6 +18,8 @@
  */
 package org.LexGrid.LexBIG.Impl.function.query;
 
+import java.sql.SQLException;
+
 // LexBIG Test ID: T1_FNC_38	TestMapSynonymtoPreferredNames
 
 import org.LexGrid.LexBIG.DataModel.Core.ResolvedConceptReference;
@@ -36,7 +38,7 @@ public class TestMapSynonymtoPreferredNames extends LexBIGServiceTestCase {
         return testID;
     }
 
-    public void testT1_FNC_38() throws LBException {
+    public void testT1_FNC_38() throws LBException, SQLException {
 
         CodedNodeSet cns = ServiceHolder.instance().getLexBIGService().getCodingSchemeConcepts(THES_SCHEME, null);
         cns = cns.restrictToMatchingDesignations("skeleton", SearchDesignationOption.ALL, "exactMatch", null);

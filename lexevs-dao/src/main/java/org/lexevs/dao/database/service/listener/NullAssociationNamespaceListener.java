@@ -18,8 +18,6 @@
  */
 package org.lexevs.dao.database.service.listener;
 
-import java.sql.SQLException;
-
 import org.LexGrid.codingSchemes.CodingScheme;
 import org.LexGrid.relations.AssociationSource;
 import org.LexGrid.relations.AssociationTarget;
@@ -46,7 +44,7 @@ public class NullAssociationNamespaceListener extends AbstractPreAssociationInse
 	 */
 	@Override
 	protected boolean doValidateNullNamespace(String uri, String version,
-			Relations relation, AssociationSource source) throws SQLException {
+			Relations relation, AssociationSource source) {
 
 		if( relation == null || source == null ) {
 			return true;

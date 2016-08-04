@@ -18,7 +18,6 @@
  */
 package org.lexevs.dao.database.service.codingscheme;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.LexGrid.LexBIG.DataModel.Core.CodingSchemeSummary;
@@ -70,7 +69,7 @@ public interface CodingSchemeService {
 	 * @return the coding scheme by uri and version
 	 */
 	public CodingScheme getCodingSchemeByUriAndVersion(
-			String codingSchemeUri, String codingSchemeVersion) throws SQLException;
+			String codingSchemeUri, String codingSchemeVersion);
 	
 	/**
 	 * Gets the coding scheme summary by uri and version.
@@ -81,7 +80,7 @@ public interface CodingSchemeService {
 	 * @return the coding scheme summary by uri and version
 	 */
 	public CodingSchemeSummary getCodingSchemeSummaryByUriAndVersion(
-			String codingSchemeUri, String codingSchemeVersion) throws SQLException;
+			String codingSchemeUri, String codingSchemeVersion);
 	
 	/**
 	 * Returns entire codingScheme.
@@ -92,7 +91,7 @@ public interface CodingSchemeService {
 	 * @return the complete coding scheme
 	 */
 	public CodingScheme getCompleteCodingScheme(
-			String codingSchemeUri, String codingSchemeVersion) throws SQLException;
+			String codingSchemeUri, String codingSchemeVersion);
 	
 	/**
 	 * Destroy coding scheme.
@@ -101,7 +100,7 @@ public interface CodingSchemeService {
 	 * @param codingSchemeVersion the coding scheme version
 	 */
 	public void removeCodingScheme(
-			String codingSchemeUri, String codingSchemeVersion) throws SQLException;
+			String codingSchemeUri, String codingSchemeVersion);
 	
 	/**
 	 * Insert coding scheme.
@@ -112,7 +111,7 @@ public interface CodingSchemeService {
 	 * @throws CodingSchemeAlreadyLoadedException the coding scheme already loaded exception
 	 */
 	public void insertCodingScheme(
-			CodingScheme scheme, String releaseURI) throws CodingSchemeAlreadyLoadedException, SQLException;
+			CodingScheme scheme, String releaseURI) throws CodingSchemeAlreadyLoadedException;
 	
 	/**
 	 * Update coding scheme.
@@ -121,7 +120,7 @@ public interface CodingSchemeService {
 	 * 
 	 * @throws LBException the LB exception
 	 */
-	public void updateCodingScheme(CodingScheme codingScheme) throws LBException,SQLException;
+	public void updateCodingScheme(CodingScheme codingScheme) throws LBException;
 	
 	/**
 	 * Insert uri map.
@@ -133,7 +132,7 @@ public interface CodingSchemeService {
 	public void insertURIMap(
 			String codingSchemeUri, 
 			String codingSchemeVersion,
-			URIMap uriMap) throws SQLException;
+			URIMap uriMap);
 	
 	/**
 	 * Update uri map.
@@ -145,7 +144,7 @@ public interface CodingSchemeService {
 	public void updateURIMap(
 			String codingSchemeUri, 
 			String codingSchemeVersion,
-			URIMap uriMap) throws SQLException;
+			URIMap uriMap);
 	
 	/**
 	 * Validated supported attribute.
@@ -158,7 +157,7 @@ public interface CodingSchemeService {
 	 * @return true, if successful
 	 */
 	public <T extends URIMap> boolean
-		 validatedSupportedAttribute(String codingSchemeUri, String codingSchemeVersion, String localId, Class<T> attributeClass) throws SQLException;
+		 validatedSupportedAttribute(String codingSchemeUri, String codingSchemeVersion, String localId, Class<T> attributeClass);
 	
 	/**
 	 * Gets the property URI map that matches the propertyType.
@@ -169,7 +168,7 @@ public interface CodingSchemeService {
 	 * 
 	 * @return the uri map
 	 */
-	public List<SupportedProperty> getSupportedPropertyForPropertyType(String codingSchemeUri, String codingSchemeVersion, PropertyTypes propertyType) throws SQLException;
+	public List<SupportedProperty> getSupportedPropertyForPropertyType(String codingSchemeUri, String codingSchemeVersion, PropertyTypes propertyType);
 
 	/**
 	 * revise the codingScheme.
@@ -180,14 +179,14 @@ public interface CodingSchemeService {
 	 * 
 	 * @throws LBException the LB exception
 	 */
-	public void revise(CodingScheme revisedCodingScheme, String releaseURI, Boolean indexNewCodingScheme) throws LBException, SQLException;
+	public void revise(CodingScheme revisedCodingScheme, String releaseURI, Boolean indexNewCodingScheme) throws LBException;
 
 	/**
 	 * Removes the coding scheme.
 	 * 
 	 * @param revisedCodingScheme the revised coding scheme
 	 */
-	public void removeCodingScheme(CodingScheme revisedCodingScheme) throws SQLException;
+	public void removeCodingScheme(CodingScheme revisedCodingScheme);
 	
 	/**
 	 * Resolve coding scheme by revision.
@@ -199,8 +198,7 @@ public interface CodingSchemeService {
 	 * @return the coding scheme
 	 * 
 	 * @throws LBRevisionException the LB revision exception
-	 * @throws SQLException 
 	 */
 	public CodingScheme resolveCodingSchemeByRevision(String codingSchemeURI,
-			String version, String revisionId) throws LBRevisionException, SQLException;
+			String version, String revisionId) throws LBRevisionException;
 }

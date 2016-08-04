@@ -20,6 +20,7 @@ package org.lexevs.dao.database.ibatis;
 
 import java.sql.SQLException;
 
+import org.apache.ibatis.session.SqlSession;
 import org.lexevs.dao.database.access.AbstractBaseDao;
 import org.lexevs.dao.database.ibatis.batch.InOrderOrderingBatchInserterDecorator;
 import org.lexevs.dao.database.ibatis.batch.SqlMapClientTemplateInserter;
@@ -27,6 +28,7 @@ import org.lexevs.dao.database.ibatis.batch.SqlMapExecutorBatchInserter;
 import org.lexevs.dao.database.ibatis.parameter.PrefixedParameter;
 import org.lexevs.dao.database.inserter.BatchInserter;
 import org.lexevs.dao.database.inserter.Inserter;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.InitializingBean;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -42,10 +44,12 @@ import com.ibatis.sqlmap.client.SqlMapExecutor;
 public abstract class AbstractIbatisDao extends AbstractBaseDao implements InitializingBean {
 
 	/** The sql map client template. */
-	private SqlMapClient sqlMapClientTemplate;
+	private SqlSessionTemplate sqlMapClientTemplate;
 	
 	/** The non batch template inserter. */
 	private Inserter nonBatchTemplateInserter;
+	
+	protected SqlSession session;
 	
 	/** The VERSION s_ namespace. */
 	public static String VERSIONS_NAMESPACE = "Versions.";
@@ -125,11 +129,17 @@ public abstract class AbstractIbatisDao extends AbstractBaseDao implements Initi
 	 * @return boolean
 	 * @throws SQLException 
 	 */
-	public boolean entryStateExists(String prefix, String entryStateUId) throws SQLException {
+	public boolean entryStateExists(String prefix, String entryStateUId) {
 		
-		String count = (String) this.getSqlMapClientTemplate().queryForObject(
-				CHECK_ENTRYSTATE_EXISTS, 
-				new PrefixedParameter(prefix, entryStateUId));
+		String count;
+		try {
+			count = (String) this.getSqlMapClientTemplate().queryForObject(
+					CHECK_ENTRYSTATE_EXISTS, 
+					new PrefixedParameter(prefix, entryStateUId));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			throw new RuntimeException("Message needed", e);
+		}
 		
 		if( count != null &&  new Integer(count).intValue() > 0 )
 			return true;
@@ -145,11 +155,16 @@ public abstract class AbstractIbatisDao extends AbstractBaseDao implements Initi
 	 * @return boolean
 	 * @throws SQLException 
 	 */
-	public boolean vsEntryStateExists(String prefix, String entryStateUId) throws SQLException {
+	public boolean vsEntryStateExists(String prefix, String entryStateUId) {
 		
-		String count = (String) this.getSqlMapClientTemplate().queryForObject(
-				CHECK_VSENTRYSTATE_EXISTS, 
-				new PrefixedParameter(prefix, entryStateUId));
+		String count;
+		try {
+			count = (String) this.getSqlMapClientTemplate().queryForObject(
+					CHECK_VSENTRYSTATE_EXISTS, 
+					new PrefixedParameter(prefix, entryStateUId));
+		} catch (SQLException e) {
+			throw new RuntimeException("Message needed", e);
+		}
 		
 		if( count != null &&  new Integer(count).intValue() > 0 )
 			return true;

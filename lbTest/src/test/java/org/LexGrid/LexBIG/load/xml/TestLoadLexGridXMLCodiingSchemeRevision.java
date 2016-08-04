@@ -19,6 +19,7 @@
 package org.LexGrid.LexBIG.load.xml;
 
 import java.io.File;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.LexGrid.LexBIG.DataModel.Collections.ResolvedConceptReferenceList;
@@ -222,7 +223,7 @@ public class TestLoadLexGridXMLCodiingSchemeRevision extends TestCase {
 		lbsm.setVersionTag(loader.getCodingSchemeReferences()[0],
 				LBConstants.KnownTags.PRODUCTION.toString());
 	}
-	public void testRemoveAutombiles() throws LBException {
+	public void testRemoveAutombiles() throws LBException, SQLException {
 		LexBIGServiceManager lbsm = service.getServiceManager(null);
 
 		AbsoluteCodingSchemeVersionReference a = ConvenienceMethods

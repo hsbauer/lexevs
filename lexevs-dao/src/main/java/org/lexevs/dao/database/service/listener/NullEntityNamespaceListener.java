@@ -18,8 +18,6 @@
  */
 package org.lexevs.dao.database.service.listener;
 
-import java.sql.SQLException;
-
 import org.LexGrid.codingSchemes.CodingScheme;
 import org.LexGrid.concepts.Entity;
 import org.apache.commons.lang.StringUtils;
@@ -43,7 +41,7 @@ public class NullEntityNamespaceListener extends AbstractPreEntityInsertValidati
 	/* (non-Javadoc)
 	 * @see org.lexevs.dao.database.service.listener.AbstractPreEntityInsertValidatingListener#doValidate(java.lang.String, java.lang.String, org.LexGrid.concepts.Entity)
 	 */
-	protected boolean doValidate(String uri, String version, Entity entity) throws SQLException {
+	protected boolean doValidate(String uri, String version, Entity entity) {
 
 		if(StringUtils.isBlank(entity.getEntityCodeNamespace())){
 			CodingScheme cs = LexEvsServiceLocator.getInstance().

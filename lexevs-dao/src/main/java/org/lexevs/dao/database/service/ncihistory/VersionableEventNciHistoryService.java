@@ -19,7 +19,6 @@
 package org.lexevs.dao.database.service.ncihistory;
 
 import java.net.URI;
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
@@ -50,7 +49,7 @@ public class VersionableEventNciHistoryService extends AbstractDatabaseService i
 	 */
 	@Override
 	@Transactional
-	public void removeNciHistory(String codingSchemeUri) throws SQLException {
+	public void removeNciHistory(String codingSchemeUri) {
 		this.getDaoManager().getNciHistoryDao(
 				codingSchemeUri).removeNciHistory(codingSchemeUri);
 	}
@@ -61,7 +60,7 @@ public class VersionableEventNciHistoryService extends AbstractDatabaseService i
 	@Override
 	@Transactional
 	public void insertSystemRelease(String codingSchemeUri,
-			SystemRelease systemRelease) throws SQLException {
+			SystemRelease systemRelease) {
 
 		this.getDaoManager().getNciHistoryDao(
 				codingSchemeUri).
@@ -74,7 +73,7 @@ public class VersionableEventNciHistoryService extends AbstractDatabaseService i
 	@Override
 	@Transactional
 	public void insertNCIChangeEvent(String codingSchemeUri,
-			NCIChangeEvent changeEvent) throws SQLException {
+			NCIChangeEvent changeEvent) {
 		Assert.notNull(changeEvent);
 		Assert.notNull(changeEvent.getEditDate());
 
@@ -90,7 +89,7 @@ public class VersionableEventNciHistoryService extends AbstractDatabaseService i
 	 * @see org.lexevs.dao.database.service.ncihistory.NciHistoryService#getBaseLines(java.lang.String, java.util.Date, java.util.Date)
 	 */
 	@Transactional
-	public SystemReleaseList getBaseLines(String uri, Date releasedAfter, Date releasedBefore) throws SQLException {		
+	public SystemReleaseList getBaseLines(String uri, Date releasedAfter, Date releasedBefore) {		
 		List<SystemRelease> list = this.getDaoManager().getNciHistoryDao(
 				uri).getBaseLines(uri, releasedAfter, releasedBefore);
 		
@@ -101,7 +100,7 @@ public class VersionableEventNciHistoryService extends AbstractDatabaseService i
 	 * @see org.lexevs.dao.database.service.ncihistory.NciHistoryService#getEarliestBaseLine(java.lang.String)
 	 */
 	@Transactional
-	public SystemRelease getEarliestBaseLine(String uri) throws SQLException {
+	public SystemRelease getEarliestBaseLine(String uri) {
 		return this.getDaoManager().getNciHistoryDao(
 				uri).getEarliestBaseLine(uri);
 		
@@ -111,7 +110,7 @@ public class VersionableEventNciHistoryService extends AbstractDatabaseService i
 	 * @see org.lexevs.dao.database.service.ncihistory.NciHistoryService#getLatestBaseLine(java.lang.String)
 	 */
 	@Transactional
-	public SystemRelease getLatestBaseLine(String uri) throws SQLException {
+	public SystemRelease getLatestBaseLine(String uri) {
 		return this.getDaoManager().getNciHistoryDao(
 				uri).getLatestBaseLine(uri);
 	}
@@ -120,7 +119,7 @@ public class VersionableEventNciHistoryService extends AbstractDatabaseService i
 	 * @see org.lexevs.dao.database.service.ncihistory.NciHistoryService#getSystemRelease(java.lang.String, java.net.URI)
 	 */
 	@Transactional
-	public SystemReleaseDetail getSystemRelease(String uri, URI releaseURN) throws SQLException {
+	public SystemReleaseDetail getSystemRelease(String uri, URI releaseURN) {
 		SystemReleaseDetail result = new SystemReleaseDetail();
 		
 		SystemRelease sr = this.getDaoManager().getNciHistoryDao(
@@ -162,7 +161,7 @@ public class VersionableEventNciHistoryService extends AbstractDatabaseService i
 	 */
 	@Transactional
 	public NCIChangeEventList getEditActionList(String uri, ConceptReference conceptReference,
-			Date date) throws SQLException {
+			Date date) {
 		List<NCIChangeEvent> list = this.getDaoManager().getNciHistoryDao(
 				uri).getEditActionList(uri, getConceptReferenceCode(conceptReference), date);
 		
@@ -174,7 +173,7 @@ public class VersionableEventNciHistoryService extends AbstractDatabaseService i
 	 */
 	@Transactional
 	public NCIChangeEventList getEditActionList(String uri, ConceptReference conceptReference, Date beginDate,
-			Date endDate) throws SQLException {
+			Date endDate) {
 		List<NCIChangeEvent> list = this.getDaoManager().getNciHistoryDao(
 				uri).getEditActionList(uri, getConceptReferenceCode(conceptReference), beginDate, endDate);
 		
@@ -185,7 +184,7 @@ public class VersionableEventNciHistoryService extends AbstractDatabaseService i
 	 * @see org.lexevs.dao.database.service.ncihistory.NciHistoryService#getEditActionList(java.lang.String, org.LexGrid.LexBIG.DataModel.Core.ConceptReference, java.net.URI)
 	 */
 	@Transactional
-	public NCIChangeEventList getEditActionList(String uri, ConceptReference conceptReference, URI releaseURN) throws SQLException {
+	public NCIChangeEventList getEditActionList(String uri, ConceptReference conceptReference, URI releaseURN) {
 		List<NCIChangeEvent> list = this.getDaoManager().getNciHistoryDao(
 				uri).getEditActionList(uri, getConceptReferenceCode(conceptReference), releaseURN.toString());
 		
@@ -196,7 +195,7 @@ public class VersionableEventNciHistoryService extends AbstractDatabaseService i
 	 * @see org.lexevs.dao.database.service.ncihistory.NciHistoryService#getConceptCreationVersion(java.lang.String, org.LexGrid.LexBIG.DataModel.Core.ConceptReference)
 	 */
 	@Transactional
-	public CodingSchemeVersion getConceptCreationVersion(String uri, ConceptReference conceptReference) throws SQLException {
+	public CodingSchemeVersion getConceptCreationVersion(String uri, ConceptReference conceptReference) {
 		return this.getDaoManager().getNciHistoryDao(
 				uri).getConceptCreateVersion(uri, conceptReference.getCode());
 	}
@@ -206,7 +205,7 @@ public class VersionableEventNciHistoryService extends AbstractDatabaseService i
 	 */
 	@Transactional
 	public CodingSchemeVersionList getConceptChangeVersions(String uri, ConceptReference conceptReference,
-			Date beginDate, Date endDate) throws SQLException{
+			Date beginDate, Date endDate){
 		List<CodingSchemeVersion> list = this.getDaoManager().getNciHistoryDao(
 				uri).getConceptChangeVersions(uri, conceptReference.getCode(), beginDate, endDate);
 		
@@ -217,7 +216,7 @@ public class VersionableEventNciHistoryService extends AbstractDatabaseService i
 	 * @see org.lexevs.dao.database.service.ncihistory.NciHistoryService#getDescendants(java.lang.String, org.LexGrid.LexBIG.DataModel.Core.ConceptReference)
 	 */
 	@Transactional
-	public NCIChangeEventList getDescendants(String uri, ConceptReference conceptReference) throws SQLException {
+	public NCIChangeEventList getDescendants(String uri, ConceptReference conceptReference) {
 		List<NCIChangeEvent> list = this.getDaoManager().getNciHistoryDao(
 				uri).getDescendants(uri, getConceptReferenceCode(conceptReference));
 		
@@ -228,7 +227,7 @@ public class VersionableEventNciHistoryService extends AbstractDatabaseService i
 	 * @see org.lexevs.dao.database.service.ncihistory.NciHistoryService#getAncestors(java.lang.String, org.LexGrid.LexBIG.DataModel.Core.ConceptReference)
 	 */
 	@Transactional
-	public NCIChangeEventList getAncestors(String uri, ConceptReference conceptReference) throws SQLException{
+	public NCIChangeEventList getAncestors(String uri, ConceptReference conceptReference){
 		List<NCIChangeEvent> list = this.getDaoManager().getNciHistoryDao(
 				uri).getAncestors(uri, getConceptReferenceCode(conceptReference));
 		

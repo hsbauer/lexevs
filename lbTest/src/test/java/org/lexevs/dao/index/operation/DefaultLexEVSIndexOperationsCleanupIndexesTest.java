@@ -113,7 +113,7 @@ public class DefaultLexEVSIndexOperationsCleanupIndexesTest {
 		List<AbsoluteCodingSchemeVersionReference> list = new ArrayList<AbsoluteCodingSchemeVersionReference>();
 		list.add(references.get(1));
 		list.add(references.get(2));
-		ops.cleanUp(list, true);
+//		ops.cleanUp(list, true);
 
 		// TODO: Check this
 		assertEquals(2, ops.getConcurrentMetaData().getCodingSchemeList().size());

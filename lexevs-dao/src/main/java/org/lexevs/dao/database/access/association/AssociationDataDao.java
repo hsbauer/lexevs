@@ -18,8 +18,6 @@
  */
 package org.lexevs.dao.database.access.association;
 
-import java.sql.SQLException;
-
 import org.LexGrid.relations.AssociationData;
 import org.LexGrid.relations.AssociationSource;
 import org.lexevs.dao.database.access.LexGridSchemaVersionAwareDao;
@@ -29,55 +27,55 @@ public interface AssociationDataDao extends LexGridSchemaVersionAwareDao {
 
 	public String insertAssociationData(String codingSchemeUId,
 			String associationPredicateUId, AssociationSource source,
-			AssociationData data) throws SQLException;
+			AssociationData data);
 
 	public String getAssociationDataUId(String codingSchemeUId,
-			String associationInstanceId) throws SQLException;
+			String associationInstanceId);
 
 	public String insertHistoryAssociationData(String codingSchemeUId,
 			String associationDataUId, Boolean assnQualExist,
-			Boolean contextExist) throws SQLException;
+			Boolean contextExist);
 
 	public String updateAssociationData(String codingSchemeUId,
 			String associationDataUId,
-			AssociationData data) throws SQLException;
+			AssociationData data);
 
 	public void deleteAssociationData(String codingSchemeUId,
-			String associationDataUId) throws SQLException;
+			String associationDataUId);
 
 	public String updateVersionableChanges(String codingSchemeUId,
 			String associationDataUId,
-			AssociationData data) throws SQLException;
+			AssociationData data);
 
 	public void deleteAllAssocQualsByAssocDataUId(String codingSchemeUId,
-			String associationDataUId) throws SQLException;
+			String associationDataUId);
 
-	public String getLatestRevision(String csUId, String assocDataUId) throws SQLException;
+	public String getLatestRevision(String csUId, String assocDataUId);
 	
-	public boolean entryStateExists(String codingSchemeUId, String entryStateUId) throws SQLException;
+	public boolean entryStateExists(String codingSchemeUId, String entryStateUId);
 
 	public String insertAssociationData(String codingSchemeUId,
 			String associationPredicateUId, AssociationSource source,
-			AssociationData data, Inserter inserter) throws SQLException;
+			AssociationData data, Inserter inserter);
 
 	public AssociationData getAssociationDataByUid(
 			String codingSchemeUId,
-			String associationDataUid) throws SQLException;
+			String associationDataUid);
 
-	public String getEntryStateUId(String codingSchemeUId, String associationDataUid) throws SQLException;
+	public String getEntryStateUId(String codingSchemeUId, String associationDataUid);
 
 	public AssociationData getHistoryAssociationDataByRevision(
 			String codingSchemeUId, 
 			String associationDataUid, 
-			String revisionId) throws SQLException;
+			String revisionId);
 
 	public void insertAssociationData(
 			String codingSchemeUId,
 			String associationPredicateUId, 
 			String sourceEntityCode,
 			String sourceEntityCodeNamespace, 
-			AssociationData data) throws SQLException;
+			AssociationData data);
 
-	public AssociationSource getTripleByUid(String codingSchemeUId, String tripleUid) throws SQLException;
+	public AssociationSource getTripleByUid(String codingSchemeUId, String tripleUid);
 
 }

@@ -18,6 +18,8 @@
  */
 package org.LexGrid.LexBIG.Impl.bugs;
 
+import java.sql.SQLException;
+
 import org.LexGrid.LexBIG.DataModel.Core.ResolvedConceptReference;
 import org.LexGrid.LexBIG.Exceptions.LBException;
 import org.LexGrid.LexBIG.Impl.function.LexBIGServiceTestCase;
@@ -75,7 +77,7 @@ final static String testID = "GForge25067";
        assertNotNull(testEntity);
     }
     
-    public void testDefinitionExists()throws LBException{
+    public void testDefinitionExists()throws LBException, SQLException{
         if (!System.getProperties().getProperty("os.name").contains("Windows")) {
             // Connecting to ms access from Linux is beyond the scope of this
             // application.

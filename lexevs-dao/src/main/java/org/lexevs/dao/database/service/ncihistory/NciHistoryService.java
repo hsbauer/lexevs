@@ -19,7 +19,6 @@
 package org.lexevs.dao.database.service.ncihistory;
 
 import java.net.URI;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -47,9 +46,8 @@ public interface NciHistoryService {
 	 * 
 	 * @param codingSchemeUri the coding scheme uri
 	 * @param systemRelease the system release
-	 * @throws SQLException 
 	 */
-	public void insertSystemRelease(String codingSchemeUri, SystemRelease systemRelease) throws SQLException;
+	public void insertSystemRelease(String codingSchemeUri, SystemRelease systemRelease);
 	
 	/**
 	 * Insert nci change event.
@@ -57,7 +55,7 @@ public interface NciHistoryService {
 	 * @param codingSchemeUri the coding scheme uri
 	 * @param changeEvent the change event
 	 */
-	public void insertNCIChangeEvent(String codingSchemeUri, NCIChangeEvent changeEvent) throws SQLException;
+	public void insertNCIChangeEvent(String codingSchemeUri, NCIChangeEvent changeEvent);
 	
 	/**
 	 * Gets the base lines.
@@ -68,7 +66,7 @@ public interface NciHistoryService {
 	 * 
 	 * @return the base lines
 	 */
-	public SystemReleaseList getBaseLines(String uri, Date releasedAfter, Date releasedBefore) throws SQLException;
+	public SystemReleaseList getBaseLines(String uri, Date releasedAfter, Date releasedBefore);
 	
 	/**
 	 * Gets the earliest base line.
@@ -77,7 +75,7 @@ public interface NciHistoryService {
 	 * 
 	 * @return the earliest base line
 	 */
-	public SystemRelease getEarliestBaseLine(String uri)  throws SQLException;
+	public SystemRelease getEarliestBaseLine(String uri) ;
 	
 	/**
 	 * Gets the latest base line.
@@ -86,7 +84,7 @@ public interface NciHistoryService {
 	 * 
 	 * @return the latest base line
 	 */
-	public SystemRelease getLatestBaseLine(String uri) throws SQLException;
+	public SystemRelease getLatestBaseLine(String uri);
 	
 	/**
 	 * Gets the system release.
@@ -96,7 +94,7 @@ public interface NciHistoryService {
 	 * 
 	 * @return the system release
 	 */
-	public SystemReleaseDetail getSystemRelease(String uri, URI releaseURN) throws SQLException;
+	public SystemReleaseDetail getSystemRelease(String uri, URI releaseURN);
 
 	/**
 	 * Gets the edits the action list.
@@ -108,7 +106,7 @@ public interface NciHistoryService {
 	 * @return the edits the action list
 	 */
 	public NCIChangeEventList getEditActionList(String uri, ConceptReference conceptReference,
-			Date date) throws SQLException;
+			Date date);
 
 	/**
 	 * Gets the edits the action list.
@@ -121,7 +119,7 @@ public interface NciHistoryService {
 	 * @return the edits the action list
 	 */
 	public NCIChangeEventList getEditActionList(String uri, ConceptReference conceptReference, Date beginDate,
-			Date endDate) throws SQLException;
+			Date endDate);
 
 	/**
 	 * Gets the edits the action list.
@@ -132,7 +130,7 @@ public interface NciHistoryService {
 	 * 
 	 * @return the edits the action list
 	 */
-	public NCIChangeEventList getEditActionList(String uri, ConceptReference conceptReference, URI releaseURN) throws SQLException;
+	public NCIChangeEventList getEditActionList(String uri, ConceptReference conceptReference, URI releaseURN);
 
 	/**
 	 * Gets the concept creation version.
@@ -142,7 +140,7 @@ public interface NciHistoryService {
 	 * 
 	 * @return the concept creation version
 	 */
-	public CodingSchemeVersion getConceptCreationVersion(String urn, ConceptReference conceptReference) throws SQLException;
+	public CodingSchemeVersion getConceptCreationVersion(String urn, ConceptReference conceptReference);
 
 	/**
 	 * Gets the concept change versions.
@@ -155,7 +153,7 @@ public interface NciHistoryService {
 	 * @return the concept change versions
 	 */
 	public CodingSchemeVersionList getConceptChangeVersions(String urn, ConceptReference conceptReference,
-			Date beginDate, Date endDate) throws SQLException;
+			Date beginDate, Date endDate);
 
 	/**
 	 * Gets the descendants.
@@ -165,7 +163,7 @@ public interface NciHistoryService {
 	 * 
 	 * @return the descendants
 	 */
-	public NCIChangeEventList getDescendants(String uri, ConceptReference conceptReference) throws SQLException;
+	public NCIChangeEventList getDescendants(String uri, ConceptReference conceptReference);
 
 	/**
 	 * Gets the ancestors.
@@ -175,13 +173,12 @@ public interface NciHistoryService {
 	 * 
 	 * @return the ancestors
 	 */
-	public NCIChangeEventList getAncestors(String uri, ConceptReference conceptReference) throws SQLException;
+	public NCIChangeEventList getAncestors(String uri, ConceptReference conceptReference);
 	
 	/**
 	 * Removes the nci history.
 	 * 
 	 * @param codingSchemeUri the coding scheme uri
-	 * @throws SQLException 
 	 */
-	public void removeNciHistory(String codingSchemeUri) throws SQLException;
+	public void removeNciHistory(String codingSchemeUri);
 }

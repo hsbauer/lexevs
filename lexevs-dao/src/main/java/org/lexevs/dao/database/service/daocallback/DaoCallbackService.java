@@ -18,8 +18,6 @@
  */
 package org.lexevs.dao.database.service.daocallback;
 
-import java.sql.SQLException;
-
 import org.lexevs.dao.database.access.DaoManager;
 
 /**
@@ -35,9 +33,8 @@ public interface DaoCallbackService {
 	 * @param daoCallback the dao callback
 	 * 
 	 * @return the t
-	 * @throws SQLException 
 	 */
-	public <T> T executeInDaoLayer(DaoCallback<T> daoCallback) throws SQLException;
+	public <T> T executeInDaoLayer(DaoCallback<T> daoCallback);
 	
 	/**
 	 * The Interface DaoCallback.
@@ -52,8 +49,7 @@ public interface DaoCallbackService {
 		 * @param daoManager the dao manager
 		 * 
 		 * @return the t
-		 * @throws SQLException 
 		 */
-		public T execute(DaoManager daoManager) throws SQLException;
+		public T execute(DaoManager daoManager);
 	}
 }

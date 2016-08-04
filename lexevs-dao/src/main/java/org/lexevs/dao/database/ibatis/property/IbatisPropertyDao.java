@@ -53,7 +53,7 @@ import org.lexevs.dao.database.inserter.Inserter;
 import org.lexevs.dao.database.schemaversion.LexGridSchemaVersion;
 import org.lexevs.dao.database.utility.DaoUtility;
 import org.springframework.classify.Classifier;
-import org.springframework.orm.ibatis.SqlMapClientCallback;
+//import org.springframework.orm.ibatis.SqlMapClientCallback;
 import org.springframework.util.Assert;
 
 import com.ibatis.sqlmap.client.SqlMapExecutor;
@@ -156,31 +156,31 @@ public class IbatisPropertyDao extends AbstractIbatisDao implements PropertyDao 
 			final PropertyType type,
 			final List<PropertyBatchInsertItem> batch) {
 
-		this.getSqlMapClientTemplate().execute(new SqlMapClientCallback(){
-
-			public Object doInSqlMapClient(SqlMapExecutor executor)
-					throws SQLException {
-				BatchInserter inserter = getBatchTemplateInserter(executor);
-				
-				inserter.startBatch();
-				
-				for(PropertyBatchInsertItem item : batch){
-					String propertyId = createUniqueId();
-					
-					insertProperty(
-							codingSchemeId,
-							item.getParentId(),
-							propertyId,
-							type,
-							item.getProperty(),
-							inserter);
-				}
-				
-				inserter.executeBatch();
-				
-				return null; 
-			}	
-		});
+//		this.getSqlMapClientTemplate().execute(new SqlMapClientCallback(){
+//
+//			public Object doInSqlMapClient(SqlMapExecutor executor)
+//					throws SQLException {
+//				BatchInserter inserter = getBatchTemplateInserter(executor);
+//				
+//				inserter.startBatch();
+//				
+//				for(PropertyBatchInsertItem item : batch){
+//					String propertyId = createUniqueId();
+//					
+//					insertProperty(
+//							codingSchemeId,
+//							item.getParentId(),
+//							propertyId,
+//							type,
+//							item.getProperty(),
+//							inserter);
+//				}
+//				
+//				inserter.executeBatch();
+//				
+//				return null; 
+//			}	
+//		});
 	}
 	
 	/**
@@ -463,8 +463,7 @@ public class IbatisPropertyDao extends AbstractIbatisDao implements PropertyDao 
 						propertyUId, 
 						entryStateUId, 
 						type, 
-						property),
-						1);	
+						property));	
 
 		if(property.getSourceCount() > 0) {
 			String multiAttributeType = this.propertyMultiAttributeClassifier.classify(Source.class);
@@ -521,8 +520,7 @@ public class IbatisPropertyDao extends AbstractIbatisDao implements PropertyDao 
 						propertyUId, 
 						entryStateUId, 
 						null, 
-						property),
-						1);	
+						property));	
 		
 		return entryStateUId;
 	}

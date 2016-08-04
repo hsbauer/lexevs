@@ -18,8 +18,6 @@
  */
 package org.lexevs.dao.database.service.association;
 
-import java.sql.SQLException;
-
 import org.LexGrid.relations.AssociationPredicate;
 import org.LexGrid.relations.AssociationSource;
 
@@ -44,11 +42,10 @@ public interface AssociationService {
 	 * @param relationContainerName the relation container name
 	 * @param associationPredicateName the association predicate name
 	 * @param source the source
-	 * @throws SQLException 
 	 */
 	public void insertAssociationSource(String codingSchemeUri, String version,
 			String relationContainerName, String associationPredicateName,
-			AssociationSource source) throws SQLException;
+			AssociationSource source);
 	
 	/**
 	 * Insert association predicate.
@@ -69,12 +66,11 @@ public interface AssociationService {
 	 * @param associationInstanceId the association instance id
 	 * 
 	 * @return the association triple by association instance id
-	 * @throws SQLException 
 	 */
 	public AssociationTriple getAssociationTripleByAssociationInstanceId(
 			String codingSchemeUri, 
 			String version,
-			String associationInstanceId) throws SQLException;
+			String associationInstanceId);
 	
 	/**
 	 * The Class AssociationTriple.

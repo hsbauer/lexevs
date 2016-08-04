@@ -46,7 +46,7 @@ import org.lexevs.dao.database.ibatis.versions.IbatisVersionsDao;
 import org.lexevs.dao.database.inserter.Inserter;
 import org.lexevs.dao.database.schemaversion.LexGridSchemaVersion;
 import org.lexevs.dao.database.utility.DaoUtility;
-import org.springframework.orm.ibatis.SqlMapClientCallback;
+//import org.springframework.orm.ibatis.SqlMapClientCallback;
 import org.springframework.util.Assert;
 
 import com.ibatis.sqlmap.client.SqlMapExecutor;
@@ -120,7 +120,7 @@ public class IbatisVSPropertyDao extends AbstractIbatisDao implements VSProperty
 
 	public String insertProperty(String parentGuid, 
 			ReferenceType type, 
-			Property property) {
+			Property property) throws SQLException {
 		String propertyGuid = this.createUniqueId();
 		String prefix = this.getPrefixResolver().resolveDefaultPrefix();
 		
@@ -133,7 +133,7 @@ public class IbatisVSPropertyDao extends AbstractIbatisDao implements VSProperty
 				this.getNonBatchTemplateInserter());	
 	}
 	
-	public String insertHistoryProperty(String parentGuid, String propertyGuid, ReferenceType type, Property property) {
+	public String insertHistoryProperty(String parentGuid, String propertyGuid, ReferenceType type, Property property) throws SQLException {
 		
 		String prefix = this.getPrefixResolver().resolveDefaultPrefix();
 		String histPrefix = this.getPrefixResolver().resolveHistoryPrefix();
@@ -173,7 +173,7 @@ public class IbatisVSPropertyDao extends AbstractIbatisDao implements VSProperty
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Property> getAllPropertiesOfParent(String parentGuid, ReferenceType type) {
+	public List<Property> getAllPropertiesOfParent(String parentGuid, ReferenceType type) throws SQLException {
 		String prefix = this.getPrefixResolver().resolveDefaultPrefix();
 		List<Property> propertyList = new ArrayList<Property>();
 		List<VSPropertyBean> propertyBeanList = this.getSqlMapClientTemplate().queryForList(GET_ALL_PROPERTIES_OF_PARENT_SQL, 
@@ -208,7 +208,7 @@ public class IbatisVSPropertyDao extends AbstractIbatisDao implements VSProperty
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Property> getAllHistoryPropertiesOfParentByRevisionGuid(String parentGuid, String revisionGuid, ReferenceType type) {
+	public List<Property> getAllHistoryPropertiesOfParentByRevisionGuid(String parentGuid, String revisionGuid, ReferenceType type) throws SQLException {
 		
 		PrefixedParameterTriple param = new PrefixedParameterTriple(
 				this.getPrefixResolver().resolveHistoryPrefix(),
@@ -221,7 +221,7 @@ public class IbatisVSPropertyDao extends AbstractIbatisDao implements VSProperty
 	}
 	
 	@SuppressWarnings("unchecked")
-	protected <T> List<T> doGetPropertyMultiAttrib(String propertyGuid, Class<T> multiAttrib){
+	protected <T> List<T> doGetPropertyMultiAttrib(String propertyGuid, Class<T> multiAttrib) throws SQLException{
 		return this.getSqlMapClientTemplate().queryForList(GET_PROPERTY_MULTIATTRIB_BY_PROPERTY_ID_SQL, 
 				new PrefixedParameterTuple(this.getPrefixResolver().resolveDefaultPrefix(), propertyGuid, this.propertyMultiAttributeClassifier.classify(multiAttrib)));
 	}
@@ -249,7 +249,7 @@ public class IbatisVSPropertyDao extends AbstractIbatisDao implements VSProperty
 			String propertyGuid,
 			ReferenceType type, 
 			Property property, 
-			Inserter inserter) {
+			Inserter inserter) throws SQLException {
 		
 		String entryStateId = this.createUniqueId();
 		
@@ -302,7 +302,7 @@ public class IbatisVSPropertyDao extends AbstractIbatisDao implements VSProperty
 
 
 	public String updateProperty(String parentGuid,
-			String propertyId, ReferenceType type, Property property) {
+			String propertyId, ReferenceType type, Property property) throws SQLException {
 		Assert.hasText(
 				property.getPropertyId(),
 				"Property must have a populated PropertyId " +
@@ -418,20 +418,22 @@ public class IbatisVSPropertyDao extends AbstractIbatisDao implements VSProperty
 			final PropertyQualifier propertyQualifier, 
 			final Inserter inserter) {
 
-		this.getSqlMapClientTemplate().execute(new SqlMapClientCallback(){
-
-			public Object doInSqlMapClient(SqlMapExecutor executor)
-			throws SQLException {
-
-				inserter.insert(INSERT_PROPERTY_QUALIFIER_SQL, 
-						buildInsertPropertyQualifierBean(
-								propertyGuid, 
-								propertyQualifierGuid, 
-								entryStateGuid,
-								propertyQualifier));
-				return null;
-			}
-		});
+//		this.getSqlMapClientTemplate().execute(new SqlMapClientCallback(){
+//
+//			public Object doInSqlMapClient(SqlMapExecutor executor)
+//			throws SQLException {
+//
+//				inserter.insert(INSERT_PROPERTY_QUALIFIER_SQL, 
+//						buildInsertPropertyQualifierBean(
+//								propertyGuid, 
+//								propertyQualifierGuid, 
+//								entryStateGuid,
+//								propertyQualifier));
+//				return null;
+//			}
+//		});
+		
+		//TODO re-implement using sqlsession:  see IbatisAssociationDao for an example
 	}
 	
 	
@@ -464,20 +466,20 @@ public class IbatisVSPropertyDao extends AbstractIbatisDao implements VSProperty
 			final Inserter inserter) {
 		final String sourceId = this.createUniqueId();	
 
-		this.getSqlMapClientTemplate().execute(new SqlMapClientCallback(){
-
-			public Object doInSqlMapClient(SqlMapExecutor executor)
-			throws SQLException {
-
-				inserter.insert(INSERT_PROPERTY_SOURCE_SQL, 
-						buildInsertPropertySourceBean(
-								propertyGuid, 
-								sourceId, 
-								entryStateId, 
-								source));
-				return null;
-			}
-		});
+//		this.getSqlMapClientTemplate().execute(new SqlMapClientCallback(){
+//
+//			public Object doInSqlMapClient(SqlMapExecutor executor)
+//			throws SQLException {
+//
+//				inserter.insert(INSERT_PROPERTY_SOURCE_SQL, 
+//						buildInsertPropertySourceBean(
+//								propertyGuid, 
+//								sourceId, 
+//								entryStateId, 
+//								source));
+//				return null;
+//			}
+//		});
 	}
 	
 	/**
@@ -494,27 +496,27 @@ public class IbatisVSPropertyDao extends AbstractIbatisDao implements VSProperty
 			final String usageContext, 
 			final Inserter inserter) {
 		
-		this.getSqlMapClientTemplate().execute(new SqlMapClientCallback(){
-
-			public Object doInSqlMapClient(SqlMapExecutor executor)
-			throws SQLException {
-
-				inserter.insert(INSERT_PROPERTY_USAGECONTEXT_SQL, 
-						buildInsertPropertyUsageContextBean(
-								propertyGuid, 
-								propertyUsageContextGuid, 
-								entryStateGuid, 
-								usageContext));
-
-				return null;
-			}
-		});
+//		this.getSqlMapClientTemplate().execute(new SqlMapClientCallback(){
+//
+//			public Object doInSqlMapClient(SqlMapExecutor executor)
+//			throws SQLException {
+//
+//				inserter.insert(INSERT_PROPERTY_USAGECONTEXT_SQL, 
+//						buildInsertPropertyUsageContextBean(
+//								propertyGuid, 
+//								propertyUsageContextGuid, 
+//								entryStateGuid, 
+//								usageContext));
+//
+//				return null;
+//			}
+//		});
 	}
 	
 	@Override
 	public void insertPropertyUsageContext(
 			String propertyGuid, 
-			String usageContext) {
+			String usageContext) throws SQLException {
 		String usageContextId = this.createUniqueId();
 		this.doInsertPropertyUsageContext(
 				propertyGuid, 
@@ -525,14 +527,14 @@ public class IbatisVSPropertyDao extends AbstractIbatisDao implements VSProperty
 	}
 	
 	public void deleteAllDefinitionEntityPropertiesOfValueSetDefinition(
-			String valueSetDefinitionURI){
+			String valueSetDefinitionURI) throws SQLException{
 		this.getSqlMapClientTemplate().delete(DELETE_ALL_DEFINITIONENTRY_PROPERTIES_OF_VALUESET_SQL, 
 				new PrefixedParameterTuple(this.getPrefixResolver().resolveDefaultPrefix(), 
 						ReferenceType.DEFINITIONENTRY.name(), valueSetDefinitionURI));
 	}
 	
 	public void deleteAllValueSetDefinitionProperties(
-			String valueSetDefinitionUID){
+			String valueSetDefinitionUID) throws SQLException{
 		// delete property entry states
 		this.vsEntryStateDao.deleteAllEntryStatesOfVsPropertiesByParentUId(valueSetDefinitionUID, ReferenceType.VALUESETDEFINITION.name());
 		
@@ -542,7 +544,7 @@ public class IbatisVSPropertyDao extends AbstractIbatisDao implements VSProperty
 	}
 	
 	public void deleteAllPickListEntityPropertiesOfPickListDefinition(
-			String pickListUID){
+			String pickListUID) throws SQLException{
 		// delete property entry states
 		this.vsEntryStateDao.deleteAllEntryStatesOfVsPropertiesByParentUId(pickListUID, ReferenceType.PICKLISTENTRY.name());
 		
@@ -552,14 +554,14 @@ public class IbatisVSPropertyDao extends AbstractIbatisDao implements VSProperty
 	}
 	
 	public void deleteAllPickListDefinitionProperties(
-			String pickListId){
+			String pickListId) throws SQLException{
 		this.getSqlMapClientTemplate().delete(DELETE_ALL_PICKLIST_DEFINITION_PROPERTIES_OF_PCIKLIST_SQL, 
 				new PrefixedParameterTuple(this.getPrefixResolver().resolveDefaultPrefix(), 
 						ReferenceType.PICKLISTDEFINITION.name(), pickListId));
 	}
 	
 	@Override
-	public void deleteAllPickListEntryNodeProperties(String pickListEntryNodeUId) {
+	public void deleteAllPickListEntryNodeProperties(String pickListEntryNodeUId) throws SQLException {
 
 		String prefix = this.getPrefixResolver().resolveDefaultPrefix();
 
@@ -584,7 +586,7 @@ public class IbatisVSPropertyDao extends AbstractIbatisDao implements VSProperty
 	 * @return the propertyGUID from parentGuid and propertyID
 	 */
 	@Override
-	public String getPropertyGuidFromParentGuidAndPropertyId(String parentGuid, String propertyId) {
+	public String getPropertyGuidFromParentGuidAndPropertyId(String parentGuid, String propertyId) throws SQLException {
 		
 		return (String) this.getSqlMapClientTemplate().queryForObject(GET_PROPERTY_GUID_SQL, 
 				new PrefixedParameterTuple(this.getPrefixResolver().resolveDefaultPrefix(), parentGuid, propertyId));
@@ -725,7 +727,7 @@ public class IbatisVSPropertyDao extends AbstractIbatisDao implements VSProperty
 	}
 
 	@Override
-	public void deletePropertyByUId(String propertyUId) {
+	public void deletePropertyByUId(String propertyUId) throws SQLException {
 
 		String prefix = this.getPrefixResolver().resolveDefaultPrefix();
 		
@@ -738,7 +740,7 @@ public class IbatisVSPropertyDao extends AbstractIbatisDao implements VSProperty
 	@Override
 	public String updateVersionableAttributes(String parentUId,
 			String propertyUId, ReferenceType type,
-			Property property) {
+			Property property) throws SQLException {
 
 		Assert.hasText(
 				property.getPropertyId(),
@@ -792,7 +794,7 @@ public class IbatisVSPropertyDao extends AbstractIbatisDao implements VSProperty
 	}
 
 	@Override
-	public String getLatestRevision(String propertyUId) {
+	public String getLatestRevision(String propertyUId) throws SQLException {
 
 		String prefix = this.getPrefixResolver().resolveDefaultPrefix();
 		
@@ -806,7 +808,7 @@ public class IbatisVSPropertyDao extends AbstractIbatisDao implements VSProperty
 	@SuppressWarnings("unchecked")
 	@Override
 	public Property resolveVSPropertyByRevision(String parentGuid,
-			String propertyId, String revisionId) throws LBRevisionException {
+			String propertyId, String revisionId) throws LBRevisionException, SQLException {
 
 		String prefix = this.getPrefixResolver().resolveDefaultPrefix();
 
@@ -881,7 +883,7 @@ public class IbatisVSPropertyDao extends AbstractIbatisDao implements VSProperty
 		return property;
 	}
 
-	public Property getPropertyByUId(String vsPropertyUId) {
+	public Property getPropertyByUId(String vsPropertyUId) throws SQLException {
 		
 		String prefix = this.getPrefixResolver().resolveDefaultPrefix();
 		

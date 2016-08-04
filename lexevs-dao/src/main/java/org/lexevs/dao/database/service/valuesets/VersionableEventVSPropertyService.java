@@ -18,8 +18,6 @@
  */
 package org.lexevs.dao.database.service.valuesets;
 
-import java.sql.SQLException;
-
 import org.LexGrid.LexBIG.Exceptions.LBException;
 import org.LexGrid.LexBIG.Exceptions.LBParameterException;
 import org.LexGrid.LexBIG.Exceptions.LBRevisionException;
@@ -51,7 +49,7 @@ public class VersionableEventVSPropertyService extends AbstractDatabaseService i
 	 */
 	@Override
 	public void updateValueSetDefinitionProperty(String valueSetDefinitionUri,
-			Property property) throws SQLException {
+			Property property) {
 	
 		String valueSetDefUId = this.getDaoManager()
 				.getCurrentValueSetDefinitionDao()
@@ -79,7 +77,7 @@ public class VersionableEventVSPropertyService extends AbstractDatabaseService i
 	 */
 	@Override
 	public void insertValueSetDefPropVersionableChanges(
-			String valueSetDefinitionUri, Property property) throws SQLException {
+			String valueSetDefinitionUri, Property property) {
 	
 		String valueSetDefUId = this.getDaoManager()
 				.getCurrentValueSetDefinitionDao()
@@ -105,7 +103,7 @@ public class VersionableEventVSPropertyService extends AbstractDatabaseService i
 	 */
 	@Override
 	public void updatePickListDefinitionProperty(String pickListId,
-			Property property) throws SQLException {
+			Property property) {
 
 		String pickListDefUId = this.getDaoManager()
 				.getCurrentPickListDefinitionDao()
@@ -134,7 +132,7 @@ public class VersionableEventVSPropertyService extends AbstractDatabaseService i
 	 */
 	@Override
 	public void insertPickListDefPropVersionableChanges(String pickListId,
-			Property property) throws SQLException {
+			Property property) {
 
 		String pickListUId = this.getDaoManager()
 				.getCurrentPickListDefinitionDao()
@@ -150,7 +148,7 @@ public class VersionableEventVSPropertyService extends AbstractDatabaseService i
 	 */
 	@Override
 	public void insertPickListEntryNodeProperty(String pickListId,
-			String pickListEntryNodeId, Property property) throws SQLException {
+			String pickListEntryNodeId, Property property) {
 		String pickListEntryNodeUId = this.getDaoManager()
 				.getCurrentPickListEntryNodeDao().getPickListEntryNodeUId(
 						pickListId, pickListEntryNodeId);
@@ -164,7 +162,7 @@ public class VersionableEventVSPropertyService extends AbstractDatabaseService i
 	 */
 	@Override
 	public void updatePickListEntryNodeProperty(String pickListId,
-			String pickListEntryNodeId, Property property) throws SQLException {
+			String pickListEntryNodeId, Property property) {
 
 		String pickListEntryNodeUId = this.getDaoManager()
 				.getCurrentPickListEntryNodeDao().getPickListEntryNodeUId(
@@ -178,7 +176,7 @@ public class VersionableEventVSPropertyService extends AbstractDatabaseService i
 	 */
 	@Override
 	public void removePickListEntryNodeProperty(String pickListId,
-			String pickListEntryNodeId, Property property) throws SQLException {
+			String pickListEntryNodeId, Property property) {
 		
 		String pickListEntryNodeUId = this.getDaoManager()
 				.getCurrentPickListEntryNodeDao().getPickListEntryNodeUId(
@@ -192,7 +190,7 @@ public class VersionableEventVSPropertyService extends AbstractDatabaseService i
 	 */
 	@Override
 	public void insertPickListEntryNodePropVersionableChanges(
-			String pickListId, String pickListEntryNodeId, Property property) throws SQLException {
+			String pickListId, String pickListEntryNodeId, Property property) {
 
 		String pickListUId = this.getDaoManager()
 				.getCurrentPickListEntryNodeDao().getPickListEntryNodeUId(
@@ -207,7 +205,7 @@ public class VersionableEventVSPropertyService extends AbstractDatabaseService i
 	 */
 	@Override
 	public void revisePickListDefinitionProperty(String pickListId,
-			Property property) throws LBException, SQLException {
+			Property property) throws LBException {
 
 		if( validPickListDefinitionRevision(pickListId, property)) {
 			
@@ -238,7 +236,7 @@ public class VersionableEventVSPropertyService extends AbstractDatabaseService i
 	 */
 	@Override
 	public void revisePickListEntryNodeProperty(String pickListId,
-			String pickListEntryNodeId, Property property) throws LBException, SQLException {
+			String pickListEntryNodeId, Property property) throws LBException {
 
 		if( validPLEntryRevision(pickListId, pickListEntryNodeId, property)) {
 			
@@ -269,7 +267,7 @@ public class VersionableEventVSPropertyService extends AbstractDatabaseService i
 	 */
 	@Override
 	public void reviseValueSetDefinitionProperty(String valueSetDefinitionUri,
-			Property property) throws LBException, SQLException {
+			Property property) throws LBException {
 
 		if( validValueSetDefinitionRevision(valueSetDefinitionUri, property)) {
 			
@@ -334,7 +332,7 @@ public class VersionableEventVSPropertyService extends AbstractDatabaseService i
 	 */
 	@Override
 	public Property resolvePickListEntryNodePropertyByRevision(String pickListId, String plEntryId, String propertyId,
-			String revisionId) throws LBRevisionException, SQLException {
+			String revisionId) throws LBRevisionException {
 		
 		String pickListEntryNodeUId = this.getDaoManager()
 				.getCurrentPickListEntryNodeDao().getPickListEntryNodeUId(
@@ -353,9 +351,8 @@ public class VersionableEventVSPropertyService extends AbstractDatabaseService i
 	 * @param property the property
 	 * @param parentUId the parent u id
 	 * @param type the type
-	 * @throws SQLException 
 	 */
-	private void updateProperty(Property property, String parentUId, ReferenceType type) throws SQLException {
+	private void updateProperty(Property property, String parentUId, ReferenceType type) {
 		
 		VSPropertyDao propertyDao = this.getDaoManager()
 				.getCurrentVsPropertyDao();
@@ -381,10 +378,9 @@ public class VersionableEventVSPropertyService extends AbstractDatabaseService i
 	 * @param property the property
 	 * @param parentUId the parent u id
 	 * @param type the type
-	 * @throws SQLException 
 	 */
 	private void updateVersionableAttributes(Property property,
-			String parentUId, ReferenceType type) throws SQLException {
+			String parentUId, ReferenceType type) {
 		
 		VSPropertyDao propertyDao = this.getDaoManager()
 				.getCurrentVsPropertyDao();

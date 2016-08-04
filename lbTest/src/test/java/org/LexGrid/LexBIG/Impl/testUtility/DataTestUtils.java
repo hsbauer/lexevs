@@ -18,6 +18,7 @@
  */
 package org.LexGrid.LexBIG.Impl.testUtility;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,8 +47,9 @@ public class DataTestUtils {
 	 * @param propertyName the property name
 	 * 
 	 * @return the properties from entity
+	 * @throws SQLException 
 	 */
-	public static List<Property> getPropertiesFromEntity(Entity entity, String propertyName){
+	public static List<Property> getPropertiesFromEntity(Entity entity, String propertyName) throws SQLException{
 		List<Property> returnList = new ArrayList<Property>();
 		
 		Property[] props = entity.getAllProperties();
@@ -81,7 +83,7 @@ public class DataTestUtils {
 		throw new RuntimeException("Property Not Found.");
 	}
 	
-	public static Property getPropertyWithValue(Entity entity, String value) {
+	public static Property getPropertyWithValue(Entity entity, String value) throws SQLException {
 		return getPropertyWithValue(entity.getAllProperties(), value);
 	}
 	
@@ -143,7 +145,7 @@ public class DataTestUtils {
 		throw new RuntimeException("AssociatedConcept Not Found.");
 	}
 	
-	public static boolean isPropertyWithValuePresent(Entity entity, String propertyName, String propertyValue) {
+	public static boolean isPropertyWithValuePresent(Entity entity, String propertyName, String propertyValue) throws SQLException {
 		for(Property prop : entity.getAllProperties()){
 			if(prop.getPropertyName().equals(propertyName) &&
 			prop.getValue().getContent().equals(propertyValue)){

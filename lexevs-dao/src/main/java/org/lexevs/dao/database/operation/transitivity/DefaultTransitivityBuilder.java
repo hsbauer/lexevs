@@ -450,7 +450,7 @@ public class DefaultTransitivityBuilder implements TransitivityBuilder {
 		return null;
 	}
 
-	protected boolean isTransitive(String codingSchemeUri, String version, String code, String namespace) {
+	protected boolean isTransitive(String codingSchemeUri, String version, String code, String namespace) throws SQLException {
 		AssociationEntity associationEntity = 
 			this.databaseServiceManager.getEntityService().
 			getAssociationEntity(codingSchemeUri, version, code, namespace);
@@ -574,7 +574,7 @@ public class DefaultTransitivityBuilder implements TransitivityBuilder {
 			return databaseServiceManager.getDaoCallbackService().executeInDaoLayer(new DaoCallback<List<Triple>>(){
 
 				@Override
-				public List<Triple> execute(DaoManager daoManager) {
+				public List<Triple> execute(DaoManager daoManager) throws SQLException {
 					String codingSchemeId = daoManager.getCurrentCodingSchemeDao().
 					getCodingSchemeUIdByUriAndVersion(codingSchemeUri, version);
 
@@ -631,7 +631,7 @@ public class DefaultTransitivityBuilder implements TransitivityBuilder {
 			codingSchemeUid = databaseServiceManager.getDaoCallbackService().executeInDaoLayer(new DaoCallback<String>(){
 
 				@Override
-				public String execute(DaoManager daoManager) {
+				public String execute(DaoManager daoManager) throws SQLException {
 					return daoManager.getCurrentCodingSchemeDao().
 					getCodingSchemeUIdByUriAndVersion(codingSchemeUri, version);
 				}
@@ -667,7 +667,7 @@ public class DefaultTransitivityBuilder implements TransitivityBuilder {
 				callbackService.executeInDaoLayer(new DaoCallback<Object>(){
 
 					@Override
-					public String execute(DaoManager daoManager) {
+					public String execute(DaoManager daoManager) throws SQLException {
 						daoManager.getCurrentAssociationDao().
 						insertBatchTransitiveClosure(codingSchemeUid, batch);
 						return null;
@@ -682,7 +682,7 @@ public class DefaultTransitivityBuilder implements TransitivityBuilder {
 						callbackService.executeInDaoLayer(new DaoCallback<Object>() {
 
 							@Override
-							public Object execute(DaoManager daoManager) {
+							public Object execute(DaoManager daoManager) throws SQLException {
 								daoManager.getCurrentAssociationDao().insertIntoTransitiveClosure(
 										codingSchemeUid, 
 										item.getAssociationPredicateId(), 

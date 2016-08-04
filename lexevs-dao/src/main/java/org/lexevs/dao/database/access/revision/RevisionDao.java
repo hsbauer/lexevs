@@ -18,7 +18,6 @@
  */
 package org.lexevs.dao.database.access.revision;
 
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -40,9 +39,8 @@ public interface RevisionDao extends LexGridSchemaVersionAwareDao {
 	 * @param revision
 	 * @param systemReleaseGuid
 	 * @throws LBRevisionException 
-	 * @throws SQLException 
 	 */
-	public String insertRevisionEntry(Revision revision, String systemReleaseGuid) throws LBRevisionException, SQLException;
+	public String insertRevisionEntry(Revision revision, String systemReleaseGuid) throws LBRevisionException;
 
 	/**
 	 * get revision entry for a given uri.
@@ -72,13 +70,12 @@ public interface RevisionDao extends LexGridSchemaVersionAwareDao {
 	 * 
 	 * @param revisionUri
 	 * @return
-	 * @throws SQLException 
 	 */
-	public String getRevisionUIdById(String revisionId) throws SQLException;
+	public String getRevisionUIdById(String revisionId);
 
 	public String getNewRevisionId();
 	
-	public String getRevisionIdForDate(Timestamp dateTime) throws SQLException;
+	public String getRevisionIdForDate(Timestamp dateTime);
 
 	/**
 	 * remove revision record from the revision table if not used by any entry.
@@ -86,7 +83,6 @@ public interface RevisionDao extends LexGridSchemaVersionAwareDao {
 	 * @param revisionId 
 	 * @return true; if successful
 	 * @throws LBException
-	 * @throws SQLException 
 	 */
-	public boolean removeRevisionById(String revisionId) throws LBException, SQLException;
+	public boolean removeRevisionById(String revisionId) throws LBException;
 }

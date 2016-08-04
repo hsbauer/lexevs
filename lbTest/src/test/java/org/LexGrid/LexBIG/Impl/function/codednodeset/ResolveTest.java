@@ -18,6 +18,8 @@
  */
 package org.LexGrid.LexBIG.Impl.function.codednodeset;
 
+import java.sql.SQLException;
+
 import org.LexGrid.LexBIG.DataModel.Core.ResolvedConceptReference;
 import org.LexGrid.LexBIG.Exceptions.LBException;
 import org.LexGrid.LexBIG.Impl.helpers.TestFilter;
@@ -265,8 +267,9 @@ public class ResolveTest extends BaseCodedNodeSetTest {
      * Test resolve property names definition.
      * 
      * @throws LBException the LB exception
+     * @throws SQLException 
      */
-    public void testResolvePropertyNamesDefinition() throws LBException{
+    public void testResolvePropertyNamesDefinition() throws LBException, SQLException{
         cns = cns.restrictToCodes(Constructors.createConceptReferenceList("A0001"));
         ResolvedConceptReferencesIterator itr = cns.resolve(null, null, Constructors.createLocalNameList("definition"), null, true);     
         
@@ -285,8 +288,9 @@ public class ResolveTest extends BaseCodedNodeSetTest {
      * Test resolve property types presentation.
      * 
      * @throws LBException the LB exception
+     * @throws SQLException 
      */
-    public void testResolvePropertyTypesPresentation() throws LBException{
+    public void testResolvePropertyTypesPresentation() throws LBException, SQLException{
         cns = cns.restrictToCodes(Constructors.createConceptReferenceList("A0001"));
         ResolvedConceptReferencesIterator itr = cns.resolve(null, null, null, new PropertyType[]{PropertyType.PRESENTATION}, true);
 
@@ -305,8 +309,9 @@ public class ResolveTest extends BaseCodedNodeSetTest {
      * Test resolve property types definition.
      * 
      * @throws LBException the LB exception
+     * @throws SQLException 
      */
-    public void testResolvePropertyTypesDefinition() throws LBException{
+    public void testResolvePropertyTypesDefinition() throws LBException, SQLException{
         cns = cns.restrictToCodes(Constructors.createConceptReferenceList("A0001"));
         ResolvedConceptReferencesIterator itr = cns.resolve(null, null, null, new PropertyType[]{PropertyType.DEFINITION}, true);
 

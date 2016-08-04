@@ -56,14 +56,10 @@ import org.lexevs.dao.database.ibatis.parameter.PrefixedParameterCollection;
 import org.lexevs.dao.database.ibatis.parameter.PrefixedParameterTriple;
 import org.lexevs.dao.database.ibatis.parameter.PrefixedParameterTuple;
 import org.lexevs.dao.database.ibatis.versions.IbatisVersionsDao;
-import org.lexevs.dao.database.inserter.BatchInserter;
 import org.lexevs.dao.database.inserter.Inserter;
 import org.lexevs.dao.database.schemaversion.LexGridSchemaVersion;
 import org.lexevs.dao.database.utility.DaoUtility;
-import org.springframework.orm.ibatis.SqlMapClientCallback;
 import org.springframework.util.Assert;
-
-import com.ibatis.sqlmap.client.SqlMapExecutor;
 
 /**
  * The Class IbatisAssociationDao.
@@ -183,9 +179,15 @@ public class IbatisAssociationDao extends AbstractIbatisDao implements Associati
 		String prefix = this.getPrefixResolver().resolvePrefixForCodingScheme(codingSchemeUId);
 		
 		PrefixedParameter bean = new PrefixedParameter(prefix, associationInstanceId);
-		
-		return (String) this.getSqlMapClientTemplate().queryForObject(
-				GET_ASSOCIATION_PREDICATE_NAME_FOR_ASSOC_INSTANCE_ID, bean);
+		String name = null;
+		try {
+			name =  (String) this.getSqlMapClientTemplate().queryForObject(
+					GET_ASSOCIATION_PREDICATE_NAME_FOR_ASSOC_INSTANCE_ID, bean);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			throw new RuntimeException("SQL failure getting predicate name ", e);
+		}
+		return name;
 	}
 
 	@Override
@@ -194,9 +196,16 @@ public class IbatisAssociationDao extends AbstractIbatisDao implements Associati
 		String prefix = this.getPrefixResolver().resolvePrefixForCodingScheme(codingSchemeUId);
 		
 		PrefixedParameter bean = new PrefixedParameter(prefix, associationInstanceId);
+		String relationsName = null;
+		try {
+			relationsName = (String) this.getSqlMapClientTemplate().queryForObject(
+					GET_RELATIONS_CONTAINER_NAME_FOR_ASSOC_INSTANCE_ID, bean);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			throw new RuntimeException("SQL failure getting relations name ", e);
+		}
 		
-		return (String) this.getSqlMapClientTemplate().queryForObject(
-				GET_RELATIONS_CONTAINER_NAME_FOR_ASSOC_INSTANCE_ID, bean);
+		return relationsName;
 	}
 
 	@Override
@@ -211,8 +220,17 @@ public class IbatisAssociationDao extends AbstractIbatisDao implements Associati
 		bean.setParam2(relationUid);
 		bean.setParam3(revisionId);
 		
-		return (Relations) this.getSqlMapClientTemplate().queryForObject(
-				GET_RELATIONS_FOR_UID_AND_REVISION_ID_SQL, bean);	
+		Relations rel = null;
+		
+		try {
+			rel =  (Relations) this.getSqlMapClientTemplate().queryForObject(
+					GET_RELATIONS_FOR_UID_AND_REVISION_ID_SQL, bean);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			throw new RuntimeException("SQL failure getting history relations ", e);
+		}	
+		
+		return rel;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -222,12 +240,20 @@ public class IbatisAssociationDao extends AbstractIbatisDao implements Associati
 			String associationPredicateId,
 			int start, int pageSize) {
 		String prefix = this.getPrefixResolver().resolvePrefixForCodingScheme(codingSchemeId);
+		List<Triple> triple = null;
 		
-		return this.getSqlMapClientTemplate().queryForList(
-				GET_ALL_TRIPLES_OF_CODINGSCHEME_SQL, 
-				new PrefixedParameterTuple(prefix, codingSchemeId, associationPredicateId), 
-				start, 
-				pageSize);
+		try {
+			triple = this.getSqlMapClientTemplate().queryForList(
+					GET_ALL_TRIPLES_OF_CODINGSCHEME_SQL, 
+					new PrefixedParameterTuple(prefix, codingSchemeId, associationPredicateId), 
+					start, 
+					pageSize);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			throw new RuntimeException("SQL failure getting coding scheme triple ", e);
+		}
+		
+		return triple;
 	}
 	
 
@@ -543,7 +569,12 @@ public class IbatisAssociationDao extends AbstractIbatisDao implements Associati
 		bean.setUId(id);
 		bean.setRelationUId(relationId);
 		
-		this.getSqlMapClientTemplate().insert(INSERT_ASSOCIATION_PREDICATE_SQL, bean);
+		try {
+			this.getSqlMapClientTemplate().insert(INSERT_ASSOCIATION_PREDICATE_SQL, bean);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			throw new RuntimeException("SQL failure inserting predicate: " + associationPredicate.getAssociationName(), e);
+		}
 		
 		if(cascade) {
 			this.insertBatchAssociationSources(
@@ -562,28 +593,41 @@ public class IbatisAssociationDao extends AbstractIbatisDao implements Associati
 	public void insertBatchAssociationSources(final String codingSchemeId,
 			final List<AssociationSourceBatchInsertItem> list) {
 		
-		this.getSqlMapClientTemplate().execute(new SqlMapClientCallback(){
+//		this.getSqlMapClientTemplate().execute(new SqlMapClientCallback(){
+//		
+//			public Object doInSqlMapClient(SqlMapExecutor executor)
+//					throws SQLException {
+//				BatchInserter batchInserter = getBatchTemplateInserter(executor);
+//				
+//				batchInserter.startBatch();
+//				
+//				for(AssociationSourceBatchInsertItem item : list){
+//					
+//					insertAssociationSource(
+//							codingSchemeId, 
+//							item.getParentId(), 
+//							item.getAssociationSource(), 
+//							batchInserter);
+//				}
+//				
+//				batchInserter.executeBatch();
+//				
+//				return null;
+//			}	
+//		});
 		
-			public Object doInSqlMapClient(SqlMapExecutor executor)
-					throws SQLException {
-				BatchInserter batchInserter = getBatchTemplateInserter(executor);
-				
-				batchInserter.startBatch();
-				
-				for(AssociationSourceBatchInsertItem item : list){
-					
-					insertAssociationSource(
-							codingSchemeId, 
-							item.getParentId(), 
-							item.getAssociationSource(), 
-							batchInserter);
-				}
-				
-				batchInserter.executeBatch();
-				
-				return null;
-			}	
-		});
+		//TODO perpetuate session down into  where inserter runs and insert as necessary
+		// Some concern here for the batch inserter where item is actually a bean
+//		example config in the xml file creates the batch executor in the sqlSession.  
+//		insertAssociationSource(
+//		codingSchemeId, 
+//		item.getParentId(), 
+//		item.getAssociationSource(), 
+//		this.session);
+		
+		for(AssociationSourceBatchInsertItem item :list){
+			this.session.insert("SomesqlconstructfromIbatis",  item);
+		}
 	}
 	
 	/* (non-Javadoc)
@@ -603,23 +647,23 @@ public class IbatisAssociationDao extends AbstractIbatisDao implements Associati
 	@ClearCache
 	public void insertBatchAssociationSources(final String codingSchemeUId,
 			final String associationPredicateUId, final List<AssociationSource> batch) {
-		this.getSqlMapClientTemplate().execute(new SqlMapClientCallback(){
-			
-			public Object doInSqlMapClient(SqlMapExecutor executor)
-					throws SQLException {
-				BatchInserter batchInserter = getBatchTemplateInserter(executor);
-				
-				batchInserter.startBatch();
-				
-				for(AssociationSource source : batch) {
-					insertAssociationSource(codingSchemeUId, associationPredicateUId, source, batchInserter);
-				}
-				
-				batchInserter.executeBatch();
-				
-				return null;
-			}	
-		});
+//		this.getSqlMapClientTemplate().execute(new SqlMapClientCallback(){
+//			
+//			public Object doInSqlMapClient(SqlMapExecutor executor)
+//					throws SQLException {
+//				BatchInserter batchInserter = getBatchTemplateInserter(executor);
+//				
+//				batchInserter.startBatch();
+//				
+//				for(AssociationSource source : batch) {
+//					insertAssociationSource(codingSchemeUId, associationPredicateUId, source, batchInserter);
+//				}
+//				
+//				batchInserter.executeBatch();
+//				
+//				return null;
+//			}	
+//		});
 	}
 	
 	/**
@@ -697,31 +741,31 @@ public class IbatisAssociationDao extends AbstractIbatisDao implements Associati
 		
 		final String prefix = this.getPrefixResolver().resolvePrefixForCodingScheme(codingSchemeId);
 		
-		this.getSqlMapClientTemplate().execute(new SqlMapClientCallback(){
-
-			public Object doInSqlMapClient(SqlMapExecutor executor)
-					throws SQLException {
-				BatchInserter batchInserter = getBatchTemplateInserter(executor);
-				
-				batchInserter.startBatch();
-				
-				for(TransitiveClosureBatchInsertItem item : batch){
-					doInsertIntoTransitiveClosure(
-							prefix,
-							item.getAssociationPredicateId(), 
-							item.getSourceEntityCode(),
-							item.getSourceEntityCodeNamespace(), 
-							item.getTargetEntityCode(),
-							item.getTargetEntityCodeNamespace(),
-							item.getPath(),
-							batchInserter);
-				}
-
-				batchInserter.executeBatch();
-
-				return null;
-			}
-		});
+//		this.getSqlMapClientTemplate().execute(new SqlMapClientCallback(){
+//
+//			public Object doInSqlMapClient(SqlMapExecutor executor)
+//					throws SQLException {
+//				BatchInserter batchInserter = getBatchTemplateInserter(executor);
+//				
+//				batchInserter.startBatch();
+//				
+//				for(TransitiveClosureBatchInsertItem item : batch){
+//					doInsertIntoTransitiveClosure(
+//							prefix,
+//							item.getAssociationPredicateId(), 
+//							item.getSourceEntityCode(),
+//							item.getSourceEntityCodeNamespace(), 
+//							item.getTargetEntityCode(),
+//							item.getTargetEntityCodeNamespace(),
+//							item.getPath(),
+//							batchInserter);
+//				}
+//
+//				batchInserter.executeBatch();
+//
+//				return null;
+//			}
+//		});
 	}
 
 

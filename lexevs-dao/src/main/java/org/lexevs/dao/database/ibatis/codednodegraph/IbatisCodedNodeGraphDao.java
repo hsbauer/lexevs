@@ -18,7 +18,6 @@
  */
 package org.lexevs.dao.database.ibatis.codednodegraph;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -83,7 +82,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 	private static String DELETE_FROM_TRANSITIVE_TABLE_BY_CODINGSCHEME_UID_SQL  = IbatisAssociationDao.ASSOCIATION_NAMESPACE + "deleteFromTransitiveTableByCodingSchemeUid";
 	
 	@Override
-	public int getTransitiveTableCount(String codingSchemeUid) throws SQLException{
+	public int getTransitiveTableCount(String codingSchemeUid){
 		
 		String prefix = this.getPrefixResolver().resolvePrefixForCodingScheme(codingSchemeUid);
 		
@@ -94,7 +93,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 	}
 	
 	@Override
-	public int deleteFromTransitiveTableByCodingSchemeUid(String codingSchemeUid) throws SQLException{
+	public int deleteFromTransitiveTableByCodingSchemeUid(String codingSchemeUid){
 		
 		String prefix = this.getPrefixResolver().resolvePrefixForCodingScheme(codingSchemeUid);
 		
@@ -118,7 +117,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 			Boolean restrictToAnonymous, 
 			List<Sort> sorts,
 			int start,
-			int pageSize) throws SQLException {
+			int pageSize) {
 		return this.doGetConceptReferences(
 				codingSchemeUid, 
 				relationsContainerName, 
@@ -147,7 +146,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 			Boolean restrictToAnonymous,
 			List<Sort> sorts, 
 			int start,
-			int pageSize) throws SQLException {
+			int pageSize) {
 		return this.doGetConceptReferences(
 				codingSchemeUid, 
 				relationsContainerName, 
@@ -176,7 +175,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 			Boolean restrictToAnonymous, 
 			TripleNode tripleNode,
 			int start,
-			int pageSize) throws SQLException{
+			int pageSize){
 		
 		if(pageSize < 0) {
 			pageSize = Integer.MAX_VALUE;
@@ -216,7 +215,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 			List<String> mustHaveTargetNamespace,
 			List<String> mustHaveEntityType,
 			Boolean restrictToAnonymous,
-			boolean useTransitive) throws SQLException {
+			boolean useTransitive) {
 		String prefix = this.getPrefixResolver().resolvePrefixForCodingScheme(codingSchemeUid);
 		
 		GetCodeRelationshipsBean bean = new GetCodeRelationshipsBean();
@@ -252,7 +251,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 			List<CodeNamespacePair> mustHaveSubjectCodes,
 			List<String> mustHaveSubjectNamespace,
 			List<String> mustHaveSubjectEntityType,
-			Boolean restrictToAnonymous) throws SQLException {
+			Boolean restrictToAnonymous) {
 		return this.doGetTripleUidsCount(
 				codingSchemeUid, 
 				relationsContainerName,
@@ -279,7 +278,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 			List<CodeNamespacePair> mustHaveObjectCodes,
 			List<String> mustHaveObjectNamespace,
 			List<String> mustHaveObjectEntityType,
-			Boolean restrictToAnonymous) throws SQLException{
+			Boolean restrictToAnonymous){
 		return this.doGetTripleUidsCount(
 				codingSchemeUid,  
 				relationsContainerName,
@@ -306,7 +305,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 			List<String> mustHaveNamespace,
 			List<String> mustHaveEntityType,
 			Boolean restrictToAnonymous,
-			TripleNode tripleNode) throws SQLException {
+			TripleNode tripleNode) {
 		String prefix = this.getPrefixResolver().resolvePrefixForCodingScheme(codingSchemeUid);
 		
 		GetEntityAssnUidsCountBean bean = new GetEntityAssnUidsCountBean();
@@ -342,7 +341,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 			Boolean restrictToAnonymous,
 			List<Sort> sorts,
 			int start, 
-			int pageSize) throws SQLException{
+			int pageSize){
 		return this.doGetTripleUids(
 				codingSchemeUid, 
 				associationPredicateUid, 
@@ -374,7 +373,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 			Boolean restrictToAnonymous,
 			List<Sort> sorts,
 			int start, 
-			int pageSize) throws SQLException{
+			int pageSize){
 		return this.doGetTripleUids(
 				codingSchemeUid, 
 				associationPredicateUid, 
@@ -406,7 +405,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 			TripleNode tripleNode,
 			List<Sort> sorts,
 			int start, 
-			int pageSize) throws SQLException{
+			int pageSize){
 		
 		String prefix = this.getPrefixResolver().resolvePrefixForCodingScheme(codingSchemeUid);
 		
@@ -443,7 +442,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 			String codingSchemeUid, 
 			List<String> tripleUids,
 			TripleNode tripleNode,
-			List<Sort> sorts) throws SQLException {
+			List<Sort> sorts) {
 		if(CollectionUtils.isEmpty(tripleUids)) {
 			return new ArrayList<ConceptReference>();
 		}
@@ -463,7 +462,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 			String codingSchemeUid, 
 			List<String> tripleUids, 
 			List<Sort> sorts,
-			TripleNode tripleNode) throws SQLException {
+			TripleNode tripleNode) {
 		if(CollectionUtils.isEmpty(tripleUids)) {
 			return new ArrayList<EntityReferencingAssociatedConcept>();
 		}
@@ -482,7 +481,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 	@CacheMethod
 	public List<String> getAssociationPredicateNamesForCodingSchemeUid(
 			String codingSchemeUid,
-			String relationContainerName) throws SQLException {
+			String relationContainerName) {
 		String prefix = this.getPrefixResolver().resolvePrefixForCodingScheme(codingSchemeUid);
 		
 		PrefixedParameterTuple bean = new PrefixedParameterTuple();
@@ -499,7 +498,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 	@Override
 	@CacheMethod
 	public List<Node> getDistinctSourceNodesForAssociationPredicate(
-			String codingSchemeUid, String associationPredicateUid) throws SQLException {
+			String codingSchemeUid, String associationPredicateUid) {
 		String prefix = this.getPrefixResolver().resolvePrefixForCodingScheme(codingSchemeUid);
 		
 		PrefixedParameter bean = new PrefixedParameter();
@@ -516,7 +515,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 	@CacheMethod
 	public List<Node> getTargetNodesForSource(String codingSchemeUid,
 			String associationPredicateUid, String sourceEntityCode,
-			String sourceEntityCodeNamespace) throws SQLException {
+			String sourceEntityCodeNamespace) {
 		String prefix = this.getPrefixResolver().resolvePrefixForCodingScheme(codingSchemeUid);
 		
 		PrefixedParameterTriple bean = new PrefixedParameterTriple();
@@ -542,7 +541,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 			TraverseAssociations traverse,
 			List<Sort> sorts, 
 			int start, 
-			int pageSize) throws SQLException {
+			int pageSize) {
 		String prefix = this.getPrefixResolver().resolvePrefixForCodingScheme(codingSchemeUid);
 		
 		SequentialMappedParameterBean bean = new SequentialMappedParameterBean(
@@ -574,7 +573,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 			TraverseAssociations traverse,
 			List<Sort> sorts, 
 			int start, 
-			int pageSize) throws SQLException {
+			int pageSize) {
 		String prefix = this.getPrefixResolver().resolvePrefixForCodingScheme(codingSchemeUid);
 		
 		SequentialMappedParameterBean bean = new SequentialMappedParameterBean(
@@ -604,7 +603,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 			List<CodeNamespacePair> mustHaveSubjectCodes,
 			List<String> mustHaveSubjectNamespace,
 			List<String> mustHaveObjectEntityType, 
-			Boolean restrictToAnonymous) throws SQLException {
+			Boolean restrictToAnonymous) {
 		return this.doGetCountConceptReferences(
 				codingSchemeUid, 
 				relationsContainerName, 
@@ -625,7 +624,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 			List<QualifierNameValuePair> associationQualifiers,
 			List<CodeNamespacePair> mustHaveObjectCodes,
 			List<String> mustHaveObjectNamespace,
-			List<String> mustHaveObjectEntityType, Boolean restrictToAnonymous) throws SQLException {
+			List<String> mustHaveObjectEntityType, Boolean restrictToAnonymous) {
 		return this.doGetCountConceptReferences(
 				codingSchemeUid, 
 				relationsContainerName, 
@@ -649,7 +648,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 			List<String> mustHaveNamespace,
 			List<String> mustHaveEntityType, 
 			Boolean restrictToAnonymous, 
-			TripleNode tripleNode) throws SQLException{
+			TripleNode tripleNode){
 		String prefix = this.getPrefixResolver().resolvePrefixForCodingScheme(codingSchemeUid);
 		
 		GetCountConceptReferenceBean bean = new GetCountConceptReferenceBean();
@@ -678,7 +677,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 			String relationsContainerName,
 			List<Sort> sortList,
 			int start, 
-			int pageSize) throws SQLException {
+			int pageSize) {
 		
 		if(pageSize < 0) {
 			pageSize = Integer.MAX_VALUE;
@@ -717,7 +716,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 			String sourceCodingSchemeUid,
 			String targetCodingSchemeUid, 
 			String relationsContainerName,
-			List<String> tripleUids) throws SQLException {
+			List<String> tripleUids) {
 		
 		SequentialMappedParameterBean bean = getParameterBeanForGetTriples(
 				mappingCodingSchemeUid,
@@ -738,7 +737,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 			String sourceCodingSchemeUid,
 			String targetCodingSchemeUid,
 			String relationsContainerName,
-			List<String> tripleUids) throws SQLException{
+			List<String> tripleUids){
 		String mappingSchemePrefix = this.getPrefixResolver().resolvePrefixForCodingScheme(mappingCodingSchemeUid);
 		String sourceSchemePrefix = null;
 		String targetSchemePrefix = null;
@@ -770,7 +769,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 	@CacheMethod
 	public int getTriplesForMappingRelationsContainerCount(
 			String mappingCodingSchemeUid, 
-			String relationsContainerName) throws SQLException {
+			String relationsContainerName) {
 		String mappingSchemePrefix = this.getPrefixResolver().resolvePrefixForCodingScheme(mappingCodingSchemeUid);
 		
 		SequentialMappedParameterBean bean = new SequentialMappedParameterBean(
@@ -796,7 +795,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 			List<ConceptReference> sourceOrTargetConceptReferences,
 			List<Sort> sortList, 
 			int start, 
-			int pageSize) throws SQLException {
+			int pageSize) {
 		
 		String mappingSchemePrefix = this.getPrefixResolver().resolvePrefixForCodingScheme(mappingCodingSchemeUid);
 		String sourceSchemePrefix = null;
@@ -833,7 +832,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 			String relationsContainerName,
 			List<ConceptReference> sourceConceptReferences,
 			List<ConceptReference> targetConceptReferences,
-			List<ConceptReference> sourceOrTargetConceptReferences) throws SQLException {
+			List<ConceptReference> sourceOrTargetConceptReferences) {
 		
 		String mappingSchemePrefix = this.getPrefixResolver().resolvePrefixForCodingScheme(mappingCodingSchemeUid);
 		
@@ -855,7 +854,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 			String relationsContainerName,
 			List<ConceptReference> sourceConceptReferences,
 			List<ConceptReference> targetConceptReferences,
-			List<ConceptReference> sourceOrTargetConceptReferences) throws SQLException {
+			List<ConceptReference> sourceOrTargetConceptReferences) {
 		String mappingSchemePrefix = this.getPrefixResolver().resolvePrefixForCodingScheme(mappingCodingSchemeUid);
 		
 		SequentialMappedParameterBean bean = new SequentialMappedParameterBean(
@@ -878,7 +877,7 @@ private LexGridSchemaVersion supportedDatebaseVersion = LexGridSchemaVersion.par
 			String mappingCodingSchemeUid, 
 			String relationsContainerName,
 			String code,
-			String namespace) throws SQLException {
+			String namespace) {
 		String prefix = this.getPrefixResolver().resolvePrefixForCodingScheme(mappingCodingSchemeUid);
 		
 		SequentialMappedParameterBean bean = new SequentialMappedParameterBean(

@@ -19,7 +19,6 @@
 package org.lexevs.dao.database.service.entity;
 
 import java.sql.Date;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -67,7 +66,7 @@ public class VersionableEventEntityService extends RevisableAbstractDatabaseServ
 	@Override
 	protected void doInsertDependentChanges(
 			CodingSchemeUriVersionBasedEntryId id, Entity revisedEntry)
-			throws LBException, SQLException {
+			throws LBException {
 		String codingSchemeUri = id.getCodingSchemeUri();
 		String version = id.getCodingSchemeVersion();
 		
@@ -279,7 +278,7 @@ public class VersionableEventEntityService extends RevisableAbstractDatabaseServ
 	@Transactional
 	@DatabaseErrorIdentifier(errorCode=INSERT_ENTITY_ERROR)
 	public void insertEntity(String codingSchemeUri, String version,
-			Entity entity) throws SQLException {
+			Entity entity) {
 		this.firePreEntityInsertEvent(new EntityInsertOrRemoveEvent(codingSchemeUri, version, entity));	
 		String codingSchemeUId = this.getDaoManager().
 			getCodingSchemeDao(codingSchemeUri, version).
@@ -299,7 +298,7 @@ public class VersionableEventEntityService extends RevisableAbstractDatabaseServ
 	@Transactional
 	@DatabaseErrorIdentifier(errorCode=INSERT_BATCH_ENTITY_ERROR)
 	public void insertBatchEntities(String codingSchemeUri, String version,
-			List<? extends Entity> entities) throws SQLException {
+			List<? extends Entity> entities) {
 		this.firePreBatchEntityInsertEvent(new EntityBatchInsertEvent(codingSchemeUri, version, entities));	
 
 		String codingSchemeUId = this.getDaoManager().
@@ -320,7 +319,7 @@ public class VersionableEventEntityService extends RevisableAbstractDatabaseServ
 	public void updateEntity(
 			final String codingSchemeUri, 
 			final String version,
-			final Entity entity) throws LBException, SQLException {
+			final Entity entity) throws LBException {
 		
 		final CodingSchemeUriVersionBasedEntryId id = 
 			new CodingSchemeUriVersionBasedEntryId(codingSchemeUri, version);
@@ -385,7 +384,7 @@ public class VersionableEventEntityService extends RevisableAbstractDatabaseServ
 	@DatabaseErrorIdentifier(errorCode=REMOVE_ENTITY_ERROR)
 	@Transactional
 	public void removeEntity(String codingSchemeUri, String version,
-			Entity revisedEntity) throws SQLException {
+			Entity revisedEntity) {
 		this.firePreEntityRemoveEvent(new EntityInsertOrRemoveEvent(codingSchemeUri, version, revisedEntity));	
 
 		CodingSchemeDao codingSchemeDao = getDaoManager().getCodingSchemeDao(codingSchemeUri, version);
@@ -543,7 +542,7 @@ public class VersionableEventEntityService extends RevisableAbstractDatabaseServ
 	 */
 	@Transactional(rollbackFor=Exception.class)
 	@Override
-	public void revise(String codingSchemeUri, String version, Entity entity) throws LBException, SQLException {
+	public void revise(String codingSchemeUri, String version, Entity entity) throws LBException {
 
 		if (this.validRevision(new CodingSchemeUriVersionBasedEntryId(codingSchemeUri, version), entity)) {
 			ChangeType changeType = entity.getEntryState().getChangeType();
@@ -592,7 +591,7 @@ public class VersionableEventEntityService extends RevisableAbstractDatabaseServ
 	@Transactional(rollbackFor=Exception.class)
 	public Entity resolveEntityByRevision(String codingSchemeURI,
 			String version, String entityCode, String entityCodeNamespace,
-			String revisionId) throws LBRevisionException, SQLException {
+			String revisionId) throws LBRevisionException {
 
 		CodingSchemeDao codingSchemeDao = getDaoManager().getCodingSchemeDao(
 				codingSchemeURI, version);
@@ -614,7 +613,7 @@ public class VersionableEventEntityService extends RevisableAbstractDatabaseServ
 	 */
 	@Override
 	protected Entity addDependentAttributesByRevisionId(
-			CodingSchemeUriVersionBasedEntryId id, String entryUid, Entity entry, String revisionId) throws SQLException {
+			CodingSchemeUriVersionBasedEntryId id, String entryUid, Entity entry, String revisionId) {
 		String codingSchemeUri = id.getCodingSchemeUri();
 		String version = id.getCodingSchemeVersion();
 
@@ -637,7 +636,7 @@ public class VersionableEventEntityService extends RevisableAbstractDatabaseServ
 	@Transactional(rollbackFor=Exception.class)
 	public Entity resolveEntityByDate(String codingSchemeURI,
 			String version, String entityCode, String entityCodeNamespace,
-			Date date) throws LBRevisionException, SQLException {
+			Date date) throws LBRevisionException {
 		
 		if( date == null )
 			return null;

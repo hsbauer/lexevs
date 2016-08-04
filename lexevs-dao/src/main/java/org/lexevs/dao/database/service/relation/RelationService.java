@@ -18,8 +18,6 @@
  */
 package org.lexevs.dao.database.service.relation;
 
-import java.sql.SQLException;
-
 import org.LexGrid.LexBIG.Exceptions.LBException;
 import org.LexGrid.LexBIG.Exceptions.LBRevisionException;
 import org.LexGrid.relations.Relations;
@@ -53,7 +51,7 @@ public interface RelationService {
  * @param version the version
  * @param relation the relation
  */
-public void insertRelation(String codingSchemeUri, String version, Relations relation) throws SQLException;
+public void insertRelation(String codingSchemeUri, String version, Relations relation);
 	
 	/**
 	 * Update relation.
@@ -63,9 +61,8 @@ public void insertRelation(String codingSchemeUri, String version, Relations rel
 	 * @param relation the relation
 	 * 
 	 * @throws LBException the LB exception
-	 * @throws SQLException 
 	 */
-	public void updateRelation(String codingSchemeUri, String version, Relations relation) throws LBException, SQLException;
+	public void updateRelation(String codingSchemeUri, String version, Relations relation) throws LBException;
 	
 	/**
 	 * Removes the relation.
@@ -74,7 +71,7 @@ public void insertRelation(String codingSchemeUri, String version, Relations rel
 	 * @param version the version
 	 * @param relation the relation
 	 */
-	public void removeRelation(String codingSchemeUri, String version, Relations relation) throws SQLException;
+	public void removeRelation(String codingSchemeUri, String version, Relations relation);
 	
 	/**
 	 * version API to revise relations.
@@ -84,10 +81,9 @@ public void insertRelation(String codingSchemeUri, String version, Relations rel
 	 * @param relation the relation
 	 * 
 	 * @throws LBException the LB exception
-	 * @throws SQLException 
 	 */
 	public void revise(String codingSchemeUri, String version,
-			Relations relation) throws LBException, SQLException;
+			Relations relation) throws LBException;
 
 	/**
 	 * Resolve relations by revision.
@@ -106,5 +102,5 @@ public void insertRelation(String codingSchemeUri, String version, Relations rel
 			String version, 
 			String relationsName, 
 			String revisionId)
-			throws LBRevisionException, SQLException;
+			throws LBRevisionException;
 }

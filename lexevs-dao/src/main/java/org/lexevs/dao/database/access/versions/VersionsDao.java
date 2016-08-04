@@ -18,8 +18,6 @@
  */
 package org.lexevs.dao.database.access.versions;
 
-import java.sql.SQLException;
-
 import org.LexGrid.versions.EntryState;
 import org.LexGrid.versions.Revision;
 import org.LexGrid.versions.SystemRelease;
@@ -59,19 +57,19 @@ public interface VersionsDao extends LexGridSchemaVersionAwareDao {
 	public String getPreviousRevisionIdFromGivenRevisionIdForEntry(
 			String codingSchemeUid, 
 			String entityUid,
-			String currentRevisionId) throws SQLException ;
+			String currentRevisionId) ;
 
 	public EntryState getEntryStateByEntryUidAndRevisionId(
 			String codingSchemeUId,
 			String entryUId, 
-			String revisionId) throws SQLException;
+			String revisionId);
 
 	public String insertEntryState(
 			String codingSchemeUId,
 			String entryUId,
 			EntryStateType entryType,
 			String previousEntryStateUId,
-			EntryState entryState) throws SQLException;
+			EntryState entryState);
 
 	public void insertEntryState( 
 			String codingSchemeUId,
@@ -79,7 +77,7 @@ public interface VersionsDao extends LexGridSchemaVersionAwareDao {
 			String entryUId, 
 			EntryStateType entryType, 
 			String previousEntryStateUId,
-			EntryState entryState) throws SQLException;
+			EntryState entryState);
 	
 	public void insertEntryState(
 			String codingSchemeUId,
@@ -88,24 +86,24 @@ public interface VersionsDao extends LexGridSchemaVersionAwareDao {
 			EntryStateType entryType, 
 			String previousEntryStateUId,
 			EntryState entryState,
-			Inserter inserter) throws SQLException;
+			Inserter inserter);
 	
 	public void updatePreviousEntryStateUIds(String codingSchemeUId,
-			String entityUId, String prevEntryStateUId, String newEntryStateUId) throws SQLException;
+			String entityUId, String prevEntryStateUId, String newEntryStateUId);
 	
 	/**
 	 * Insert revision.
 	 * 
 	 * @param revision the revision
 	 */
-	public void insertRevision(Revision revision) throws SQLException;
+	public void insertRevision(Revision revision);
 	
 	/**
 	 * Insert system release.
 	 * 
 	 * @param systemRelease the system release
 	 */
-	public void insertSystemRelease(SystemRelease systemRelease) throws SQLException;
+	public void insertSystemRelease(SystemRelease systemRelease);
 	
 	/**
 	 * Gets the system release id by uri.
@@ -115,16 +113,16 @@ public interface VersionsDao extends LexGridSchemaVersionAwareDao {
 	 * @return the system release id by uri
 	 */
 	
-	public String getSystemReleaseIdByUri(String systemReleaseUri) throws SQLException;
+	public String getSystemReleaseIdByUri(String systemReleaseUri);
 
-	public void deleteAllEntryStateOfCodingScheme(String codingSchemeUId) throws SQLException;
+	public void deleteAllEntryStateOfCodingScheme(String codingSchemeUId);
 
 	public void deleteAllEntryStateOfEntity(String codingSchemeUId,
-			String entityUId) throws SQLException;
+			String entityUId);
 	
 	public void deleteAllEntryStateEntriesByEntryUId(String codingSchemeUId,
-			String entryUId) throws SQLException;
+			String entryUId);
 
 	public void deleteAllEntryStateOfRelation(String codingSchemeUId,
-			String relationUId) throws SQLException;
+			String relationUId);
 }

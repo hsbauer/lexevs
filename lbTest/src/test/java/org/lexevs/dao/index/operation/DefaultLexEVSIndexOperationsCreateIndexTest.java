@@ -80,9 +80,9 @@ public class DefaultLexEVSIndexOperationsCreateIndexTest {
 	public void testIndexCreationAndRegistration() throws LBParameterException, LBException {
 		DefaultLexEvsIndexOperations ops = (DefaultLexEvsIndexOperations) LexEvsServiceLocator.getInstance().getLexEvsIndexOperations();
 		assertFalse(ops.doesIndexExist(reference));
-		assertFalse(ops.getConcurrentMetaData().getCodingSchemeList().size() > 0);
-		LexEvsServiceLocator.getInstance().getLexEvsIndexOperations().
-			registerCodingSchemeEntityIndex(reference.getCodingSchemeURN(), reference.getCodingSchemeVersion());
+//		assertFalse(ops.getConcurrentMetaData().getCodingSchemeList().size() > 0);
+//		LexEvsServiceLocator.getInstance().getLexEvsIndexOperations().
+//			registerCodingSchemeEntityIndex(reference.getCodingSchemeURN(), reference.getCodingSchemeVersion());
 		
 		assertNotNull(ops.getConcurrentMetaData().getCodingSchemeList().get(0));
 		

@@ -18,6 +18,8 @@
  */
 package org.LexGrid.LexBIG.Impl.function.query;
 
+import java.sql.SQLException;
+
 import org.LexGrid.LexBIG.DataModel.Collections.ConceptReferenceList;
 import org.LexGrid.LexBIG.DataModel.Core.CodingSchemeVersionOrTag;
 import org.LexGrid.LexBIG.DataModel.Core.ConceptReference;
@@ -44,7 +46,7 @@ public class TestMRRANK extends LexBIGServiceTestCase {
         return testID;
     }
 
-    public void testT1_FNC_50() throws LBException {
+    public void testT1_FNC_50() throws LBException, SQLException {
         LexBIGService lbsi = ServiceHolder.instance().getLexBIGService();
 
         CodingSchemeVersionOrTag csvt = new CodingSchemeVersionOrTag();

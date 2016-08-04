@@ -18,8 +18,6 @@
  */
 package org.lexevs.dao.database.access.valuesets;
 
-import java.sql.SQLException;
-
 import org.LexGrid.LexBIG.Exceptions.LBRevisionException;
 import org.LexGrid.valueSets.DefinitionEntry;
 import org.lexevs.dao.database.access.LexGridSchemaVersionAwareDao;
@@ -33,29 +31,28 @@ public interface VSDefinitionEntryDao extends LexGridSchemaVersionAwareDao {
 	 * @param definitionEntry the Value Set definitionEntry
 	 * 
 	 * @return the string
- * @throws SQLException 
 	 */
 public String insertDefinitionEntry(String valueSetDefinitionUId,
-			DefinitionEntry vsdEntry) throws SQLException;
+			DefinitionEntry vsdEntry);
 	
-	public void deleteDefinitionEntry(String vsDefinitionEntryUId) throws SQLException;
+	public void deleteDefinitionEntry(String vsDefinitionEntryUId);
 
 	public String getDefinitionEntryUId(String valueSetDefinitionURI,
-			String ruleOrder) throws SQLException;
+			String ruleOrder);
 
 	public String insertHistoryDefinitionEntry(String valueSetDefUId,
-			String vsDefinitionUId, DefinitionEntry defEntry) throws SQLException;
+			String vsDefinitionUId, DefinitionEntry defEntry);
 
 	public String updateDefinitionEntry(String vsDefinitionUId,
-			DefinitionEntry defEntry) throws SQLException;
+			DefinitionEntry defEntry);
 
 	public String updateDefinitionEntryVersionableAttrib(
-			String vsDefinitionUId, DefinitionEntry defEntry) throws SQLException;
+			String vsDefinitionUId, DefinitionEntry defEntry);
 
-	public String getLatestRevision(String vsDefEntryUId) throws SQLException;
+	public String getLatestRevision(String vsDefEntryUId);
 
 	public DefinitionEntry resolveDefinitionEntryByRevision(
 			String valueSetDefURI, String ruleOrder, String revisionId)
-			throws LBRevisionException, SQLException;
+			throws LBRevisionException;
 
 }

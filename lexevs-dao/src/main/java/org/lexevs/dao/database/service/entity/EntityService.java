@@ -19,7 +19,6 @@
 package org.lexevs.dao.database.service.entity;
 
 import java.sql.Date;
-import java.sql.SQLException;
 import java.util.List;
 
 import org.LexGrid.LexBIG.DataModel.Core.ResolvedConceptReference;
@@ -60,12 +59,11 @@ public interface EntityService {
 	 * @param codingSchemeUri the coding scheme uri
 	 * @param version the version
 	 * @param entity the entity
-	 * @throws SQLException 
 	 */
 	public void insertEntity(
 			String codingSchemeUri, 
 			String version, 
-			Entity entity) throws SQLException;
+			Entity entity);
 	
 	/**
 	 * Gets the entity count.
@@ -175,12 +173,11 @@ public interface EntityService {
 	 * @param codingSchemeUri the coding scheme uri
 	 * @param version the version
 	 * @param entities the entities
-	 * @throws SQLException 
 	 */
 	public void insertBatchEntities(
 			String codingSchemeUri, 
 			String version,
-			List<? extends Entity> entities) throws SQLException;
+			List<? extends Entity> entities);
 	
 	/**
 	 * Update entity.
@@ -190,12 +187,11 @@ public interface EntityService {
 	 * @param codingSchemeUri the coding scheme uri
 	 * 
 	 * @throws LBException the LB exception
-	 * @throws SQLException 
 	 */
 	public void updateEntity(
 			String codingSchemeUri, 
 			String version, 
-			Entity entity) throws LBException, SQLException;
+			Entity entity) throws LBException;
 	
 	/**
 	 * Removes the entity.
@@ -205,12 +201,11 @@ public interface EntityService {
 	 * @param entity the entity
 	 * 
 	 * @throws LBException the LB exception
-	 * @throws SQLException 
 	 */
 	public void removeEntity(
 			String codingSchemeUri, 
 			String version,
-			Entity entity) throws LBException, SQLException;
+			Entity entity) throws LBException;
 	
 	/**
 	 * Revise.
@@ -220,10 +215,9 @@ public interface EntityService {
 	 * @param revisedEntity the revised entity
 	 * 
 	 * @throws LBException the LB exception
-	 * @throws SQLException 
 	 */
 	public void revise(String codingSchemeUri, String version,
-			Entity revisedEntity) throws LBException, SQLException;
+			Entity revisedEntity) throws LBException;
 	
 	/**
 	 * Resolve entity by revision.
@@ -237,10 +231,9 @@ public interface EntityService {
 	 * @return the entity
 	 * 
 	 * @throws LBRevisionException the LB revision exception
-	 * @throws SQLException 
 	 */
 	public Entity resolveEntityByRevision(String codingSchemeURI,
-			String version, String entityCode, String entityCodeNamespace, String revisionId) throws LBRevisionException, SQLException;
+			String version, String entityCode, String entityCodeNamespace, String revisionId) throws LBRevisionException;
 	
 	/**
 	 * Resolve entity by date.
@@ -254,11 +247,10 @@ public interface EntityService {
 	 * @return the entity
 	 * 
 	 * @throws LBRevisionException the LB revision exception
-	 * @throws SQLException 
 	 */
 	public Entity resolveEntityByDate(String codingSchemeURI,
 			String version, String entityCode, String entityCodeNamespace,
-			Date date) throws LBRevisionException, SQLException;
+			Date date) throws LBRevisionException;
 
 	/**
 	 * Gets the entity description.

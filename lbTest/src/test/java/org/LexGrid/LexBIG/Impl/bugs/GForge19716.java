@@ -18,6 +18,7 @@
  */
 package org.LexGrid.LexBIG.Impl.bugs;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,7 +82,7 @@ public class GForge19716 extends LexBIGServiceTestCase {
         assertTrue(foundProp);      
     }
     
-    public void testAddAnyPropertySingle(){
+    public void testAddAnyPropertySingle() throws SQLException{
         Entity entity = new Entity();
         
         Presentation pres = new Presentation();
@@ -102,7 +103,7 @@ public class GForge19716 extends LexBIGServiceTestCase {
         assertTrue(entity.getProperty().length == 1);   
     }
     
-    public void testAddAnyPropertyList(){
+    public void testAddAnyPropertyList() throws SQLException{
         Entity entity = new Entity();
         
         Presentation pres = new Presentation();

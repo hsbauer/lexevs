@@ -81,7 +81,7 @@ public class DefaultServiceEventListener implements DatabaseServiceEventListener
 	/* (non-Javadoc)
 	 * @see org.lexevs.dao.database.service.event.DatabaseServiceEventListener#onEntityUpdate(org.lexevs.dao.database.service.event.entity.EntityUpdateEvent)
 	 */
-	public boolean onEntityUpdate(EntityUpdateEvent event) {
+	public boolean onEntityUpdate(EntityUpdateEvent event) throws SQLException {
 		return true;
 	}
 

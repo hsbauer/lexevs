@@ -52,7 +52,7 @@ import org.lexevs.dao.database.inserter.BatchInserter;
 import org.lexevs.dao.database.inserter.Inserter;
 import org.lexevs.dao.database.schemaversion.LexGridSchemaVersion;
 import org.lexevs.dao.database.utility.DaoUtility;
-import org.springframework.orm.ibatis.SqlMapClientCallback;
+//import org.springframework.orm.ibatis.SqlMapClientCallback;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
@@ -150,7 +150,7 @@ public class IbatisEntityDao extends AbstractIbatisDao implements EntityDao {
 	 * @see org.lexevs.dao.database.access.entity.EntityDao#getEntityByCodeAndNamespace(java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@CacheMethod
-	public Entity getEntityByCodeAndNamespace(String codingSchemeUid, String entityCode, String entityCodeNamespace){
+	public Entity getEntityByCodeAndNamespace(String codingSchemeUid, String entityCode, String entityCodeNamespace) {
 		return this.getEntityByCodeAndNamespace(
 				codingSchemeUid, 
 				entityCode, 
@@ -180,7 +180,7 @@ public class IbatisEntityDao extends AbstractIbatisDao implements EntityDao {
 			List<String> propertyNames, 
 			List<String> propertyTypes,
 			List<String> entityUids) {
-		if(CollectionUtils.isEmpty(entityUids)) {
+		if(CollectionUtils.isEmpty(entityUids))  {
 			return new ArrayList<Entity>();
 		}
 		
@@ -194,7 +194,7 @@ public class IbatisEntityDao extends AbstractIbatisDao implements EntityDao {
 	public Map<String,Entity> getEntitiesWithUidMap(String codingSchemeId,
 			List<String> propertyNames, List<String> propertyTypes,
 			List<String> entityUids) {
-		if(CollectionUtils.isEmpty(entityUids)) {
+		if(CollectionUtils.isEmpty(entityUids))  {
 			return new HashMap<String,Entity>();
 		}
 		
@@ -226,7 +226,7 @@ public class IbatisEntityDao extends AbstractIbatisDao implements EntityDao {
 
 	@Override
 	@CacheMethod
-	public AssociationEntity getAssociationEntityByCodeAndNamespace(String codingSchemeId, String entityCode, String entityCodeNamespace){
+	public AssociationEntity getAssociationEntityByCodeAndNamespace(String codingSchemeId, String entityCode, String entityCodeNamespace) {
 		String prefix = this.getPrefixResolver().resolvePrefixForCodingScheme(codingSchemeId);
 		
 		String entityId = this.getEntityUId(codingSchemeId, entityCode, entityCodeNamespace);
@@ -283,7 +283,7 @@ public class IbatisEntityDao extends AbstractIbatisDao implements EntityDao {
 			String codingSchemeId, 
 			String entityId, 
 			List<String> propertyNames, 
-			List<String> propertyTypes){
+			List<String> propertyTypes) {
 		
 		List<Entity> entities = this.getEntities(
 				codingSchemeId, 
@@ -333,7 +333,7 @@ public class IbatisEntityDao extends AbstractIbatisDao implements EntityDao {
 	
 	@SuppressWarnings("unchecked")
 	@Deprecated
-	protected List<PropertyLink> doGetPropertyLinks(String prefix, String codingSchemeId, List<String> entityUids){
+	protected List<PropertyLink> doGetPropertyLinks(String prefix, String codingSchemeId, List<String> entityUids) {
 		return this.getSqlMapClientTemplate().
 			queryForList(GET_PROPERTY_LINKS_BY_ENTITY_UIDS_SQL, 
 				new PrefixedParameterCollection(prefix, codingSchemeId, entityUids));
@@ -580,28 +580,30 @@ public class IbatisEntityDao extends AbstractIbatisDao implements EntityDao {
 			final boolean cascade) {
 		final String prefix = this.getPrefixResolver().resolvePrefixForCodingScheme(codingSchemeId);
 
-		this.getSqlMapClientTemplate().execute(new SqlMapClientCallback(){
-
-			public Object doInSqlMapClient(SqlMapExecutor executor)
-					throws SQLException {
-				BatchInserter batchInserter = getBatchTemplateInserter(executor);
-				
-				batchInserter.startBatch();
-				
-				for(Entity entity : entities){
-					doInsertEntity(
-							prefix, 
-							codingSchemeId, 
-							entity, 
-							batchInserter,
-							cascade);
-				}
-				
-				batchInserter.executeBatch();
-
-				return null;
-			}
-		});
+//		this.getSqlMapClientTemplate().execute(new SqlMapClientCallback(){
+//
+//			public Object doInSqlMapClient(SqlMapExecutor executor)
+//					throws SQLException {
+//				BatchInserter batchInserter = getBatchTemplateInserter(executor);
+//				
+//				batchInserter.startBatch();
+//				
+//				for(Entity entity : entities){
+//					doInsertEntity(
+//							prefix, 
+//							codingSchemeId, 
+//							entity, 
+//							batchInserter,
+//							cascade);
+//				}
+//				
+//				batchInserter.executeBatch();
+//
+//				return null;
+//			}
+//		});
+		
+		//TODO refashion as an sqlSession see IbatisAssocaitionDao for example
 	}
 	
 

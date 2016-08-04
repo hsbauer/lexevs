@@ -95,9 +95,10 @@ public class DefaultPrefixResolver implements PrefixResolver {
 	 * @see org.lexevs.dao.database.prefix.PrefixResolver#resolvePrefixForCodingScheme(java.lang.String)
 	 */
 	@CacheMethod
-	public String resolvePrefixForCodingScheme(final String codingSchemeId) throws SQLException {
-		String prefix =
-			databaseServiceManager.getDaoCallbackService().executeInDaoLayer(new DaoCallback<String>() {
+	public String resolvePrefixForCodingScheme(final String codingSchemeId) {
+		String prefix = null;
+		try {
+			prefix = databaseServiceManager.getDaoCallbackService().executeInDaoLayer(new DaoCallback<String>() {
 
 				@Override
 				public String execute(DaoManager daoManager) {
@@ -113,6 +114,10 @@ public class DefaultPrefixResolver implements PrefixResolver {
 				}
 
 			});
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			throw new RuntimeException("Message needed", e);
+		}
 		
 		prefix = allowForNullPrefixValue(prefix);
 
@@ -127,7 +132,7 @@ public class DefaultPrefixResolver implements PrefixResolver {
 	}
 
 	@CacheMethod
-	public String resolvePrefixForHistoryCodingScheme(final String codingSchemeId) throws SQLException {
+	public String resolvePrefixForHistoryCodingScheme(final String codingSchemeId) {
 
 		String prefix = this.resolvePrefixForCodingScheme(codingSchemeId);
 		

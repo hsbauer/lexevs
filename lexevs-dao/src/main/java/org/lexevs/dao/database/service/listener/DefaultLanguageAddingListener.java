@@ -89,8 +89,9 @@ public class DefaultLanguageAddingListener extends DefaultServiceEventListener {
 	 * @param entity the entity
 	 * 
 	 * @return true, if successful
+	 * @throws SQLException 
 	 */
-	private boolean addDefaultLanguage(CodingScheme cs, Entity entity) {
+	private boolean addDefaultLanguage(CodingScheme cs, Entity entity) throws SQLException {
 		String defaultLanguage = cs.getDefaultLanguage();
 		if(StringUtils.isNotBlank(defaultLanguage)) {
 			for(Property prop : entity.getAllProperties()) {

@@ -20,6 +20,8 @@ package org.LexGrid.LexBIG.load.xml;
 
 import junit.framework.TestCase;
 
+import java.sql.SQLException;
+
 import org.LexGrid.LexBIG.Impl.testUtility.ServiceHolder;
 import org.LexGrid.LexBIG.LexBIGService.LexBIGService;
 import org.LexGrid.codingSchemes.CodingScheme;
@@ -59,14 +61,14 @@ public class TestEntryStateAccess extends TestCase {
 		daoCallbackService = dbManager.getDaoCallbackService();
 	}
 	
-	public void testEntryState(){
+	public void testEntryState() throws SQLException{
 		assertTrue(getEntryStateForCodingScheme().getContainingRevision().equals("testRelease2010Feb_testData"));
 	}
 	
-	private EntryState getEntryStateForCodingScheme(){
+	private EntryState getEntryStateForCodingScheme() throws SQLException{
         return daoCallbackService.executeInDaoLayer(new DaoCallback<EntryState>() {
 
-            public EntryState execute(DaoManager daoManager) {
+            public EntryState execute(DaoManager daoManager) throws SQLException {
               
                 csDao = (IbatisCodingSchemeDao)daoManager.getCodingSchemeDao("urn:oid:22.22.0.2", "2.0");
                 CodingScheme cs = csDao .getCodingSchemeByUriAndVersion("urn:oid:22.22.0.2", "2.0");

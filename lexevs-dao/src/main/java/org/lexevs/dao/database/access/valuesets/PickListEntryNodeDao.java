@@ -18,8 +18,6 @@
  */
 package org.lexevs.dao.database.access.valuesets;
 
-import java.sql.SQLException;
-
 import org.LexGrid.LexBIG.Exceptions.LBRevisionException;
 import org.LexGrid.valueSets.PickListEntryNode;
 import org.lexevs.dao.database.access.LexGridSchemaVersionAwareDao;
@@ -33,34 +31,33 @@ public interface PickListEntryNodeDao extends LexGridSchemaVersionAwareDao {
 	 * @param entryNode the pick list entry node
 	 * 
 	 * @return the string
- * @throws SQLException 
 	 */
-public String insertPickListEntry(String pickListGuid, PickListEntryNode entryNode) throws SQLException;
+public String insertPickListEntry(String pickListGuid, PickListEntryNode entryNode);
 
-	public String getPickListEntryNodeUId(String pickListId, String pickListEntryNodeId) throws SQLException;
+	public String getPickListEntryNodeUId(String pickListId, String pickListEntryNodeId);
 
-	public void removeAllPickListEntryNodeMultiAttributes(String pickListEntryNodeUId) throws SQLException;
+	public void removeAllPickListEntryNodeMultiAttributes(String pickListEntryNodeUId);
 
-	public String insertHistoryPickListEntryNode(String pickListEntryNodeUId) throws SQLException;
+	public String insertHistoryPickListEntryNode(String pickListEntryNodeUId);
 
 	public String updatePickListEntryNode(String pickListEntryNodeUId,
-			PickListEntryNode pickListEntryNode) throws SQLException;
+			PickListEntryNode pickListEntryNode);
 
 	public String updateVersionableAttributes(String pickListEntryNodeUId,
-			PickListEntryNode pickListEntryNode) throws SQLException;
+			PickListEntryNode pickListEntryNode);
 
-	public String getPickListEntryStateUId(String pickListEntryNodeUId) throws SQLException;
+	public String getPickListEntryStateUId(String pickListEntryNodeUId);
 
 	public void updateEntryStateUId(String pickListEntryNodeUId,
-			String entryStateUId) throws SQLException;
+			String entryStateUId);
 
-	public void createEntryStateIfAbsent(String entryStateUId, String vsPLEntryUId) throws SQLException;
+	public void createEntryStateIfAbsent(String entryStateUId, String vsPLEntryUId);
 
-	public String getLatestRevision(String pickListEntryNodeUId) throws SQLException;
+	public String getLatestRevision(String pickListEntryNodeUId);
 
-	public void deletePLEntryNodeByUId(String pickListEntryNodeUId) throws SQLException;
+	public void deletePLEntryNodeByUId(String pickListEntryNodeUId);
 
 	public PickListEntryNode resolvePLEntryNodeByRevision(
-			String pickListId, String plEntryId, String revisionId) throws LBRevisionException, SQLException;
+			String pickListId, String plEntryId, String revisionId) throws LBRevisionException;
 
 }

@@ -19,6 +19,7 @@
 package org.LexGrid.LexBIG.load.xml;
 
 import java.io.File;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 
@@ -376,7 +377,7 @@ public class TestLoadLexGridXMLAssociationDataRevision extends TestCase {
 				.equals("DEPENDENT"));
 	}
 
-	public void testRemoveAutomobiles() throws LBException {
+	public void testRemoveAutomobiles() throws LBException, SQLException {
 		LexBIGServiceManager lbsm = ServiceHolder.instance().getLexBIGService()
 				.getServiceManager(null);
 

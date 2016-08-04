@@ -18,7 +18,6 @@
  */
 package org.lexevs.dao.database.service.version;
 
-import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -150,11 +149,10 @@ public class VersionableEventAuthoringService extends AbstractDatabaseService
 	 * @param indexNewCodingScheme the index new coding scheme
 	 * 
 	 * @throws LBRevisionException the LB revision exception
-	 * @throws SQLException 
 	 */
 	@Override
 	@Transactional(rollbackFor=Exception.class)
-	public void loadSystemRelease(SystemRelease systemRelease, Boolean indexNewCodingScheme) throws LBRevisionException, SQLException {
+	public void loadSystemRelease(SystemRelease systemRelease, Boolean indexNewCodingScheme) throws LBRevisionException {
 
 		if (systemRelease == null) {
 			return;
@@ -275,11 +273,10 @@ public class VersionableEventAuthoringService extends AbstractDatabaseService
 	 * @param releaseURI the release uri
 	 * 
 	 * @throws LBRevisionException the LB revision exception
-	 * @throws SQLException 
 	 */
 	@Override
 	@Transactional(rollbackFor=Exception.class)
-	public void loadRevision(Revision revision, String releaseURI, Boolean indexNewCodingScheme) throws LBRevisionException, SQLException {
+	public void loadRevision(Revision revision, String releaseURI, Boolean indexNewCodingScheme) throws LBRevisionException {
 
 		if (revision == null)
 			return;
@@ -367,11 +364,10 @@ public class VersionableEventAuthoringService extends AbstractDatabaseService
 	 * codingScheme in this revision needs to Lucene indexed or not.
 	 * 
 	 * @throws LBRevisionException the LB revision exception
-	 * @throws SQLException 
 	 */
 	@Transactional(rollbackFor=Exception.class)
 	public void loadRevision(Versionable versionable, String releaseURI, Boolean indexNewCodingScheme)
-			throws LBRevisionException, SQLException {
+			throws LBRevisionException {
 
 		RevisionDao revisionDao = this.getDaoManager().getRevisionDao();
 		Revision revision = new Revision();
@@ -482,7 +478,7 @@ public class VersionableEventAuthoringService extends AbstractDatabaseService
 	 * @see org.lexevs.dao.database.service.version.AuthoringService#getSystemReleaseMetadataById(java.lang.String)
 	 */
 	@Override
-	public SystemRelease getSystemReleaseMetadataById(String systemReleaseId) throws SQLException {
+	public SystemRelease getSystemReleaseMetadataById(String systemReleaseId) {
 		SystemReleaseDao sysReleaseDao = this.getDaoManager().getSystemReleaseDao();
 		return sysReleaseDao.getSystemReleaseMetadataById(systemReleaseId);
 	}
@@ -491,7 +487,7 @@ public class VersionableEventAuthoringService extends AbstractDatabaseService
 	 * @see org.lexevs.dao.database.service.version.AuthoringService#getSystemReleaseMetadataByUri(java.lang.String)
 	 */
 	@Override
-	public SystemRelease getSystemReleaseMetadataByUri(String systemReleaseUri) throws SQLException {
+	public SystemRelease getSystemReleaseMetadataByUri(String systemReleaseUri) {
 		SystemReleaseDao sysReleaseDao = this.getDaoManager().getSystemReleaseDao();
 		return sysReleaseDao.getSystemReleaseMetadataByUri(systemReleaseUri);
 	}
@@ -500,7 +496,7 @@ public class VersionableEventAuthoringService extends AbstractDatabaseService
 	 * @see org.lexevs.dao.database.service.version.AuthoringService#insertSystemReleaseMetadata(org.LexGrid.versions.SystemRelease)
 	 */
 	@Override
-	public String insertSystemReleaseMetadata(SystemRelease systemRelease) throws SQLException {
+	public String insertSystemReleaseMetadata(SystemRelease systemRelease) {
 		SystemReleaseDao sysReleaseDao = this.getDaoManager().getSystemReleaseDao();
 		return sysReleaseDao.insertSystemReleaseEntry(systemRelease);
 	}
@@ -510,7 +506,7 @@ public class VersionableEventAuthoringService extends AbstractDatabaseService
 	 * @see org.lexevs.dao.database.service.version.AuthoringService#removeRevisionRecordbyId(java.lang.String)
 	 */
 	@Override
-	public boolean removeRevisionRecordbyId(String revisionId) throws LBException, SQLException {
+	public boolean removeRevisionRecordbyId(String revisionId) throws LBException {
 		RevisionDao revisionDao = this.getDaoManager().getRevisionDao();
 		return revisionDao.removeRevisionById(revisionId);
 	}

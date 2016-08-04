@@ -18,8 +18,6 @@
  */
 package org.lexevs.dao.database.prefix;
 
-import java.sql.SQLException;
-
 /**
  * The Interface PrefixResolver.
  * 
@@ -51,9 +49,8 @@ public interface PrefixResolver {
 	 * @param codingSchemeId the coding scheme id
 	 * 
 	 * @return the string
-	 * @throws SQLException 
 	 */
-	public String resolvePrefixForCodingScheme(String codingSchemeId) throws SQLException;
+	public String resolvePrefixForCodingScheme(String codingSchemeId);
 	
 	/**
 	 * Resolve prefix for history coding scheme.
@@ -61,9 +58,8 @@ public interface PrefixResolver {
 	 * @param codingSchemeId the coding scheme id
 	 * 
 	 * @return the string
-	 * @throws SQLException 
 	 */
-	public String resolvePrefixForHistoryCodingScheme(String codingSchemeId) throws SQLException;
+	public String resolvePrefixForHistoryCodingScheme(String codingSchemeId);
 	
 	/**
 	 * Gets the next coding scheme prefix.

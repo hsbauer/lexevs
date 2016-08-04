@@ -18,7 +18,6 @@
  */
 package org.lexevs.dao.database.service.association;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.LexGrid.relations.AssociationPredicate;
@@ -53,7 +52,7 @@ public class VersionableEventAssociationService extends AbstractDatabaseService 
 	public AssociationTriple getAssociationTripleByAssociationInstanceId(
 			String codingSchemeUri, 
 			String version, 
-			String associationInstanceId) throws SQLException {
+			String associationInstanceId) {
 		CodingSchemeDao codingSchemeDao = this.getDaoManager().getCodingSchemeDao(codingSchemeUri, version);
 		
 		String codingSchemeUId = codingSchemeDao.
@@ -101,7 +100,7 @@ public class VersionableEventAssociationService extends AbstractDatabaseService 
 			String version, 
 			String relationContainerName,
 			String associationPredicateName,
-			AssociationSource source) throws SQLException{
+			AssociationSource source){
 		CodingSchemeDao codingSchemeDao = this.getDaoManager().getCodingSchemeDao(codingSchemeUri, version);
 		
 		String codingSchemeUId = codingSchemeDao.
@@ -170,10 +169,9 @@ public class VersionableEventAssociationService extends AbstractDatabaseService 
 	 * @param predicateId the predicate id
 	 * @param sources the sources
 	 * @param relations the relations
-	 * @throws SQLException 
 	 */
 	protected void doInsertAssociationSource(String codingSchemeUri, 
-			String codingSchemeVersion, String codingSchemeId, Relations relations, String predicateId, List<AssociationSource> sources) throws SQLException {
+			String codingSchemeVersion, String codingSchemeId, Relations relations, String predicateId, List<AssociationSource> sources) {
 		AssociationDao associationDao = this.getDaoManager().getAssociationDao(codingSchemeUri, codingSchemeVersion);
 
 		this.firePreBatchAssociationInsertEvent(new AssociationBatchInsertEvent(

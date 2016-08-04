@@ -18,7 +18,6 @@
  */
 package org.lexevs.dao.database.ibatis.versions;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.LexGrid.versions.EntryState;
@@ -117,7 +116,7 @@ public class IbatisVersionsDao extends AbstractIbatisDao implements VersionsDao 
 	public String getPreviousRevisionIdFromGivenRevisionIdForEntry(
 			String codingSchemeUid, 
 			String entityUid,
-			String revisionId) throws SQLException {
+			String revisionId) {
 		String prefix = this.getPrefixResolver().resolvePrefixForCodingScheme(
 				codingSchemeUid);
 		
@@ -133,7 +132,7 @@ public class IbatisVersionsDao extends AbstractIbatisDao implements VersionsDao 
 	public EntryState getEntryStateByEntryUidAndRevisionId(
 			String codingSchemeUId,
 			String entryUId, 
-			String revisionId) throws SQLException {
+			String revisionId) {
 		PrefixedParameterTriple bean = new PrefixedParameterTriple();
 		bean.setPrefix(this.getPrefixResolver().resolvePrefixForCodingScheme(codingSchemeUId));
 		bean.setParam1(entryUId);
@@ -151,7 +150,7 @@ public class IbatisVersionsDao extends AbstractIbatisDao implements VersionsDao 
 	 * (java.lang.String)
 	 */
 	@Override
-	public String getSystemReleaseIdByUri(String systemReleaseUri) throws SQLException {
+	public String getSystemReleaseIdByUri(String systemReleaseUri) {
 		
 		return (String) this.getSqlMapClientTemplate().queryForObject(
 				GET_SYSTEM_RELEASE_ID_BY_URI, systemReleaseUri);
@@ -176,7 +175,7 @@ public class IbatisVersionsDao extends AbstractIbatisDao implements VersionsDao 
 			EntryStateType entryType, 
 			String previousEntryStateUId,
 			EntryState entryState, 
-			Inserter inserter) throws SQLException {
+			Inserter inserter) {
 		if (entryState == null) {
 			return;
 		}
@@ -234,7 +233,7 @@ public class IbatisVersionsDao extends AbstractIbatisDao implements VersionsDao 
 
 	@Override
 	public void updatePreviousEntryStateUIds(String codingSchemeUId,
-			String entryUId, String prevEntryStateUId, String newEntryStateUId) throws SQLException {
+			String entryUId, String prevEntryStateUId, String newEntryStateUId) {
 		PrefixedParameterTriple bean = new PrefixedParameterTriple();
 		bean.setPrefix(this.getPrefixResolver().resolvePrefixForCodingScheme(codingSchemeUId));
 		bean.setParam1(entryUId);
@@ -258,7 +257,7 @@ public class IbatisVersionsDao extends AbstractIbatisDao implements VersionsDao 
 			String entryUId, 
 			EntryStateType entryType,
 			String previousEntryStateUId, 
-			EntryState entryState) throws SQLException {
+			EntryState entryState) {
 
 		String entryStateUId = this.createUniqueId();
 
@@ -288,7 +287,7 @@ public class IbatisVersionsDao extends AbstractIbatisDao implements VersionsDao 
 			String entryUId,
 			EntryStateType entryType, 
 			String previousEntryStateUId,
-			EntryState entryState) throws SQLException {
+			EntryState entryState) {
 		
 		if (entryState != null && entryState.getRelativeOrder() == null)
 			entryState.setRelativeOrder(0L);
@@ -320,7 +319,6 @@ public class IbatisVersionsDao extends AbstractIbatisDao implements VersionsDao 
 	 *            the entry state
 	 * 
 	 * @return the insert entry state bean
-	 * @throws SQLException 
 	 */
 	protected InsertEntryStateBean buildInsertEntryStateBean(
 			String prefix,
@@ -328,7 +326,7 @@ public class IbatisVersionsDao extends AbstractIbatisDao implements VersionsDao 
 			String entryUId, 
 			String entryType,
 			String previousEntryStateUId, 
-			EntryState entryState) throws SQLException {
+			EntryState entryState) {
 
 		String revisionUId = null;
 		String prevRevisionUId = null;
@@ -354,7 +352,7 @@ public class IbatisVersionsDao extends AbstractIbatisDao implements VersionsDao 
 	}
 
 	public void deleteAllEntryStateEntriesByEntryUId(String codingSchemeUId,
-			String entryUId) throws SQLException {
+			String entryUId) {
 		Assert.notNull(entryUId);
 
 		String prefix = this.getPrefixResolver().resolvePrefixForCodingScheme(
@@ -393,7 +391,7 @@ public class IbatisVersionsDao extends AbstractIbatisDao implements VersionsDao 
 	}
 
 	@Override
-	public void deleteAllEntryStateOfCodingScheme(String codingSchemeUId) throws SQLException {
+	public void deleteAllEntryStateOfCodingScheme(String codingSchemeUId) {
 
 		String prefix = this.getPrefixResolver().resolvePrefixForCodingScheme(
 				codingSchemeUId);
@@ -472,7 +470,7 @@ public class IbatisVersionsDao extends AbstractIbatisDao implements VersionsDao 
 
 	@Override
 	public void deleteAllEntryStateOfEntity(String codingSchemeUId,
-			String entityUId) throws SQLException {
+			String entityUId) {
 
 		String prefix = this.getPrefixResolver().resolvePrefixForCodingScheme(
 				codingSchemeUId);
@@ -490,7 +488,7 @@ public class IbatisVersionsDao extends AbstractIbatisDao implements VersionsDao 
 
 	@Override
 	public void deleteAllEntryStateOfRelation(String codingSchemeUId,
-			String relationUId) throws SQLException {
+			String relationUId) {
 
 		String prefix = this.getPrefixResolver().resolvePrefixForCodingScheme(
 				codingSchemeUId);

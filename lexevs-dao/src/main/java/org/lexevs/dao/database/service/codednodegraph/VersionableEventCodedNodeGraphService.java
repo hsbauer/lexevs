@@ -55,7 +55,7 @@ public class VersionableEventCodedNodeGraphService extends AbstractDatabaseServi
 	@Override
 	public List<String> getRelationNamesForCodingScheme(
 			String codingSchemeUri,
-			String codingSchemeVersion) {
+			String codingSchemeVersion) throws SQLException {
 		String codingSchemeUid = this.getCodingSchemeUId(codingSchemeUri, codingSchemeVersion);
 		
 		AssociationDao associationDao = 
@@ -329,6 +329,7 @@ public class VersionableEventCodedNodeGraphService extends AbstractDatabaseServi
 	 * @param associationPredicateName the association predicate name
 	 * 
 	 * @return the association predicate uid
+	 * @throws SQLException 
 	 */
 	@Transactional
 	protected String getAssociationPredicateUid(
@@ -336,7 +337,7 @@ public class VersionableEventCodedNodeGraphService extends AbstractDatabaseServi
 			String version,
 			String codingSchemeUid,
 			String relationsContainerName, 
-			String associationPredicateName) {
+			String associationPredicateName) throws SQLException {
 		AssociationDao associationDao =
 			this.getDaoManager().getAssociationDao(
 				uri, version);
@@ -373,6 +374,7 @@ public class VersionableEventCodedNodeGraphService extends AbstractDatabaseServi
 	 * @param associationPredicateName the association predicate name
 	 * 
 	 * @return the association predicate uids
+	 * @throws SQLException 
 	 */
 	@Transactional
 	protected List<String> getAssociationPredicateUids(
@@ -380,7 +382,7 @@ public class VersionableEventCodedNodeGraphService extends AbstractDatabaseServi
 			String version,
 			String codingSchemeUid,
 			String relationsContainerName, 
-			String associationPredicateName) {
+			String associationPredicateName) throws SQLException {
 		AssociationDao associationDao =
 			this.getDaoManager().getAssociationDao(
 				uri, version);
@@ -614,13 +616,14 @@ public class VersionableEventCodedNodeGraphService extends AbstractDatabaseServi
 	 * @param associationPredicateNames the association predicate names
 	 * 
 	 * @return the association predicate uids
+	 * @throws SQLException 
 	 */
 	private List<String> getAssociationPredicateUids(
 			String codingSchemeUri,
 			String codingSchemeVersion, 
 			String codingSchemeUid,
 			String relationsContainerName,
-			List<String> associationPredicateNames) {
+			List<String> associationPredicateNames) throws SQLException {
 		
 		List<String> associationPredicateUids = new ArrayList<String>();
 		
@@ -692,7 +695,7 @@ public class VersionableEventCodedNodeGraphService extends AbstractDatabaseServi
 	@Override
 	public List<String> getAssociationPredicateUidsForNames(
 			String codingSchemeUri, String codingSchemeVersion,
-			String relationsContainerName, List<String> associationNames) {
+			String relationsContainerName, List<String> associationNames) throws SQLException {
 		String codingSchemeUid = this.getCodingSchemeUId(codingSchemeUri, codingSchemeVersion);
 		return this.getAssociationPredicateUids(
 				codingSchemeUri, 

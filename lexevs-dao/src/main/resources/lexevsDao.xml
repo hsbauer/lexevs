@@ -22,7 +22,12 @@
         		</entry>
         	</map>
         </property>
-    </bean>   
+    </bean>
+
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+		<constructor-arg index="1" value="BATCH" />
+	</bean>
 
 	<bean id="defaultRootBuilder" class="org.lexevs.dao.database.operation.root.DefaultRootBuilder">
 		<property name="databaseServiceManager" ref="databaseServiceManager"/>
@@ -41,6 +46,7 @@
     	<property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"/>
 		<property name="prefixResolver" ref="defaultPrefixResolver"/>
 		<property name="primaryKeyIncrementer" ref="primaryKeyIncrementer"/>
+		<property name="session" ref="sqlSession" />
     </bean>
 	
 	<bean id="ibatisPropertyDao"

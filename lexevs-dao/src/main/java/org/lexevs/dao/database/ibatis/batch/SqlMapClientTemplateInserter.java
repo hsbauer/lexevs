@@ -47,7 +47,7 @@ public class SqlMapClientTemplateInserter implements Inserter{
 	/* (non-Javadoc)
 	 * @see org.lexevs.dao.database.ibatis.batch.Inserter#insert(java.lang.String, java.lang.Object)
 	 */
-	public void insert(String sql, Object parameter) throws SQLException {
+	public void insert(String sql, Object parameter) {
 		sqlMapClientTemplate.insert(sql, parameter);
 	}
 

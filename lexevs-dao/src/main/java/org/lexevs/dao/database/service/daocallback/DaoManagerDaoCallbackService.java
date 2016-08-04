@@ -18,8 +18,6 @@
  */
 package org.lexevs.dao.database.service.daocallback;
 
-import java.sql.SQLException;
-
 import org.lexevs.dao.database.access.DaoManager;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,10 +35,9 @@ private DaoManager daoManager;
 	 * @param daoCallback the dao callback
 	 * 
 	 * @return the t
-	 * @throws SQLException 
 	 */
 	@Transactional
-	public <T> T executeInDaoLayer(DaoCallback<T> daoCallback) throws SQLException{
+	public <T> T executeInDaoLayer(DaoCallback<T> daoCallback){
 		return daoCallback.execute(daoManager);
 	}
 

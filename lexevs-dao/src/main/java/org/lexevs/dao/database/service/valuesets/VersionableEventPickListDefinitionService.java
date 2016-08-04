@@ -19,7 +19,6 @@
 package org.lexevs.dao.database.service.valuesets;
 
 import java.sql.Date;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -168,7 +167,7 @@ public class VersionableEventPickListDefinitionService extends AbstractDatabaseS
 	 * @see org.lexevs.dao.database.service.valuesets.PickListDefinitionService#updatePickListDefinition(org.LexGrid.valueSets.PickListDefinition)
 	 */
 	@Override
-	public void updatePickListDefinition(PickListDefinition definition) throws LBException, SQLException {
+	public void updatePickListDefinition(PickListDefinition definition) throws LBException {
 
 		String pickListId = definition.getPickListId();
 		
@@ -191,7 +190,7 @@ public class VersionableEventPickListDefinitionService extends AbstractDatabaseS
 	 * @see org.lexevs.dao.database.service.valuesets.PickListDefinitionService#updateVersionableAttributes(org.LexGrid.valueSets.PickListDefinition)
 	 */
 	@Override
-	public void updateVersionableAttributes(PickListDefinition definition) throws LBException, SQLException {
+	public void updateVersionableAttributes(PickListDefinition definition) throws LBException {
 
 		String pickListId = definition.getPickListId();
 		
@@ -214,7 +213,7 @@ public class VersionableEventPickListDefinitionService extends AbstractDatabaseS
 	 * @see org.lexevs.dao.database.service.valuesets.PickListDefinitionService#insertDependentChanges(org.LexGrid.valueSets.PickListDefinition)
 	 */
 	@Override
-	public void insertDependentChanges(PickListDefinition definition) throws LBException, SQLException {
+	public void insertDependentChanges(PickListDefinition definition) throws LBException {
 
 		String pickListId = definition.getPickListId();
 		
@@ -252,7 +251,7 @@ public class VersionableEventPickListDefinitionService extends AbstractDatabaseS
 	 */
 	@Override
 	public void revise(PickListDefinition pickListDefinition, Mappings mapping,
-			String releaseURI) throws LBException, SQLException {
+			String releaseURI) throws LBException {
 	
 		if (validRevision(pickListDefinition)) {
 			ChangeType changeType = pickListDefinition.getEntryState()
@@ -394,10 +393,9 @@ public class VersionableEventPickListDefinitionService extends AbstractDatabaseS
 	 * Do add pick list definition dependent entry.
 	 * 
 	 * @param definition the definition
-	 * @throws SQLException 
 	 */
 	private void doAddPickListDefinitionDependentEntry(
-			PickListDefinition definition) throws SQLException {
+			PickListDefinition definition) {
 	
 		String pickListId = definition.getPickListId();
 		
@@ -458,7 +456,7 @@ public class VersionableEventPickListDefinitionService extends AbstractDatabaseS
 	 */
 	@Override
 	public PickListDefinition resolvePickListDefinitionByDate(String pickListId,
-			Date date, Integer sortType) throws LBRevisionException, SQLException {
+			Date date, Integer sortType) throws LBRevisionException {
 		
 		RevisionDao revisionDao = getDaoManager().getRevisionDao();
 

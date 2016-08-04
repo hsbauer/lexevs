@@ -18,6 +18,8 @@
  */
 package org.LexGrid.LexBIG.Impl.function.query;
 
+import java.sql.SQLException;
+
 import org.LexGrid.LexBIG.DataModel.Core.ResolvedConceptReference;
 import org.LexGrid.LexBIG.Exceptions.LBInvocationException;
 import org.LexGrid.LexBIG.Exceptions.LBParameterException;
@@ -87,9 +89,10 @@ public class TestSameCodeDifferentNamespace extends BaseCodedNodeSetTest{
      * 
      * @throws LBInvocationException the LB invocation exception
      * @throws LBParameterException the LB parameter exception
+     * @throws SQLException 
      */
     @Test
-    public void testRestrictToCodesNoNamespaceIfPropertiesCountAreCorrect() throws LBInvocationException, LBParameterException{
+    public void testRestrictToCodesNoNamespaceIfPropertiesCountAreCorrect() throws LBInvocationException, LBParameterException, SQLException{
         cns = cns.restrictToCodes(Constructors.createConceptReferenceList("DifferentNamespaceConcept"));
         
         ResolvedConceptReference[] refs = cns.resolveToList(null, null, null, -1).getResolvedConceptReference();
@@ -119,9 +122,10 @@ public class TestSameCodeDifferentNamespace extends BaseCodedNodeSetTest{
      * 
      * @throws LBInvocationException the LB invocation exception
      * @throws LBParameterException the LB parameter exception
+     * @throws SQLException 
      */
     @Test
-    public void testRestrictToCodesNoNamespaceIfPropertiesTypesAreCorrect() throws LBInvocationException, LBParameterException{
+    public void testRestrictToCodesNoNamespaceIfPropertiesTypesAreCorrect() throws LBInvocationException, LBParameterException, SQLException{
         cns = cns.restrictToCodes(Constructors.createConceptReferenceList("DifferentNamespaceConcept"));
         
         ResolvedConceptReference[] refs = cns.resolveToList(null, null, null, -1).getResolvedConceptReference();
@@ -155,9 +159,10 @@ public class TestSameCodeDifferentNamespace extends BaseCodedNodeSetTest{
      * 
      * @throws LBInvocationException the LB invocation exception
      * @throws LBParameterException the LB parameter exception
+     * @throws SQLException 
      */
     @Test
-    public void testRestrictToCodesNoNamespaceIfPropertiesValuesAreCorrect() throws LBInvocationException, LBParameterException{
+    public void testRestrictToCodesNoNamespaceIfPropertiesValuesAreCorrect() throws LBInvocationException, LBParameterException, SQLException{
         cns = cns.restrictToCodes(Constructors.createConceptReferenceList("DifferentNamespaceConcept"));
         
         ResolvedConceptReference[] refs = cns.resolveToList(null, null, null, -1).getResolvedConceptReference();

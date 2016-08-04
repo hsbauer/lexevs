@@ -18,8 +18,6 @@
  */
 package org.lexevs.dao.database.service.event;
 
-import java.sql.SQLException;
-
 import org.LexGrid.codingSchemes.CodingScheme;
 import org.lexevs.dao.database.service.event.association.AssociationBatchInsertEvent;
 import org.lexevs.dao.database.service.event.codingscheme.CodingSchemeInsertErrorEvent;
@@ -52,9 +50,8 @@ public class DatabaseServiceEventSupport {
 	 * @param exception the exception
 	 * 
 	 * @throws T the T
-	 * @throws SQLException 
 	 */
-	protected <T extends Exception> void fireCodingSchemeInsertErrorEvent(CodingScheme scheme, T exception) throws T, SQLException {
+	protected <T extends Exception> void fireCodingSchemeInsertErrorEvent(CodingScheme scheme, T exception) throws T {
 		for(DatabaseServiceEventListener listener : this.listenerRegistry.getRegisteredListeners()){
 			listener.onCodingSchemeInsertError(
 					new CodingSchemeInsertErrorEvent<T>(
@@ -123,9 +120,8 @@ public class DatabaseServiceEventSupport {
 	 * Fire pre entity insert event.
 	 * 
 	 * @param entityInsertEvent the entity insert event
-	 * @throws SQLException 
 	 */
-	protected void firePreEntityInsertEvent(EntityInsertOrRemoveEvent entityInsertEvent) throws SQLException{
+	protected void firePreEntityInsertEvent(EntityInsertOrRemoveEvent entityInsertEvent){
 			for(DatabaseServiceEventListener listener : this.listenerRegistry.getRegisteredListeners()){
 				listener.onPreEntityInsert(entityInsertEvent);
 			}
@@ -146,9 +142,8 @@ public class DatabaseServiceEventSupport {
 	 * Fire pre batch entity insert event.
 	 * 
 	 * @param entityInsertEvent the entity insert event
-	 * @throws SQLException 
 	 */
-	protected void firePreBatchEntityInsertEvent(EntityBatchInsertEvent entityInsertEvent) throws SQLException{
+	protected void firePreBatchEntityInsertEvent(EntityBatchInsertEvent entityInsertEvent){
 			for(DatabaseServiceEventListener listener : this.listenerRegistry.getRegisteredListeners()){
 				listener.onPreBatchEntityInsert(entityInsertEvent);
 			}
@@ -169,9 +164,8 @@ public class DatabaseServiceEventSupport {
 	 * Fire pre batch association insert event.
 	 * 
 	 * @param assocInsertEvent the assoc insert event
-	 * @throws SQLException 
 	 */
-	protected void firePreBatchAssociationInsertEvent(AssociationBatchInsertEvent assocInsertEvent) throws SQLException{
+	protected void firePreBatchAssociationInsertEvent(AssociationBatchInsertEvent assocInsertEvent){
 			for(DatabaseServiceEventListener listener : this.listenerRegistry.getRegisteredListeners()){
 				listener.onPreBatchAssociationInsert(assocInsertEvent);
 			}

@@ -50,7 +50,7 @@ public static String VERSIONS_NAMESPACE = "Versions.";
 	}
 	
 	@Override
-	public String getSystemReleaseUIdByUri(String systemReleaseUri) throws SQLException {
+	public String getSystemReleaseUIdByUri(String systemReleaseUri) {
 		
 		return (String) this.getSqlMapClientTemplate().queryForObject(GET_SYSTEM_RELEASE_ID_BY_URI, 
 			systemReleaseUri);
@@ -63,19 +63,19 @@ public static String VERSIONS_NAMESPACE = "Versions.";
 	}
 
 	@Override
-	public SystemRelease getSystemReleaseMetadataById(String systemReleaseId) throws SQLException {
+	public SystemRelease getSystemReleaseMetadataById(String systemReleaseId) {
 		return (SystemRelease) this.getSqlMapClientTemplate().queryForObject(GET_SYSTEM_RELEASE_METADATA_BY_ID, 
 				systemReleaseId);
 	}
 
 	@Override
-	public SystemRelease getSystemReleaseMetadataByUri(String systemReleaseUri) throws SQLException {
+	public SystemRelease getSystemReleaseMetadataByUri(String systemReleaseUri) {
 		return (SystemRelease) this.getSqlMapClientTemplate().queryForObject(GET_SYSTEM_RELEASE_METADATA_BY_URI, 
 				systemReleaseUri);
 	}
 
 	@Override
-	public String insertSystemReleaseEntry(SystemRelease systemRelease) throws SQLException {
+	public String insertSystemReleaseEntry(SystemRelease systemRelease) {
 		if (systemRelease == null)
 			return null;
 		

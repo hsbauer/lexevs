@@ -18,8 +18,6 @@
  */
 package org.lexevs.dao.database.service.valuesets;
 
-import java.sql.SQLException;
-
 import org.LexGrid.LexBIG.Exceptions.LBException;
 import org.LexGrid.LexBIG.Exceptions.LBParameterException;
 import org.LexGrid.LexBIG.Exceptions.LBRevisionException;
@@ -45,7 +43,7 @@ public class VersionableEventPickListEntryNodeService extends
 	 */
 	@Override
 	public void insertPickListEntryNode(String pickListId,
-			PickListEntryNode pickListEntryNode) throws SQLException {
+			PickListEntryNode pickListEntryNode) {
 
 		String pickListDefUId = this.getDaoManager()
 				.getCurrentPickListDefinitionDao()
@@ -60,7 +58,7 @@ public class VersionableEventPickListEntryNodeService extends
 	 */
 	@Override
 	public void removePickListEntryNode(String pickListId,
-			PickListEntryNode pickListEntryNode) throws SQLException {
+			PickListEntryNode pickListEntryNode) {
 
 		PickListEntryNodeDao pickListEntryNodeDao = this.getDaoManager()
 				.getCurrentPickListEntryNodeDao();
@@ -90,7 +88,7 @@ public class VersionableEventPickListEntryNodeService extends
 	 */
 	@Override
 	public void updatePickListEntryNode(String pickListId,
-			PickListEntryNode pickListEntryNode) throws LBException, SQLException {
+			PickListEntryNode pickListEntryNode) throws LBException {
 
 		String pickListEntryId = pickListEntryNode.getPickListEntryId();
 
@@ -120,7 +118,7 @@ public class VersionableEventPickListEntryNodeService extends
 	 */
 	@Override
 	public void updateVersionableAttributes(String pickListId,
-			PickListEntryNode pickListEntryNode) throws LBException, SQLException {
+			PickListEntryNode pickListEntryNode) throws LBException {
 
 		String pickListEntryId = pickListEntryNode.getPickListEntryId();
 
@@ -150,7 +148,7 @@ public class VersionableEventPickListEntryNodeService extends
 	 */
 	@Override
 	public void insertDependentChanges(String pickListId,
-			PickListEntryNode pickListEntryNode) throws LBException, SQLException {
+			PickListEntryNode pickListEntryNode) throws LBException {
 
 		String pickListEntryId = pickListEntryNode.getPickListEntryId();
 
@@ -179,7 +177,7 @@ public class VersionableEventPickListEntryNodeService extends
 	 */
 	@Override
 	public void revise(String pickListId, PickListEntryNode pickListEntryNode)
-			throws LBException, SQLException {
+			throws LBException {
 
 		if (validRevision(pickListId, pickListEntryNode)) {
 
@@ -211,7 +209,7 @@ public class VersionableEventPickListEntryNodeService extends
 	@Override
 	public PickListEntryNode resolvePickListEntryNodeByRevision(
 			String pickListId, String plEntryId, String revisionId)
-			throws LBRevisionException, SQLException {
+			throws LBRevisionException {
 		PickListEntryNodeDao pickListEntryNodeDao = this.getDaoManager()
 				.getCurrentPickListEntryNodeDao();
 
@@ -246,10 +244,9 @@ public class VersionableEventPickListEntryNodeService extends
 	 * @return true, if successful
 	 * 
 	 * @throws LBException the LB exception
-	 * @throws SQLException 
 	 */
 	private boolean validRevision(String pickListId,
-			PickListEntryNode pickListEntryNode) throws LBException, SQLException {
+			PickListEntryNode pickListEntryNode) throws LBException {
 		
 		if (pickListEntryNode == null)
 			throw new LBParameterException("pickListEntryNode is null.");
@@ -314,10 +311,9 @@ public class VersionableEventPickListEntryNodeService extends
 	 * 
 	 * @param pickListId the pick list id
 	 * @param pickListEntryNode the pick list entry node
-	 * @throws SQLException 
 	 */
 	private void doAddPLEntryDependentEntry(String pickListId,
-			PickListEntryNode pickListEntryNode) throws SQLException {
+			PickListEntryNode pickListEntryNode) {
 	
 		String pickListEntryId = pickListEntryNode.getPickListEntryId();
 	

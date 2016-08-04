@@ -18,8 +18,6 @@
  */
 package org.lexevs.dao.database.access.association;
 
-import java.sql.SQLException;
-
 import org.LexGrid.relations.AssociationSource;
 import org.LexGrid.relations.AssociationTarget;
 import org.lexevs.dao.database.access.LexGridSchemaVersionAwareDao;
@@ -27,44 +25,44 @@ import org.lexevs.dao.database.inserter.Inserter;
 
 public interface AssociationTargetDao extends LexGridSchemaVersionAwareDao {
 
-	public String insertAssociationTarget(String codingSchemeUId, String associationPredicateUId, AssociationSource source, AssociationTarget target) throws SQLException;
+	public String insertAssociationTarget(String codingSchemeUId, String associationPredicateUId, AssociationSource source, AssociationTarget target);
 
 	public String insertAssociationTarget(
 			String codingSchemeUId, 
 			String associationPredicateUId, 
 			String sourceEntityCode, 
 			String sourceEntityCodeNamespace,
-			AssociationTarget target) throws SQLException;
+			AssociationTarget target);
 
-	public String updateAssociationTarget(String codingSchemeUId, String associationTargetUId, AssociationTarget target) throws SQLException;
+	public String updateAssociationTarget(String codingSchemeUId, String associationTargetUId, AssociationTarget target);
 
-	public String updateVersionableChanges(String codingSchemeUId, String associationTargetUId, AssociationTarget target) throws SQLException;
+	public String updateVersionableChanges(String codingSchemeUId, String associationTargetUId, AssociationTarget target);
 
-	public String getAssociationTargetUId(String codingSchemeUId, String associationInstanceId) throws SQLException;
+	public String getAssociationTargetUId(String codingSchemeUId, String associationInstanceId);
 	
-	public AssociationSource getTripleByUid(String codingSchemeUId, String tripleUid) throws SQLException;
+	public AssociationSource getTripleByUid(String codingSchemeUId, String tripleUid);
 
 	public String insertHistoryAssociationTarget(String codingSchemeUId,
-			String assnEntityTripleUId, Boolean assnQualExists, Boolean contextExists) throws SQLException;
+			String assnEntityTripleUId, Boolean assnQualExists, Boolean contextExists);
 
 	public void deleteAssnTargetByUId(String codingSchemeUId,
-			String associationTargetUId) throws SQLException;
+			String associationTargetUId);
 
-	public String getLatestRevision(String csUId, String targetUId) throws SQLException;
+	public String getLatestRevision(String csUId, String targetUId);
 
 	public void deleteAssociationMultiAttribsByAssociationTargetUId(
-			String codingSchemeUId, String associationTargetUId) throws SQLException;
+			String codingSchemeUId, String associationTargetUId);
 
 	public String insertAssociationTarget(String codingSchemeUId,
 			String associationPredicateUId, AssociationSource source,
-			AssociationTarget target, Inserter inserter) throws SQLException;
+			AssociationTarget target, Inserter inserter);
 
-	public boolean entryStateExists(String codingSchemeUId, String entryStateUId) throws SQLException;
+	public boolean entryStateExists(String codingSchemeUId, String entryStateUId);
 	
-	public String getEntryStateUId(String codingSchemeUId, String associationTargetUid) throws SQLException;
+	public String getEntryStateUId(String codingSchemeUId, String associationTargetUid);
 	
 	public AssociationSource getHistoryTripleByRevision(
 			String codingSchemeUId, 
 			String tripleUid, 
-			String revisionId) throws SQLException;
+			String revisionId);
 }

@@ -18,6 +18,8 @@
  */
 package org.LexGrid.LexBIG.Impl.function.codednodeset;
 
+import java.sql.SQLException;
+
 import org.LexGrid.LexBIG.DataModel.Collections.ResolvedConceptReferenceList;
 import org.LexGrid.LexBIG.DataModel.Core.ResolvedConceptReference;
 import org.LexGrid.LexBIG.Exceptions.LBException;
@@ -231,9 +233,10 @@ public class ResolveToListTest extends BaseCodedNodeSetTest {
      * Test resolve property names presentation.
      * 
      * @throws LBException the LB exception
+     * @throws SQLException 
      */
 	@Test
-    public void testResolvePropertyNamesPresentation() throws LBException{
+    public void testResolvePropertyNamesPresentation() throws LBException, SQLException{
         cns = cns.restrictToCodes(Constructors.createConceptReferenceList("A0001"));
         ResolvedConceptReferenceList rcrl = cns.resolveToList(null, null, Constructors.createLocalNameList("textualPresentation"), null, -1);
        
@@ -252,9 +255,10 @@ public class ResolveToListTest extends BaseCodedNodeSetTest {
      * Test resolve property names definition.
      * 
      * @throws LBException the LB exception
+     * @throws SQLException 
      */
 	@Test
-    public void testResolvePropertyNamesDefinition() throws LBException{
+    public void testResolvePropertyNamesDefinition() throws LBException, SQLException{
         cns = cns.restrictToCodes(Constructors.createConceptReferenceList("A0001"));
         ResolvedConceptReferenceList rcrl = cns.resolveToList(null, null, Constructors.createLocalNameList("definition"), null, -1);
 
@@ -273,9 +277,10 @@ public class ResolveToListTest extends BaseCodedNodeSetTest {
      * Test resolve property types presentation.
      * 
      * @throws LBException the LB exception
+     * @throws SQLException 
      */
 	@Test
-    public void testResolvePropertyTypesPresentation() throws LBException{
+    public void testResolvePropertyTypesPresentation() throws LBException, SQLException{
         cns = cns.restrictToCodes(Constructors.createConceptReferenceList("A0001"));
         ResolvedConceptReferenceList rcrl = cns.resolveToList(null, null, null, new PropertyType[]{PropertyType.PRESENTATION}, -1);
 
@@ -294,9 +299,10 @@ public class ResolveToListTest extends BaseCodedNodeSetTest {
      * Test resolve property types definition.
      * 
      * @throws LBException the LB exception
+     * @throws SQLException 
      */
 	@Test
-    public void testResolvePropertyTypesDefinition() throws LBException{
+    public void testResolvePropertyTypesDefinition() throws LBException, SQLException{
         cns = cns.restrictToCodes(Constructors.createConceptReferenceList("A0001"));
         ResolvedConceptReferenceList rcrl = cns.resolveToList(null, null, null, new PropertyType[]{PropertyType.DEFINITION}, -1);
 

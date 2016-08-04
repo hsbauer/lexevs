@@ -18,8 +18,6 @@
  */
 package org.lexevs.dao.database.service.listener;
 
-import java.sql.SQLException;
-
 import org.LexGrid.concepts.Entity;
 import org.lexevs.dao.database.service.event.entity.EntityBatchInsertEvent;
 import org.lexevs.dao.database.service.event.entity.EntityInsertOrRemoveEvent;
@@ -47,15 +45,14 @@ public abstract class AbstractPreEntityInsertValidatingListener extends DefaultS
 	 * @param entity the entity
 	 * 
 	 * @return true, if successful
-	 * @throws SQLException 
 	 */
-	protected abstract boolean doValidate(String uri, String version, Entity entity) throws SQLException;
+	protected abstract boolean doValidate(String uri, String version, Entity entity);
 
 	/* (non-Javadoc)
 	 * @see org.lexevs.dao.database.service.listener.DefaultServiceEventListener#onPreBatchEntityInsert(org.lexevs.dao.database.service.event.entity.EntityBatchInsertEvent)
 	 */
 	@Override
-	public boolean onPreBatchEntityInsert(EntityBatchInsertEvent event) throws SQLException {
+	public boolean onPreBatchEntityInsert(EntityBatchInsertEvent event) {
 		if(event == null || event.getEntities() == null) {return true;}
 		
 		for(Entity entity : event.getEntities()) {
@@ -72,7 +69,7 @@ public abstract class AbstractPreEntityInsertValidatingListener extends DefaultS
 	 * @see org.lexevs.dao.database.service.listener.DefaultServiceEventListener#onPreEntityInsert(org.lexevs.dao.database.service.event.entity.EntityInsertOrRemoveEvent)
 	 */
 	@Override
-	public boolean onPreEntityInsert(EntityInsertOrRemoveEvent event) throws SQLException {
+	public boolean onPreEntityInsert(EntityInsertOrRemoveEvent event) {
 		if(event == null || event.getEntity() == null) {return true;}
 	
 		return this.doValidate(

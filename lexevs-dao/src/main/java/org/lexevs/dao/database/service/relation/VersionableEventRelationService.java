@@ -68,7 +68,7 @@ public class VersionableEventRelationService extends RevisableAbstractDatabaseSe
 	@Override
 	protected Relations addDependentAttributesByRevisionId(
 			CodingSchemeUriVersionBasedEntryId id, String entryUid,
-			Relations entry, String revisionId) throws SQLException {
+			Relations entry, String revisionId) {
 		entry.setProperties(new Properties());
 		
 		List<Property> properties = 
@@ -92,7 +92,7 @@ public class VersionableEventRelationService extends RevisableAbstractDatabaseSe
 	@Override
 	protected void doInsertDependentChanges(
 			CodingSchemeUriVersionBasedEntryId id, Relations revisedEntry)
-		throws LBException, SQLException {
+		throws LBException {
 		
 		CodingSchemeDao codingSchemeDao = getDaoManager().getCodingSchemeDao(
 				id.getCodingSchemeUri(), id.getCodingSchemeVersion());
@@ -145,10 +145,15 @@ public class VersionableEventRelationService extends RevisableAbstractDatabaseSe
 								assocPredicateList[i], false);
 					}
 					
-					assocTargetService.revise(id.getCodingSchemeUri(), id.getCodingSchemeVersion(),
-							revisedEntry.getContainerName(), assocPredicateList[i]
-									.getAssociationName(), assocSourceList[j],
-							assocTarget[k]);
+					try {
+						assocTargetService.revise(id.getCodingSchemeUri(), id.getCodingSchemeVersion(),
+								revisedEntry.getContainerName(), assocPredicateList[i]
+										.getAssociationName(), assocSourceList[j],
+								assocTarget[k]);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						throw new RuntimeException("Message needed", e);
+					}
 				}
 
 				AssociationData[] assocData = assocSourceList[j]
@@ -280,7 +285,7 @@ public class VersionableEventRelationService extends RevisableAbstractDatabaseSe
 			String codingSchemeURI,
 			String version, 
 			String relationsName,
-			String revisionId) throws LBRevisionException, SQLException {
+			String revisionId) throws LBRevisionException {
 		CodingSchemeUriVersionBasedEntryId id = 
 			new CodingSchemeUriVersionBasedEntryId(
 					codingSchemeURI, version);
@@ -321,7 +326,7 @@ public class VersionableEventRelationService extends RevisableAbstractDatabaseSe
 	@Transactional(rollbackFor=Exception.class)
 	@DatabaseErrorIdentifier(errorCode=UPDATE_RELATION_ERROR)
 	public void updateRelation(String codingSchemeUri, String version,
-			final Relations relation) throws LBException, SQLException {
+			final Relations relation) throws LBException {
 
 		final AssociationDao associationDao = this.getDaoManager().getAssociationDao(
 				codingSchemeUri, version);
@@ -351,7 +356,7 @@ public class VersionableEventRelationService extends RevisableAbstractDatabaseSe
 	@DatabaseErrorIdentifier(errorCode=REMOVE_RELATION_ERROR)
 	@Transactional
 	public void removeRelation(String codingSchemeUri, String version,
-			Relations relation) throws SQLException {
+			Relations relation) {
 
 		CodingSchemeDao codingSchemeDao = getDaoManager().getCodingSchemeDao(codingSchemeUri, version);
 		
@@ -386,7 +391,7 @@ public class VersionableEventRelationService extends RevisableAbstractDatabaseSe
 	@Override
 	@Transactional(rollbackFor=Exception.class)
 	public void revise(String codingSchemeUri, String version,
-			Relations relation) throws LBException, SQLException {
+			Relations relation) throws LBException {
 
 		if (validRevision(new CodingSchemeUriVersionBasedEntryId(codingSchemeUri, version), relation)) {
 			ChangeType changeType = relation.getEntryState().getChangeType();
@@ -488,9 +493,8 @@ public class VersionableEventRelationService extends RevisableAbstractDatabaseSe
 	 * @param revisedEntry the revised entry
 	 * 
 	 * @return true, if successful
-	 * @throws SQLException 
 	 */
-	private boolean doAddRelationDependentEntry(CodingSchemeUriVersionBasedEntryId id, Relations revisedEntry) throws SQLException {
+	private boolean doAddRelationDependentEntry(CodingSchemeUriVersionBasedEntryId id, Relations revisedEntry) {
 		
 		String codingSchemeUri = id.getCodingSchemeUri();
 		String version = id.getCodingSchemeVersion();

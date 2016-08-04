@@ -204,7 +204,7 @@ public class LexEvsResourceManagingService
 	/* (non-Javadoc)
 	 * @see org.lexevs.system.service.SystemResourceService#removeCodingSchemeResourceFromSystem(java.lang.String, java.lang.String)
 	 */
-	public void removeCodingSchemeResourceFromSystem(String uri, String version) throws LBParameterException, SQLException {
+	public void removeCodingSchemeResourceFromSystem(String uri, String version) throws LBParameterException {
 		this.fireRemoveCodingSchemeResourceFromSystemEvent(uri, version);
 		
 		AbsoluteCodingSchemeVersionReference ref = new AbsoluteCodingSchemeVersionReference();
@@ -254,7 +254,7 @@ public class LexEvsResourceManagingService
 		this.readCodingSchemeAliasesFromServer();
 	}
 
-	public void removeValueSetDefinitionResourceFromSystem(String valueSetDefinitionURI, String version) throws LBParameterException, SQLException {
+	public void removeValueSetDefinitionResourceFromSystem(String valueSetDefinitionURI, String version) throws LBParameterException {
 		this.databaseServiceManager.getValueSetDefinitionService().removeValueSetDefinition(valueSetDefinitionURI);
 		
 		List<RegistryEntry> entryList = this.getRegistry().getAllRegistryEntriesOfTypeURIAndVersion(ResourceType.VALUESET_DEFINITION, valueSetDefinitionURI, version);
@@ -264,7 +264,7 @@ public class LexEvsResourceManagingService
 		}
 	}
 
-	public void removePickListDefinitionResourceFromSystem(String pickListId, String version) throws LBParameterException, SQLException {
+	public void removePickListDefinitionResourceFromSystem(String pickListId, String version) throws LBParameterException {
 		this.databaseServiceManager.getPickListDefinitionService().removePickListDefinitionByPickListId(pickListId);
 		
 		List<RegistryEntry> entryList = null;
@@ -276,7 +276,7 @@ public class LexEvsResourceManagingService
 		}
 	}
 	
-	public void removeNciHistoryResourceToSystemFromSystem(String uri) throws SQLException {
+	public void removeNciHistoryResourceToSystemFromSystem(String uri) {
 		try {
 			this.databaseServiceManager.getNciHistoryService().removeNciHistory(uri);
 			

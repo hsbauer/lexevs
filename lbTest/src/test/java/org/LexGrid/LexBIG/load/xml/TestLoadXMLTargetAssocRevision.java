@@ -19,6 +19,7 @@
 package org.LexGrid.LexBIG.load.xml;
 
 import java.io.File;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import junit.framework.TestCase;
@@ -198,7 +199,7 @@ public class TestLoadXMLTargetAssocRevision extends TestCase {
 				LBConstants.KnownTags.PRODUCTION.toString());
 	}
 	
-    public void testRemoveAutombiles() throws LBException {
+    public void testRemoveAutombiles() throws LBException, SQLException {
         LexBIGServiceManager lbsm = service.getServiceManager(null);
 
         AbsoluteCodingSchemeVersionReference a = ConvenienceMethods.createAbsoluteCodingSchemeVersionReference(
